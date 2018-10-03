@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FileDrop from './FileDrop';
-import { fileToString } from '../helpers';
+import { fileToString } from '../util';
 
 const handleChange = (e, setCSVString) => {
   const file = e.target.files[0];

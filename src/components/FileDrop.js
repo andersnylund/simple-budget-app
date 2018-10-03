@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { fileToString } from '../helpers';
+import { fileToString } from '../util';
 
 const StyledDiv = styled.div`
   border: 5px solid lightblue;

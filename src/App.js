@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import CSVFileReader from './components/CSVFileReader';
 import CSVDataParser from './components/CSVDataParser';
+import BankSelector from './components/BankSelector';
+import banks from './banks';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      csvString: null
+      csvString: null,
+      selectedBank: banks[0]
     };
   }
 
@@ -16,13 +19,24 @@ class App extends Component {
     });
   };
 
+  setBank = bank => {
+    this.setState({
+      selectedBank: bank
+    });
+  };
+
   render() {
-    const { csvString } = this.state;
+    const { csvString, selectedBank } = this.state;
 
     return (
       <div className="App">
         <CSVFileReader setCSVString={this.setCSVString} />
-        {csvString ? <CSVDataParser csvString={csvString} /> : <p>not loaded</p>}
+        <BankSelector setBank={this.setBank} />
+        {csvString ? (
+          <CSVDataParser csvString={csvString} selectedBank={selectedBank} />
+        ) : (
+          <p>not loaded</p>
+        )}
       </div>
     );
   }

@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import './App.css';
 import Papa from 'papaparse';
 import { XYPlot, MarkSeries, HorizontalGridLines, VerticalGridLines, YAxis, XAxis } from 'react-vis';
 import moment from 'moment';
-
-moment.locale('fi');
+import FileDrop from './components/FileDrop';
 
 class App extends Component {
 
@@ -64,7 +62,9 @@ class App extends Component {
         </div> 
         :
           <div>
-            <h1>Upload yor CSV-file here</h1>
+            <h1>Drag n Drop your CSV-file here</h1>
+            <FileDrop />
+            <p>or upload it</p>
             <input type='file' accept='.csv' onChange={this.hanleFileChange}></input>  
           </div>
         }

@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 import Papa from 'papaparse';
+import { XYPlot, MarkSeries, HorizontalGridLines, VerticalGridLines, YAxis, XAxis } from 'react-vis';
+import moment from 'moment';
+
+moment.locale('fi');
 
 class App extends Component {
 
@@ -15,9 +19,21 @@ class App extends Component {
 
   handleFileLoaded = () => {
     const content = this.fileReader.result;
-    const parsed = Papa.parse(content);
+    const parsed = Papa.parse(content, {
+      header: true
+    });
+
+    const manipulated = parsed.data.map(row => {
+      return {
+        x: moment(row['Pvm'], 'DD.MM.YYYY'),
+        y: parseInt(row['Saldo'].replace(',', '.')),
+      };
+    });
+
+    console.log('manipulated', manipulated);
+
     this.setState({
-      data: parsed
+      data: manipulated
     });
   }
 
@@ -37,7 +53,13 @@ class App extends Component {
         <div>
           <h1>Done!</h1>
           <div>
-            {this.state.data.data.map((row) => (<div>{row}</div>))}
+          <XYPlot height={1200} width={1200}>
+            <HorizontalGridLines />
+            <VerticalGridLines />
+            <XAxis title="X Axis" position="start" />
+            <YAxis title="Y Axis" />
+            <MarkSeries data={this.state.data} />
+          </XYPlot>
           </div>
         </div> 
         :

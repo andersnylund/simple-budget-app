@@ -1,9 +1,9 @@
 export class Bank {
-  constructor(name, dateHeaderIndex, dateHeaderFormat, receiverIndex, amountIndex) {
+  constructor(name, dateHeaderIndex, dateHeaderFormat, partyIndex, amountIndex) {
     this.name = name;
     this.dateHeaderIndex = dateHeaderIndex;
     this.dateHeaderFormat = dateHeaderFormat;
-    this.receiverIndex = receiverIndex;
+    this.partyIndex = partyIndex;
     this.amountIndex = amountIndex;
   }
 }

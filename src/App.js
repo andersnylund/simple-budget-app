@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import CSVFileReader from './components/CSVFileReader';
-import CSVDataParser from './components/CSVDataParser';
 import BankSelector from './components/BankSelector';
 import banks from './banks';
+import TransactionHistory from './components/TransactionHistory';
+import { parse } from './util';
 
 class App extends Component {
   constructor(props) {
@@ -27,16 +28,15 @@ class App extends Component {
 
   render() {
     const { csvString, selectedBank } = this.state;
+    const showTransactionHistory = csvString && selectedBank;
 
     return (
       <div className="App">
         <CSVFileReader setCSVString={this.setCSVString} />
         <BankSelector setBank={this.setBank} />
-        {csvString ? (
-          <CSVDataParser csvString={csvString} selectedBank={selectedBank} />
-        ) : (
-          <p>not loaded</p>
-        )}
+        {showTransactionHistory ? (
+          <TransactionHistory data={parse(csvString, selectedBank)} />
+        ) : null}
       </div>
     );
   }

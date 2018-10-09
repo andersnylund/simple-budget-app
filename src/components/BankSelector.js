@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import banks from '../banks';
 
 const handleChange = (e, setBank) => {
@@ -8,8 +9,17 @@ const handleChange = (e, setBank) => {
   setBank(bank);
 };
 
-const BankSelector = ({ setBank }) => {
-  const bankArray = banks.map(bank => <option key={bank.name}>{bank.name}</option>);
+const BankSelector = ({ selectedBank, setBank }) => {
+  const bankArray = banks.map(bank => {
+    if (selectedBank && _.isEqual(selectedBank.name, bank.name)) {
+      return (
+        <option selected key={bank.name}>
+          {bank.name}
+        </option>
+      );
+    }
+    return <option key={bank.name}>{bank.name}</option>;
+  });
 
   return (
     <div>
@@ -19,7 +29,8 @@ const BankSelector = ({ setBank }) => {
 };
 
 BankSelector.propTypes = {
-  setBank: PropTypes.func.isRequired
+  setBank: PropTypes.func.isRequired,
+  selectedBank: PropTypes.objectOf({}).isRequired
 };
 
 export default BankSelector;

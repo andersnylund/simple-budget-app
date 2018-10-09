@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
 import CSVFileReader from './components/CSVFileReader';
 import BankSelector from './components/BankSelector';
 import TransactionHistory from './components/TransactionHistory';
-import { parse } from './util';
+import { parse, saveStateToLocalStorage, hydrateStateWithLocalStorage } from './util';
 
 class App extends Component {
   constructor(props) {
@@ -15,16 +14,16 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.hydrateStateWithLocalStorage();
+    hydrateStateWithLocalStorage(this);
     // add event listener to save state to localStorage
     // when user leaves/refreshes the page
-    window.addEventListener('beforeunload', () => this.saveStateToLocalStorage());
+    window.addEventListener('beforeunload', () => saveStateToLocalStorage(this));
   }
 
   componentWillUnmount() {
-    window.removeEventListener('beforeunload', () => this.saveStateToLocalStorage());
+    window.removeEventListener('beforeunload', () => saveStateToLocalStorage(this));
     // saves if component has a chance to unmount
-    this.saveStateToLocalStorage();
+    saveStateToLocalStorage(this);
   }
 
   setCSVString = string => {
@@ -38,34 +37,6 @@ class App extends Component {
       selectedBank: bank
     });
   };
-
-  hydrateStateWithLocalStorage() {
-    // for all items in state
-    Object.keys(this.state).forEach(key => {
-      // if the key exists in localStorage
-      if (_.has(localStorage, key)) {
-        // get the key's value from localStorage
-        let value = localStorage.getItem(key);
-        // parse the localStorage string and setState
-        try {
-          value = JSON.parse(value);
-          this.setState({ [key]: value });
-        } catch (e) {
-          // handle empty string
-          this.setState({ [key]: value });
-        }
-      }
-    });
-  }
-
-  saveStateToLocalStorage() {
-    // for every item in React state
-    Object.keys(this.state).forEach(key => {
-      // save to localStorage
-      const { [key]: value } = this.state;
-      localStorage.setItem(key, JSON.stringify(value));
-    });
-  }
 
   render() {
     const { csvString, selectedBank } = this.state;

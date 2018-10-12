@@ -9,7 +9,7 @@ import {
   VerticalGridLines
 } from 'react-vis';
 
-const TransactionHistory = ({ data }) => {
+const BalanceHistory = ({ data }) => {
   let result = [];
 
   data.reduce(
@@ -37,8 +37,8 @@ const TransactionHistory = ({ data }) => {
   );
 };
 
-TransactionHistory.propTypes = {
+BalanceHistory.propTypes = {
   data: PropTypes.arrayOf({}).isRequired
 };
 
-export default TransactionHistory;
+export default BalanceHistory;

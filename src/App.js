@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CSVFileReader from './components/CSVFileReader';
 import BankSelector from './components/BankSelector';
 import BalanceHistory from './components/BalanceHistory';
+import Categorizer from './components/Categorizer';
 import { parse, saveStateToLocalStorage, hydrateStateWithLocalStorage } from './util';
 
 class App extends Component {
@@ -38,20 +39,22 @@ class App extends Component {
     });
   };
 
+  visual = data => (
+    <div>
+      <BalanceHistory data={data} />
+      <Categorizer data={data} />
+    </div>
+  );
+
   render() {
     const { csvString, selectedBank } = this.state;
-    const showBalanceHistory = csvString && selectedBank;
-
-    let data;
-    if (showBalanceHistory) {
-      data = parse(csvString, selectedBank);
-    }
+    const isSetUp = csvString && selectedBank;
 
     return (
       <div className="App">
         <CSVFileReader setCSVString={this.setCSVString} />
         <BankSelector selectedBank={selectedBank} setBank={this.setBank} />
-        {showBalanceHistory ? <BalanceHistory data={data} /> : null}
+        {isSetUp ? this.visual(parse(csvString, selectedBank)) : null}
       </div>
     );
   }

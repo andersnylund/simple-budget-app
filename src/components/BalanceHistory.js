@@ -8,6 +8,11 @@ import {
   LineSeries,
   VerticalGridLines
 } from 'react-vis';
+import styled from 'styled-components';
+
+const StyledXYPlot = styled(XYPlot)`
+  margin: 50px;
+`;
 
 const BalanceHistory = ({ data }) => {
   let result = [];
@@ -26,13 +31,13 @@ const BalanceHistory = ({ data }) => {
 
   return (
     <div>
-      <XYPlot width={1200} height={1200}>
+      <StyledXYPlot width={800} height={800}>
         <HorizontalGridLines />
         <VerticalGridLines />
         <LineSeries data={result} />
         <XAxis />
         <YAxis />
-      </XYPlot>
+      </StyledXYPlot>
     </div>
   );
 };

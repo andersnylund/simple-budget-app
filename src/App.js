@@ -5,7 +5,7 @@ import InfoPage from './pages/InfoPage';
 import BottomNavigation from './components/BottomNavigation';
 import VisualizationPage from './pages/VisualizationPage';
 import CategorizationPage from './pages/CategorizationPage';
-import { saveStateToLocalStorage, hydrateStateWithLocalStorage } from './util';
+import { saveStateToLocalStorage, hydrateStateWithLocalStorage } from './utils';
 
 class App extends Component {
   constructor(props) {
@@ -67,7 +67,7 @@ class App extends Component {
       );
     }
     if (pageIndex === 3) {
-      return <CategorizationPage />;
+      return <CategorizationPage csvString={csvString} bank={selectedBank} />;
     }
     if (pageIndex === 4) {
       return <VisualizationPage csvString={csvString} bank={selectedBank} />;

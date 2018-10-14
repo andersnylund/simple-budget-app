@@ -1,6 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
+import Categorizer from '../components/Categorizer';
+import Bank from '../Bank';
 
 const Container = styled.div`
   display: flex;
@@ -9,10 +12,20 @@ const Container = styled.div`
   text-align: center;
 `;
 
-const Categorization = () => (
+const Categorization = ({ csvString, bank }) => (
   <Container>
     <Typography variant="h2">Categorization</Typography>
+    {!csvString || !bank ? (
+      <Typography variant="h4">Go back to import page!</Typography>
+    ) : (
+      <Categorizer />
+    )}
   </Container>
 );
+
+Categorization.propTypes = {
+  csvString: PropTypes.string.isRequired,
+  bank: PropTypes.objectOf(Bank).isRequired
+};
 
 export default Categorization;

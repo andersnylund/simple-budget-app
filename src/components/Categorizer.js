@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 
 const Categorizer = ({ data, onCategory }) => {
-  const rows = data.map(row => <li>{`${row.date} ${row.party} ${row.amount}`}</li>);
+  // const rows = data.map(row => <li>{`${row.date} ${row.party} ${row.amount}`}</li>);
 
   return (
     <div>
-      <ul>{rows}</ul>
+      <ul>coming soon</ul>
     </div>
   );
 };

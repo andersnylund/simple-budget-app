@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import BalanceHistory from '../components/BalanceHistory';
-import { parse } from '../util';
+import { parse } from '../utils';
 
 const Container = styled.div`
   margin: 30px;

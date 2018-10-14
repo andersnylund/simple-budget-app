@@ -1,43 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  XYPlot,
-  XAxis,
-  YAxis,
-  HorizontalGridLines,
-  LineSeries,
-  VerticalGridLines
-} from 'react-vis';
-import styled from 'styled-components';
-
-const StyledXYPlot = styled(XYPlot)`
-  margin: 50px;
-`;
+import Chart from 'react-apexcharts';
+import Typography from '@material-ui/core/Typography';
 
 const BalanceHistory = ({ data }) => {
   let result = [];
 
-  data.reduce(
-    (previous, current) => {
-      const value = {
-        x: current.date,
-        y: previous.y - parseInt(current.amount, 10)
-      };
-      result = result.concat(value);
-      return value;
-    },
-    { y: 0 }
-  );
+  data.reduce((previous, current) => {
+    const value = previous - parseInt(current.amount, 10);
+    result = result.concat(value);
+    return value;
+  }, 0);
+
+  const options = {
+    markers: {
+      style: 'inverted',
+      size: 1
+    }
+  };
+
+  const series = [
+    {
+      name: 'Balance',
+      data: result
+    }
+  ];
 
   return (
     <div>
-      <StyledXYPlot width={800} height={800}>
-        <HorizontalGridLines />
-        <VerticalGridLines />
-        <LineSeries data={result} />
-        <XAxis />
-        <YAxis />
-      </StyledXYPlot>
+      <Typography variant="h4">Balance history</Typography>
+      <Chart options={options} series={series} width={800} height={800} type="line" />
     </div>
   );
 };

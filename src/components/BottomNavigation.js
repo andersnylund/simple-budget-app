@@ -16,54 +16,22 @@ const Container = styled.div`
 `;
 
 class SimpleBottomNavigation extends React.Component {
-  state = {
-    value: 0
-  };
-
   handleChange = (event, value) => {
-    this.setState({ value });
+    const { onChangePage } = this.props;
+    onChangePage(value);
   };
 
   render() {
-    const { value } = this.state;
-    const { onChange } = this.props;
+    const { activePageIndex } = this.props;
 
     return (
       <Container>
-        <BottomNavigation value={value} onChange={this.handleChange} showLabels>
-          <BottomNavigationAction
-            label="Start"
-            icon={<ArrowForward />}
-            onClick={() => onChange('LANDING')}
-          />
-          <BottomNavigationAction
-            label="Info"
-            icon={<InfoIcon />}
-            onClick={() => {
-              onChange('INFO');
-            }}
-          />
-          <BottomNavigationAction
-            label="Import"
-            icon={<InputIcon />}
-            onClick={() => {
-              onChange('IMPORT');
-            }}
-          />
-          <BottomNavigationAction
-            label="Categorization"
-            icon={<CategoryIcon />}
-            onClick={() => {
-              onChange('CATEGORIZATION');
-            }}
-          />
-          <BottomNavigationAction
-            label="Visualization"
-            icon={<ShowChartIcon />}
-            onClick={() => {
-              onChange('VISUALIZATION');
-            }}
-          />
+        <BottomNavigation value={activePageIndex} onChange={this.handleChange} showLabels>
+          <BottomNavigationAction label="Start" icon={<ArrowForward />} />
+          <BottomNavigationAction label="Info" icon={<InfoIcon />} />
+          <BottomNavigationAction label="Import" icon={<InputIcon />} />
+          <BottomNavigationAction label="Categorization" icon={<CategoryIcon />} />
+          <BottomNavigationAction label="Visualization" icon={<ShowChartIcon />} />
         </BottomNavigation>
       </Container>
     );
@@ -71,7 +39,8 @@ class SimpleBottomNavigation extends React.Component {
 }
 
 SimpleBottomNavigation.propTypes = {
-  onChange: PropTypes.func.isRequired
+  onChangePage: PropTypes.func.isRequired,
+  activePageIndex: PropTypes.number.isRequired
 };
 
 export default SimpleBottomNavigation;

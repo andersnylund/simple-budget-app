@@ -13,7 +13,7 @@ class App extends Component {
     this.state = {
       csvString: null,
       selectedBank: null,
-      activePage: 'LANDING'
+      activePageIndex: 0
     };
   }
 
@@ -42,22 +42,22 @@ class App extends Component {
     });
   };
 
-  changePage = page => {
+  changePage = pageIndex => {
     this.setState({
-      activePage: page
+      activePageIndex: pageIndex
     });
   };
 
-  showPage = key => {
+  showPage = pageIndex => {
     const { selectedBank, csvString } = this.state;
 
-    if (key === 'LANDING') {
+    if (pageIndex === 0) {
       return <LandingPage />;
     }
-    if (key === 'INFO') {
+    if (pageIndex === 1) {
       return <InfoPage />;
     }
-    if (key === 'IMPORT') {
+    if (pageIndex === 2) {
       return (
         <ImportPage
           setCSVString={this.setCSVString}
@@ -66,22 +66,22 @@ class App extends Component {
         />
       );
     }
-    if (key === 'CATEGORIZATION') {
+    if (pageIndex === 3) {
       return <CategorizationPage />;
     }
-    if (key === 'VISUALIZATION') {
+    if (pageIndex === 4) {
       return <VisualizationPage csvString={csvString} bank={selectedBank} />;
     }
     return <LandingPage />;
   };
 
   render() {
-    const { activePage } = this.state;
+    const { activePageIndex } = this.state;
 
     return (
       <div className="app">
-        {this.showPage(activePage)}
-        <BottomNavigation onChange={this.changePage} />
+        {this.showPage(activePageIndex)}
+        <BottomNavigation onChangePage={this.changePage} activePageIndex={activePageIndex} />
       </div>
     );
   }

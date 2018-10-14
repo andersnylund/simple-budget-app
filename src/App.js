@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
-import CSVFileReader from './components/CSVFileReader';
-import BankSelector from './components/BankSelector';
-import BalanceHistory from './components/BalanceHistory';
-import Categorizer from './components/Categorizer';
-import { parse, saveStateToLocalStorage, hydrateStateWithLocalStorage } from './util';
+import LandingPage from './pages/LandingPage';
+import ImportPage from './pages/ImportPage';
+import InfoPage from './pages/InfoPage';
+import BottomNavigation from './components/BottomNavigation';
+import VisualizationPage from './pages/VisualizationPage';
+import CategorizationPage from './pages/CategorizationPage';
+import { saveStateToLocalStorage, hydrateStateWithLocalStorage } from './util';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       csvString: null,
-      selectedBank: null
+      selectedBank: null,
+      activePage: 'LANDING'
     };
   }
 
@@ -39,22 +42,46 @@ class App extends Component {
     });
   };
 
-  visual = data => (
-    <div>
-      <BalanceHistory data={data} />
-      <Categorizer data={data} />
-    </div>
-  );
+  changePage = page => {
+    this.setState({
+      activePage: page
+    });
+  };
+
+  showPage = key => {
+    const { selectedBank } = this.state;
+
+    if (key === 'LANDING') {
+      return <LandingPage />;
+    }
+    if (key === 'INFO') {
+      return <InfoPage />;
+    }
+    if (key === 'IMPORT') {
+      return (
+        <ImportPage
+          setCSVString={this.setCSVString}
+          selectedBank={selectedBank}
+          setBank={this.setBank}
+        />
+      );
+    }
+    if (key === 'CATEGORIZATION') {
+      return <CategorizationPage />;
+    }
+    if (key === 'VISUALIZATION') {
+      return <VisualizationPage />;
+    }
+    return <LandingPage />;
+  };
 
   render() {
-    const { csvString, selectedBank } = this.state;
-    const isSetUp = csvString && selectedBank;
+    const { activePage } = this.state;
 
     return (
-      <div className="App">
-        <CSVFileReader setCSVString={this.setCSVString} />
-        <BankSelector selectedBank={selectedBank} setBank={this.setBank} />
-        {isSetUp ? this.visual(parse(csvString, selectedBank)) : null}
+      <div className="app">
+        {this.showPage(activePage)}
+        <BottomNavigation onChange={this.changePage} />
       </div>
     );
   }

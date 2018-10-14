@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
 import CSVFileReader from '../components/CSVFileReader';
-import Selector from '../components/Selector';
+import Selector from '../components/BankSelector';
 
 const Container = styled.div`
   display: flex;

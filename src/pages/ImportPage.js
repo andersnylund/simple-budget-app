@@ -1,18 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
 import CSVFileReader from '../components/CSVFileReader';
-import BankSelector from '../components/BankSelector';
+import Selector from '../components/Selector';
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
+  padding: 30px;
+  justify-content: space-around;
+
+  .item {
+    padding: 30px;
+  }
 `;
 
 const ImportPage = ({ setCSVString, selectedBank, setBank }) => (
   <Container>
-    <CSVFileReader setCSVString={setCSVString} />
-    <BankSelector selectedBank={selectedBank} setBank={setBank} />
+    <Typography variant="h2" className="item">
+      Import
+    </Typography>
+    <CSVFileReader setCSVString={setCSVString} className="item" />
+    <Selector selectedBank={selectedBank} setBank={setBank} className="item" />
   </Container>
 );
 

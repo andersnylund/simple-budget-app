@@ -49,7 +49,7 @@ class App extends Component {
   };
 
   showPage = key => {
-    const { selectedBank } = this.state;
+    const { selectedBank, csvString } = this.state;
 
     if (key === 'LANDING') {
       return <LandingPage />;
@@ -70,7 +70,7 @@ class App extends Component {
       return <CategorizationPage />;
     }
     if (key === 'VISUALIZATION') {
-      return <VisualizationPage />;
+      return <VisualizationPage csvString={csvString} bank={selectedBank} />;
     }
     return <LandingPage />;
   };

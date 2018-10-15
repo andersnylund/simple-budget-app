@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 const Container = styled.div`
   text-align: center;
   h2 {
-    margin: 30px;
+    margin: 3rem;
   }
 `;
 

@@ -7,7 +7,7 @@ import Bank from '../Bank';
 
 const Container = styled.div`
   display: flex;
-  padding: 30px;
+  padding: 3rem;
   flex-direction: column;
   text-align: center;
 `;

@@ -6,7 +6,7 @@ import BalanceHistory from '../components/BalanceHistory';
 import { parse } from '../utils';
 
 const Container = styled.div`
-  margin: 30px;
+  margin: 3rem;
   text-align: center;
 `;
 

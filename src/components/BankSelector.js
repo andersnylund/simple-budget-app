@@ -29,7 +29,7 @@ class ControlledOpenSelect extends React.Component {
     const { selectedBank, ...rest } = this.props;
     const { open } = this.state;
 
-    const value = selectedBank ? selectedBank.name : 'None';
+    const value = selectedBank ? selectedBank.name : 'Other';
 
     const bankArray = banks.map(bank => (
       <MenuItem key={bank.name} value={bank.name}>
@@ -52,8 +52,8 @@ class ControlledOpenSelect extends React.Component {
               id: 'demo-controlled-open-select'
             }}
           >
-            <MenuItem key="None" value="None">
-              None
+            <MenuItem key="Other" value="Other">
+              Other
             </MenuItem>
             {bankArray}
           </Select>

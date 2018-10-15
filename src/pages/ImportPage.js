@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
 import CSVFileReader from '../components/CSVFileReader';
 import Selector from '../components/BankSelector';
+import Bank from '../Bank';
 
 const Container = styled.div`
   display: flex;
@@ -12,23 +13,27 @@ const Container = styled.div`
   justify-content: space-around;
 
   .item {
-    padding: 30px;
+    padding: 3rem;
   }
 `;
 
-const ImportPage = ({ setCSVString, selectedBank, setBank }) => (
+const ImportPage = ({ setInitialTransactions, selectedBank, setBank }) => (
   <Container>
     <Typography variant="h2" className="item">
       Import
     </Typography>
-    <CSVFileReader setCSVString={setCSVString} className="item" />
+    <CSVFileReader
+      setInitialTransactions={setInitialTransactions}
+      selectedBank={selectedBank}
+      className="item"
+    />
     <Selector selectedBank={selectedBank} setBank={setBank} className="item" />
   </Container>
 );
 
 ImportPage.propTypes = {
-  setCSVString: PropTypes.func.isRequired,
-  selectedBank: PropTypes.objectOf({}).isRequired,
+  setInitialTransactions: PropTypes.func.isRequired,
+  selectedBank: PropTypes.objectOf(Bank).isRequired,
   setBank: PropTypes.func.isRequired
 };
 

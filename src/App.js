@@ -11,7 +11,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      csvString: null,
+      initialTransactions: null,
       selectedBank: null,
       activePageIndex: 0
     };
@@ -30,9 +30,9 @@ class App extends Component {
     saveStateToLocalStorage(this);
   }
 
-  setCSVString = string => {
+  setInitialTransactions = transactions => {
     this.setState({
-      csvString: string
+      initialTransactions: transactions
     });
   };
 
@@ -49,7 +49,7 @@ class App extends Component {
   };
 
   showPage = pageIndex => {
-    const { selectedBank, csvString } = this.state;
+    const { selectedBank, initialTransactions } = this.state;
 
     if (pageIndex === 0) {
       return <LandingPage />;
@@ -60,17 +60,17 @@ class App extends Component {
     if (pageIndex === 2) {
       return (
         <ImportPage
-          setCSVString={this.setCSVString}
+          setInitialTransactions={this.setInitialTransactions}
           selectedBank={selectedBank}
           setBank={this.setBank}
         />
       );
     }
     if (pageIndex === 3) {
-      return <CategorizationPage csvString={csvString} bank={selectedBank} />;
+      return <CategorizationPage initialTransactions={initialTransactions} />;
     }
     if (pageIndex === 4) {
-      return <VisualizationPage csvString={csvString} bank={selectedBank} />;
+      return <VisualizationPage initialTransactions={initialTransactions} />;
     }
     return <LandingPage />;
   };

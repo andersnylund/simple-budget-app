@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import Chart from 'react-apexcharts';
 import Typography from '@material-ui/core/Typography';
 
-const BalanceHistory = ({ data }) => {
+const BalanceHistory = ({ initialTransactions }) => {
   let result = [];
 
-  data.reduce((previous, current) => {
+  initialTransactions.reduce((previous, current) => {
     const value = previous - parseInt(current.amount, 10);
     result = result.concat(value);
     return value;
@@ -35,7 +35,13 @@ const BalanceHistory = ({ data }) => {
 };
 
 BalanceHistory.propTypes = {
-  data: PropTypes.arrayOf({}).isRequired
+  initialTransactions: PropTypes.arrayOf(
+    PropTypes.shape({
+      date: PropTypes.string.isRequired,
+      amount: PropTypes.string.isRequired,
+      party: PropTypes.string.isRequired
+    })
+  ).isRequired
 };
 
 export default BalanceHistory;

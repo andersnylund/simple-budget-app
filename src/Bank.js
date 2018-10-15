@@ -11,4 +11,6 @@ export class Bank {
 const danske = new Bank('Danske Bank', 0, 'DD.MM.YYYY', 1, 2);
 const op = new Bank('Osuuspankki', 0, 'DD.MM.YYYY', 5, 2);
 
-export default [danske, op];
+export const banks = [danske, op];
+
+export default Bank;

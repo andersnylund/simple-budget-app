@@ -4,7 +4,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import banks from '../banks';
+import { banks } from '../Bank';
 
 class ControlledOpenSelect extends React.Component {
   state = {
@@ -29,6 +29,8 @@ class ControlledOpenSelect extends React.Component {
     const { selectedBank, ...rest } = this.props;
     const { open } = this.state;
 
+    const value = selectedBank ? selectedBank.name : 'Other';
+
     const bankArray = banks.map(bank => (
       <MenuItem key={bank.name} value={bank.name}>
         {bank.name}
@@ -43,13 +45,16 @@ class ControlledOpenSelect extends React.Component {
             open={open}
             onClose={this.handleClose}
             onOpen={this.handleOpen}
-            value={selectedBank.name}
+            value={value}
             onChange={this.handleChange}
             inputProps={{
               name: 'bank',
               id: 'demo-controlled-open-select'
             }}
           >
+            <MenuItem key="Other" value="Other">
+              Other
+            </MenuItem>
             {bankArray}
           </Select>
         </FormControl>

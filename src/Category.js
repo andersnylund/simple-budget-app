@@ -1,4 +1,6 @@
-import RestaurantMenu from '@material-ui/icons/RestaurantMenu';
+import Restaurant from '@material-ui/icons/Restaurant';
+import FlightTakeoff from '@material-ui/icons/FlightTakeoff';
+import FitnessCenter from '@material-ui/icons/FitnessCenter';
 
 export class Category {
   constructor(name, icon) {
@@ -7,6 +9,10 @@ export class Category {
   }
 }
 
-const categories = [new Category('Restaurants', RestaurantMenu)];
+export const categories = [
+  new Category('Restaurants', Restaurant),
+  new Category('Travelling', FlightTakeoff),
+  new Category('Sports', FitnessCenter)
+];
 
-export default categories;
+export default Category;

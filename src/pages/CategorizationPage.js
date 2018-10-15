@@ -16,7 +16,7 @@ const Categorization = ({ csvString, bank }) => (
   <Container>
     <Typography variant="h2">Categorization</Typography>
     {!csvString || !bank ? (
-      <Typography variant="h4">Go back to import page!</Typography>
+      <Typography variant="h4">Select a file and bank on import page</Typography>
     ) : (
       <Categorizer />
     )}

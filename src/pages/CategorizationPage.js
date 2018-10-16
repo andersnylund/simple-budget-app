@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
 import Categorizer from '../components/Categorizer';
-import Bank from '../Bank';
 
 const Container = styled.div`
   display: flex;
@@ -12,10 +11,10 @@ const Container = styled.div`
   text-align: center;
 `;
 
-const Categorization = ({ csvString, bank }) => (
+const CategorizationPage = ({ initialTransactions }) => (
   <Container>
     <Typography variant="h2">Categorization</Typography>
-    {!csvString || !bank ? (
+    {!initialTransactions ? (
       <Typography variant="h4">Select a file and bank on import page</Typography>
     ) : (
       <Categorizer />
@@ -23,9 +22,14 @@ const Categorization = ({ csvString, bank }) => (
   </Container>
 );
 
-Categorization.propTypes = {
-  csvString: PropTypes.string.isRequired,
-  bank: PropTypes.objectOf(Bank).isRequired
+CategorizationPage.propTypes = {
+  initialTransactions: PropTypes.arrayOf(
+    PropTypes.shape({
+      date: PropTypes.string.isRequired,
+      amount: PropTypes.string.isRequired,
+      party: PropTypes.string.isRequired
+    })
+  ).isRequired
 };
 
-export default Categorization;
+export default CategorizationPage;

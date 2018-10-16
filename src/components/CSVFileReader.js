@@ -2,18 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
-import { fileToString } from '../utils';
+import { parse } from '../utils';
+import Bank from '../Bank';
 
 const StyledInput = styled.input`
   display: none;
 `;
 
-const handleChange = (e, setCSVString) => {
+const handleChange = async (e, setInitialTransactions, selectedBank) => {
   const file = e.target.files[0];
-  fileToString(file, setCSVString);
+  const csvString = await new Response(file).text();
+  const parsed = parse(csvString, selectedBank);
+  setInitialTransactions(parsed);
 };
 
-const CSVFileReader = ({ setCSVString, ...rest }) => (
+const CSVFileReader = ({ setInitialTransactions, selectedBank, ...rest }) => (
   <div {...rest}>
     <label htmlFor="contained-button-file">
       <StyledInput
@@ -21,7 +24,7 @@ const CSVFileReader = ({ setCSVString, ...rest }) => (
         id="contained-button-file"
         multiple={false}
         type="file"
-        onChange={e => handleChange(e, setCSVString)}
+        onChange={e => handleChange(e, setInitialTransactions, selectedBank)}
       />
       <Button variant="contained" component="span">
         Upload
@@ -31,7 +34,8 @@ const CSVFileReader = ({ setCSVString, ...rest }) => (
 );
 
 CSVFileReader.propTypes = {
-  setCSVString: PropTypes.func.isRequired
+  setInitialTransactions: PropTypes.func.isRequired,
+  selectedBank: PropTypes.objectOf(Bank).isRequired
 };
 
 export default CSVFileReader;

@@ -11,9 +11,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      initialTransactions: null,
-      selectedBank: null,
-      activePageIndex: 0
+      initialTransactions: undefined,
+      selectedBank: undefined,
+      activePageIndex: 0,
+      userState: undefined
     };
   }
 
@@ -22,6 +23,12 @@ class App extends Component {
     // add event listener to save state to localStorage
     // when user leaves/refreshes the page
     window.addEventListener('beforeunload', () => saveStateToLocalStorage(this));
+    const userStateNotDefined = !this.state.userState;
+    if (userStateNotDefined) {
+      // @TODO Check if this should be moved this to constants file.
+      const INITIAL_CATEGORIES = ['Housing', 'Food', 'Others', 'Entertainment', 'Monthly-bill'];
+      this.setInitialUserState(INITIAL_CATEGORIES);
+    }
   }
 
   componentWillUnmount() {
@@ -34,6 +41,28 @@ class App extends Component {
     this.setState({
       initialTransactions: transactions
     });
+    const uniquePartiesList = this.filterTransactionList(transactions);
+    this.updateUniquePartiesList(uniquePartiesList);
+  };
+
+  /**
+   * @desc filterTransactionList removes duplicate transactions from transactions list.
+   * @param initialTransactionsList
+   * @return list of unique transactions based on the party
+   */
+  filterTransactionList = initialTransactionsList => {
+    const uniqueTransactionList = [];
+
+    const addedTransactionParties = [];
+
+    initialTransactionsList.map(transaction => {
+      if (!addedTransactionParties.includes(transaction.party)) {
+        uniqueTransactionList.push(transaction);
+        addedTransactionParties.push(transaction.party);
+      }
+    });
+
+    return uniqueTransactionList;
   };
 
   setBank = bank => {
@@ -48,8 +77,48 @@ class App extends Component {
     });
   };
 
+  updateCategories = categoriesUpdate => {
+    this.setState({
+      userState: {
+        ...this.state.userState,
+        categories: [...categoriesUpdate]
+      }
+    });
+  };
+
+  updateUniquePartiesList = newPartiesList => {
+    this.setState({
+      userState: {
+        ...this.state.userState,
+        transactions: {
+          uniquePartiesList: [...newPartiesList]
+        }
+      }
+    });
+  };
+
+  setInitialUserState = initialCategoryList => {
+    const categoryList = [];
+
+    initialCategoryList.map(categoryTitle =>
+      categoryList.push({
+        categoryTitle,
+        categoryParties: []
+      })
+    );
+
+    this.setState({
+      userState: {
+        transactions: {
+          uniquePartiesList: []
+        },
+        categories: categoryList
+      }
+    });
+  };
+
   showPage = pageIndex => {
-    const { selectedBank, initialTransactions } = this.state;
+    const { selectedBank, initialTransactions, userState } = this.state;
 
     if (pageIndex === 0) {
       return <LandingPage />;
@@ -67,7 +136,13 @@ class App extends Component {
       );
     }
     if (pageIndex === 3) {
-      return <CategorizationPage initialTransactions={initialTransactions} />;
+      return (
+        <CategorizationPage
+          currentUserState={userState}
+          updateCategories={this.updateCategories}
+          updateUniquePartiesList={this.updateUniquePartiesList}
+        />
+      );
     }
     if (pageIndex === 4) {
       return <VisualizationPage initialTransactions={initialTransactions} />;

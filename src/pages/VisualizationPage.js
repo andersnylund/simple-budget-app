@@ -12,7 +12,11 @@ const Container = styled.div`
 const Visualization = ({ initialTransactions }) => (
   <Container>
     <Typography variant="h2">Visualization</Typography>
-    <BalanceHistory initialTransactions={initialTransactions} />
+    {!initialTransactions ? (
+      <Typography variant="h4">Select a file and bank on import page</Typography>
+    ) : (
+      <BalanceHistory initialTransactions={initialTransactions} />
+    )}
   </Container>
 );
 

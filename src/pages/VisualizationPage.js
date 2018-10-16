@@ -11,7 +11,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   max-width: 60rem;
-  margin: 3rem auto 3rem;
+  margin: 3rem auto;
 `;
 
 const Visualization = ({ initialTransactions }) => (

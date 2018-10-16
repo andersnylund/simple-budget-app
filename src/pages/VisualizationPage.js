@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import BalanceHistory from '../components/BalanceHistory';
+import PartyGrouping from '../components/PartyGrouping';
 
 const Container = styled.div`
   text-align: center;
@@ -10,13 +11,14 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   max-width: 60rem;
-  margin: 3rem auto 0;
+  margin: 3rem auto 3rem;
 `;
 
 const Visualization = ({ initialTransactions }) => (
   <Container>
     <Typography variant="h2">Visualization</Typography>
     <BalanceHistory initialTransactions={initialTransactions} />
+    <PartyGrouping initialTransactions={initialTransactions} />
   </Container>
 );
 

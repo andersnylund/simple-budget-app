@@ -16,12 +16,8 @@ const BalanceHistory = ({ initialTransactions }) => {
     return balance;
   }, 0);
 
-  const options = {
-    markers: {
-      style: 'inverted',
-      size: 1
-    }
-  };
+  const options = {};
+
   const series = [
     {
       name: 'Balance',

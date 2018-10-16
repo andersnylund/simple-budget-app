@@ -3,10 +3,15 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import BalanceHistory from '../components/BalanceHistory';
+import PartyGrouping from '../components/PartyGrouping';
 
 const Container = styled.div`
-  margin: 3rem;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 60rem;
+  margin: 3rem auto;
 `;
 
 const Visualization = ({ initialTransactions }) => (
@@ -15,7 +20,10 @@ const Visualization = ({ initialTransactions }) => (
     {!initialTransactions ? (
       <Typography variant="h4">Select a file and bank on import page</Typography>
     ) : (
-      <BalanceHistory initialTransactions={initialTransactions} />
+      <div>
+        <BalanceHistory initialTransactions={initialTransactions} />
+        <PartyGrouping initialTransactions={initialTransactions} />
+      </div>
     )}
   </Container>
 );

@@ -5,8 +5,12 @@ import Typography from '@material-ui/core/Typography';
 import BalanceHistory from '../components/BalanceHistory';
 
 const Container = styled.div`
-  margin: 3rem;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 60rem;
+  margin: 3rem auto 0;
 `;
 
 const Visualization = ({ initialTransactions }) => (

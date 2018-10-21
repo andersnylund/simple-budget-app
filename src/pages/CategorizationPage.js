@@ -2,34 +2,38 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import Categorizer from '../components/Categorizer';
 
 const Container = styled.div`
-  display: flex;
-  padding: 3rem;
-  flex-direction: column;
-  text-align: center;
+  max-width: 30rem;
+  margin: 0 auto;
 `;
 
-const CategorizationPage = ({ initialTransactions }) => (
+const CategorizationPage = ({ userState, updateCategories }) => (
   <Container>
-    <Typography variant="h2">Categorization</Typography>
-    {!initialTransactions ? (
-      <Typography variant="h4">Select a file and bank on import page</Typography>
-    ) : (
-      <Categorizer />
-    )}
+    <Grid container>
+      <Typography variant="h2">Categorization</Typography>
+      {!userState ? (
+        <Typography variant="h4">Select a file and bank on import page</Typography>
+      ) : (
+        <Categorizer userState={userState} updateCategories={updateCategories} />
+      )}
+    </Grid>
   </Container>
 );
 
 CategorizationPage.propTypes = {
-  initialTransactions: PropTypes.arrayOf(
-    PropTypes.shape({
-      date: PropTypes.string.isRequired,
-      amount: PropTypes.string.isRequired,
-      party: PropTypes.string.isRequired
-    })
-  ).isRequired
+  userState: PropTypes.shape({
+    uniqueParties: PropTypes.arrayOf(PropTypes.string).isRequired,
+    categories: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string,
+        parties: PropTypes.arrayOf(PropTypes.string)
+      })
+    )
+  }).isRequired,
+  updateCategories: PropTypes.func.isRequired
 };
 
 export default CategorizationPage;

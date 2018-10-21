@@ -6,14 +6,19 @@ import BottomNavigation from './components/BottomNavigation';
 import VisualizationPage from './pages/VisualizationPage';
 import CategorizationPage from './pages/CategorizationPage';
 import { saveStateToLocalStorage, hydrateStateWithLocalStorage } from './utils';
+import { INITIAL_CATEGORIES } from './constants';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      initialTransactions: null,
-      selectedBank: null,
-      activePageIndex: 0
+      initialTransactions: undefined,
+      selectedBank: undefined,
+      activePageIndex: 0,
+      userState: {
+        categories: INITIAL_CATEGORIES.map(c => ({ title: c, parties: [] })),
+        uniqueParties: []
+      }
     };
   }
 
@@ -34,6 +39,9 @@ class App extends Component {
     this.setState({
       initialTransactions: transactions
     });
+
+    const uniqueParties = new Set(transactions.map(t => t.party));
+    this.setUniqueParties(uniqueParties);
   };
 
   setBank = bank => {
@@ -48,8 +56,26 @@ class App extends Component {
     });
   };
 
+  setCategories = newCategories => {
+    this.setState(prevState => ({
+      userState: {
+        ...prevState.userState,
+        categories: [...newCategories]
+      }
+    }));
+  };
+
+  setUniqueParties = newParties => {
+    this.setState(prevState => ({
+      userState: {
+        ...prevState.userState,
+        uniqueParties: [...newParties]
+      }
+    }));
+  };
+
   showPage = pageIndex => {
-    const { selectedBank, initialTransactions } = this.state;
+    const { selectedBank, initialTransactions, userState } = this.state;
 
     if (pageIndex === 0) {
       return <LandingPage />;
@@ -67,7 +93,13 @@ class App extends Component {
       );
     }
     if (pageIndex === 3) {
-      return <CategorizationPage initialTransactions={initialTransactions} />;
+      return (
+        <CategorizationPage
+          userState={userState}
+          updateCategories={this.setCategories}
+          updateUniqueParties={this.setUniqueParties}
+        />
+      );
     }
     if (pageIndex === 4) {
       return <VisualizationPage initialTransactions={initialTransactions} />;

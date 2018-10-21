@@ -13,19 +13,21 @@ class CategoryList extends React.Component {
 
   componentDidMount() {
     const { updateActiveCategory } = this.props;
+    const { checkedCategory } = this.state;
 
-    updateActiveCategory(this.state.checkedCategory);
+    updateActiveCategory(checkedCategory);
   }
 
   setCheckedCategory = event => {
     const { updateActiveCategory } = this.props;
+    const { checkedCategory } = this.state;
     const newTitle = event.target.name;
     this.setState(
       {
         checkedCategory: newTitle
       },
       () => {
-        updateActiveCategory(this.state.checkedCategory);
+        updateActiveCategory(checkedCategory);
       }
     );
   };

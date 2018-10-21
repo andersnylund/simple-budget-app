@@ -8,6 +8,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import InputIcon from '@material-ui/icons/Input';
 import CategoryIcon from '@material-ui/icons/Category';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
+import PublishIcon from '@material-ui/icons/Publish';
 
 const Container = styled.div`
   position: fixed;
@@ -32,6 +33,7 @@ class SimpleBottomNavigation extends React.Component {
           <BottomNavigationAction label="Import" icon={<InputIcon />} />
           <BottomNavigationAction label="Categorization" icon={<CategoryIcon />} />
           <BottomNavigationAction label="Visualization" icon={<ShowChartIcon />} />
+          <BottomNavigationAction label="Export" icon={<PublishIcon />} />
         </BottomNavigation>
       </Container>
     );

@@ -5,6 +5,7 @@ import InfoPage from './pages/InfoPage';
 import BottomNavigation from './components/BottomNavigation';
 import VisualizationPage from './pages/VisualizationPage';
 import CategorizationPage from './pages/CategorizationPage';
+import ExportPage from './pages/ExportPage';
 import { saveStateToLocalStorage, hydrateStateWithLocalStorage } from './utils';
 import { INITIAL_CATEGORIES } from './constants';
 
@@ -103,6 +104,9 @@ class App extends Component {
     }
     if (pageIndex === 4) {
       return <VisualizationPage initialTransactions={initialTransactions} />;
+    }
+    if (pageIndex === 5) {
+      return <ExportPage userState={userState} />;
     }
     return <LandingPage />;
   };

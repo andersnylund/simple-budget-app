@@ -11,35 +11,36 @@ class CategoryList extends React.Component {
     checkedCategory: 'Housing' // @TODO Add this dynamically.
   };
 
+  componentDidMount() {
+    const { updateActiveCategory } = this.props;
+    const { checkedCategory } = this.state;
+
+    updateActiveCategory(checkedCategory);
+  }
+
   setCheckedCategory = event => {
     const { updateActiveCategory } = this.props;
-    const newCategoryTitle = event.target.name;
+    const { checkedCategory } = this.state;
+    const newTitle = event.target.name;
     this.setState(
       {
-        checkedCategory: newCategoryTitle
+        checkedCategory: newTitle
       },
       () => {
-        updateActiveCategory(this.state.checkedCategory);
+        updateActiveCategory(checkedCategory);
       }
     );
   };
-
-  componentDidMount() {
-    const { updateActiveCategory } = this.props;
-
-    updateActiveCategory(this.state.checkedCategory);
-  }
-
-  componentDidUpdate(prevProps, prevState) {}
 
   render() {
     const { data } = this.props;
 
     const categories = data
-      ? data.map((category, index) => (
-          <Category
-            data={category}
-            checked={this.state.checkedCategory === category.categoryTitle}
+      ? data.map(category => (
+        <Category
+            title={category.title}
+            parties={category.parties}
+            checked={this.state.checkedCategory === category.title}
             onSelect={this.setCheckedCategory}
           />
         ))
@@ -55,14 +56,8 @@ class CategoryList extends React.Component {
 CategoryList.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      categoryTitle: PropTypes.string,
-      categoryParties: PropTypes.arrayOf(
-        PropTypes.shape({
-          date: PropTypes.string,
-          amount: PropTypes.string,
-          party: PropTypes.string.isRequired
-        })
-      )
+      title: PropTypes.string,
+      parties: PropTypes.arrayOf(PropTypes.string)
     })
   ).isRequired,
   updateActiveCategory: PropTypes.func.isRequired

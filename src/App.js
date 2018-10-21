@@ -6,6 +6,7 @@ import BottomNavigation from './components/BottomNavigation';
 import VisualizationPage from './pages/VisualizationPage';
 import CategorizationPage from './pages/CategorizationPage';
 import { saveStateToLocalStorage, hydrateStateWithLocalStorage } from './utils';
+import { INITIAL_CATEGORIES } from './constants';
 
 class App extends Component {
   constructor(props) {
@@ -14,7 +15,10 @@ class App extends Component {
       initialTransactions: undefined,
       selectedBank: undefined,
       activePageIndex: 0,
-      userState: undefined
+      userState: {
+        categories: INITIAL_CATEGORIES.map(c => ({ title: c, parties: [] })),
+        uniqueParties: []
+      }
     };
   }
 
@@ -23,12 +27,6 @@ class App extends Component {
     // add event listener to save state to localStorage
     // when user leaves/refreshes the page
     window.addEventListener('beforeunload', () => saveStateToLocalStorage(this));
-    const userStateNotDefined = !this.state.userState;
-    if (userStateNotDefined) {
-      // @TODO Check if this should be moved this to constants file.
-      const INITIAL_CATEGORIES = ['Housing', 'Food', 'Others', 'Entertainment', 'Monthly-bill'];
-      this.setInitialUserState(INITIAL_CATEGORIES);
-    }
   }
 
   componentWillUnmount() {
@@ -41,28 +39,9 @@ class App extends Component {
     this.setState({
       initialTransactions: transactions
     });
-    const uniquePartiesList = this.filterTransactionList(transactions);
-    this.updateUniquePartiesList(uniquePartiesList);
-  };
 
-  /**
-   * @desc filterTransactionList removes duplicate transactions from transactions list.
-   * @param initialTransactionsList
-   * @return list of unique transactions based on the party
-   */
-  filterTransactionList = initialTransactionsList => {
-    const uniqueTransactionList = [];
-
-    const addedTransactionParties = [];
-
-    initialTransactionsList.map(transaction => {
-      if (!addedTransactionParties.includes(transaction.party)) {
-        uniqueTransactionList.push(transaction);
-        addedTransactionParties.push(transaction.party);
-      }
-    });
-
-    return uniqueTransactionList;
+    const uniqueParties = new Set(transactions.map(t => t.party));
+    this.setUniqueParties(uniqueParties);
   };
 
   setBank = bank => {
@@ -77,44 +56,22 @@ class App extends Component {
     });
   };
 
-  updateCategories = categoriesUpdate => {
-    this.setState({
+  setCategories = newCategories => {
+    this.setState(prevState => ({
       userState: {
-        ...this.state.userState,
-        categories: [...categoriesUpdate]
+        ...prevState.userState,
+        categories: [...newCategories]
       }
-    });
+    }));
   };
 
-  updateUniquePartiesList = newPartiesList => {
-    this.setState({
+  setUniqueParties = newParties => {
+    this.setState(prevState => ({
       userState: {
-        ...this.state.userState,
-        transactions: {
-          uniquePartiesList: [...newPartiesList]
-        }
+        ...prevState.userState,
+        uniqueParties: [...newParties]
       }
-    });
-  };
-
-  setInitialUserState = initialCategoryList => {
-    const categoryList = [];
-
-    initialCategoryList.map(categoryTitle =>
-      categoryList.push({
-        categoryTitle,
-        categoryParties: []
-      })
-    );
-
-    this.setState({
-      userState: {
-        transactions: {
-          uniquePartiesList: []
-        },
-        categories: categoryList
-      }
-    });
+    }));
   };
 
   showPage = pageIndex => {
@@ -138,9 +95,9 @@ class App extends Component {
     if (pageIndex === 3) {
       return (
         <CategorizationPage
-          currentUserState={userState}
-          updateCategories={this.updateCategories}
-          updateUniquePartiesList={this.updateUniquePartiesList}
+          userState={userState}
+          updateCategories={this.setCategories}
+          updateUniqueParties={this.setUniqueParties}
         />
       );
     }

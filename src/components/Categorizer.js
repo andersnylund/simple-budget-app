@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import TransactionList from './TransactionList';
-import CategoryList from './CategoryList';
 import Button from '@material-ui/core/Button';
+import PartyList from './PartyList';
+import CategoryList from './CategoryList';
 
 class Categorizer extends React.Component {
   state = {
-    selectedTransactions: [],
+    selectedParties: [],
     activeCategory: undefined
   };
 
@@ -17,75 +17,72 @@ class Categorizer extends React.Component {
     });
   };
 
-  updateSelectedTransactions = newSelectedTransactions => {
+  updateSelectedParties = newSelectedParties => {
     this.setState({
-      selectedTransactions: [...newSelectedTransactions]
+      selectedParties: [...newSelectedParties]
     });
   };
 
-  availableTransactions = (transactionsList, categories) => {
-    const transactionsFoundInCategories = [];
+  unCategorizedParties = (parties, categories) => {
+    const categorizedParties = [];
 
     if (categories && categories.length > 0) {
-      categories.map(category => {
-        if (category.categoryParties) {
-          category.categoryParties.forEach(parties => {
-            if (!transactionsFoundInCategories.includes(parties)) {
-              transactionsFoundInCategories.push(parties);
-            }
-          });
-        }
+      categories.forEach(category => {
+        category.parties.forEach(p => {
+          if (!categorizedParties.includes(p)) {
+            categorizedParties.push(p);
+          }
+        });
       });
     }
 
-    const availableTransactions = transactionsList.filter(
-      transaction => !transactionsFoundInCategories.includes(transaction)
-    );
+    const unCategorizedParties = parties.filter(party => !categorizedParties.includes(party));
 
-    return availableTransactions;
+    return unCategorizedParties;
   };
 
   updateState = () => {
-    const { updateCategories, currentUserState } = this.props;
+    const { updateCategories, userState } = this.props;
+    const { activeCategory, selectedParties } = this.state;
 
-    const currentCategories = currentUserState.categories;
+    const currentCategories = userState.categories;
     const categoryOlderState = currentCategories.find(
-      category => category.categoryTitle === this.state.activeCategory
+      category => category.title === activeCategory
     );
     const categoriesWithoutActiveCategory = currentCategories.filter(
-      category => category.categoryTitle !== this.state.activeCategory
+      category => category.title !== activeCategory
     );
 
     const newCategory = {
-      categoryTitle: this.state.activeCategory,
-      categoryParties: [...categoryOlderState.categoryParties, ...this.state.selectedTransactions]
+      title: activeCategory,
+      parties: [...categoryOlderState.parties, ...selectedParties]
     };
 
     updateCategories([...categoriesWithoutActiveCategory, newCategory]);
 
     this.setState({
-      selectedTransactions: undefined
+      selectedParties: []
     });
   };
 
   render() {
-    const { currentUserState } = this.props;
+    const { userState } = this.props;
 
-    const availableTransactions = this.availableTransactions(
-      currentUserState.transactions.uniquePartiesList,
-      currentUserState.categories
+    const availableParties = this.unCategorizedParties(
+      userState.uniqueParties,
+      userState.categories
     );
     return (
       <Grid container spacing={24}>
         <Grid item md={6} xs={12}>
-          <TransactionList
-            data={availableTransactions}
-            updateSelectedTransactions={this.updateSelectedTransactions}
+          <PartyList
+            parties={availableParties}
+            updateSelectedParties={this.updateSelectedParties}
           />
         </Grid>
         <Grid item md={6} xs={12}>
           <CategoryList
-            data={currentUserState.categories}
+            data={userState.categories}
             updateActiveCategory={this.updateActiveCategory}
           />
         </Grid>
@@ -98,26 +95,12 @@ class Categorizer extends React.Component {
 }
 
 Categorizer.propTypes = {
-  currentUserState: PropTypes.shape({
-    transactions: PropTypes.shape({
-      uniquePartiesList: PropTypes.arrayOf(
-        PropTypes.shape({
-          date: PropTypes.string.isRequired,
-          amount: PropTypes.string.isRequired,
-          party: PropTypes.string.isRequired
-        })
-      )
-    }),
+  userState: PropTypes.shape({
+    uniqueParties: PropTypes.arrayOf(PropTypes.string).isRequired,
     categories: PropTypes.arrayOf(
       PropTypes.shape({
-        categoryTitle: PropTypes.string,
-        categoryParties: PropTypes.arrayOf(
-          PropTypes.shape({
-            date: PropTypes.string,
-            amount: PropTypes.string,
-            party: PropTypes.string.isRequired
-          })
-        )
+        title: PropTypes.string,
+        parties: PropTypes.arrayOf(PropTypes.string)
       })
     )
   }).isRequired,

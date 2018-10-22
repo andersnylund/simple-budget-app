@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import Typography from '@material-ui/core/Typography';
+
+import IntroFeatures from '../components/IntroFeatures';
+import {FormattedMessage} from 'react-intl';
+import {ThreeSixty, SettingsEthernet, Language} from '@material-ui/icons';
 
 const Container = styled.div`
   text-align: center;
@@ -9,10 +12,24 @@ const Container = styled.div`
   }
 `;
 
+const features = [
+  {
+    title: <Container><ThreeSixty/><FormattedMessage id="landingPage.features.1.header"/></Container>,
+    description: <FormattedMessage id="landingPage.features.1.description"/>
+  },
+  {
+    title: <Container><SettingsEthernet /><FormattedMessage id="landingPage.features.2.header"/></Container>,
+    description: <FormattedMessage id="landingPage.features.2.description"/>
+  },
+  {
+    title: <Container><Language /><FormattedMessage id="landingPage.features.3.header"/></Container>,
+    description: <FormattedMessage id="landingPage.features.3.description"/>
+  }
+];
+
 const LandingPage = () => (
   <Container>
-    <Typography variant="h2">Simple Budgeting</Typography>
-    <Typography variant="body2">Welcome to Simple Budgeting</Typography>
+    <IntroFeatures header={<FormattedMessage id="landingPage.header"/>} intro={<FormattedMessage id="landingPage.intro"/>} features={features}/>
   </Container>
 );
 

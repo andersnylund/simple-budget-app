@@ -1,0 +1,10 @@
+{
+    "landingPage.header" : "Hello. I'm Simple Budgeting!",
+    "landingPage.intro" : "We think that budgeting is something everyone should do. However, many might see budgeting as a “must-do”-thing that too often gets avoided. I believe that I can help a lot of people in getting started with simple budgeting. Its visual representations will make budgeting more easy and more fun!",
+    "landingPage.features.1.header" : "Single page",
+    "landingPage.features.1.description" : "We run on single page, which dramatically reduces the number of round-trip requests",
+    "landingPage.features.2.header" : "Reactive",
+    "landingPage.features.2.description" : "You see what you clicked! Thus, no more page refresh, which is easy to use and learn",
+    "landingPage.features.3.header" : "Localizable",
+    "landingPage.features.3.description" : "So far, only English is supported. We are simply that international"
+}

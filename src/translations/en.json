@@ -6,5 +6,10 @@
     "landingPage.features.2.header" : "Reactive",
     "landingPage.features.2.description" : "You see what you clicked! Thus, no more page refresh, which is easy to use and learn",
     "landingPage.features.3.header" : "Localizable",
-    "landingPage.features.3.description" : "So far, only English is supported. We are simply that international"
+    "landingPage.features.3.description" : "So far, only English is supported. We are simply that international",
+    "navigation.Start": "Start",
+    "navigation.Info": "Info",
+    "navigation.Import": "Import",
+    "navigation.Categorization": "Categorization",
+    "navigation.Visualization": "Visualization"
 }

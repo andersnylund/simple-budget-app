@@ -99,7 +99,7 @@ class App extends Component {
       );
     }
     else if (pageIndex === 3) {
-      page = <CategorizationPage initialTransactions={initialTransactions} />;
+      page = (
         <CategorizationPage
           userState={userState}
           updateCategories={this.setCategories}

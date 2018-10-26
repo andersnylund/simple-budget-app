@@ -16,26 +16,26 @@ const handleChange = async (e, setInitialTransactions, selectedBank) => {
   setInitialTransactions(parsed);
 };
 
-const CSVFileReader = ({ setInitialTransactions, selectedBank, ...rest }) => (
+const TransactionFileReader = ({ setInitialTransactions, selectedBank, ...rest }) => (
   <div {...rest}>
-    <label htmlFor="contained-button-file">
+    <label htmlFor="transactions-input">
       <StyledInput
         accept=".csv"
-        id="contained-button-file"
+        id="transactions-input"
         multiple={false}
         type="file"
         onChange={e => handleChange(e, setInitialTransactions, selectedBank)}
       />
       <Button variant="contained" component="span">
-        Upload
+        Upload transactions
       </Button>
     </label>
   </div>
 );
 
-CSVFileReader.propTypes = {
+TransactionFileReader.propTypes = {
   setInitialTransactions: PropTypes.func.isRequired,
   selectedBank: PropTypes.objectOf(Bank).isRequired
 };
 
-export default CSVFileReader;
+export default TransactionFileReader;

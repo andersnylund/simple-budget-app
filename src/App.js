@@ -9,18 +9,20 @@ import ExportPage from './pages/ExportPage';
 import { saveStateToLocalStorage, hydrateStateWithLocalStorage } from './utils';
 import { INITIAL_CATEGORIES } from './constants';
 
+const initialState = {
+  initialTransactions: undefined,
+  selectedBank: undefined,
+  activePageIndex: 0,
+  userState: {
+    categories: INITIAL_CATEGORIES.map(c => ({ title: c, parties: [] })),
+    uniqueParties: []
+  }
+};
+
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      initialTransactions: undefined,
-      selectedBank: undefined,
-      activePageIndex: 0,
-      userState: {
-        categories: INITIAL_CATEGORIES.map(c => ({ title: c, parties: [] })),
-        uniqueParties: []
-      }
-    };
+    this.state = { ...initialState };
   }
 
   componentDidMount() {
@@ -75,6 +77,10 @@ class App extends Component {
     }));
   };
 
+  resetState = () => {
+    this.setState({ ...initialState });
+  };
+
   showPage = pageIndex => {
     const { selectedBank, initialTransactions, userState } = this.state;
 
@@ -90,6 +96,9 @@ class App extends Component {
           setInitialTransactions={this.setInitialTransactions}
           selectedBank={selectedBank}
           setBank={this.setBank}
+          setCategories={this.setCategories}
+          setUniqueParties={this.setUniqueParties}
+          resetState={this.resetState}
         />
       );
     }

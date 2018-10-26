@@ -4,9 +4,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { banks } from '../Bank';
+import Bank, { banks } from '../Bank';
 
-class ControlledOpenSelect extends React.Component {
+class BankSelector extends React.Component {
   state = {
     open: false
   };
@@ -63,9 +63,9 @@ class ControlledOpenSelect extends React.Component {
   }
 }
 
-ControlledOpenSelect.propTypes = {
-  selectedBank: PropTypes.objectOf({}).isRequired,
+BankSelector.propTypes = {
+  selectedBank: PropTypes.objectOf(Bank).isRequired,
   setBank: PropTypes.func.isRequired
 };
 
-export default ControlledOpenSelect;
+export default BankSelector;

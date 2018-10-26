@@ -11,8 +11,8 @@ RUN npm install
 # Copy all files to the working directory
 COPY . .
 
-# Run tests when we have implemented tests
-# RUN CI=true npm test
+# Run tests
+RUN CI=true npm test
 
 # Build the app and move the resulting build to the `/public` directory
 RUN npm run build

@@ -46,19 +46,19 @@ const IntroFeatures = ({ classes, header, intro, features }) => (
         </Typography>
       </div>
       <Grid container spacing={40} alignItems="flex-end">
-        {features.map(tier => (
-          <Grid item key={tier.title} xs={12} sm={6} md={4}>
+        {features.map(({id, title, description}) => (
+          <Grid item key={id} xs={12} sm={6} md={4}>
             <Card>
               <CardHeader
-                title={tier.title}
-                subheader={tier.subheader}
+                key="{id}.title"
+                title={title}
                 titleTypographyProps={{ align: 'center' }}
                 subheaderTypographyProps={{ align: 'center' }}
                 className={classes.cardHeader}
               />
               <CardContent>
-                <Typography variant="subtitle1" align="center" key={tier.description}>
-                  {tier.description}
+                <Typography variant="subtitle1" align="center" key="{id}.description">
+                  {description}
                 </Typography>
               </CardContent>
             </Card>
@@ -71,9 +71,9 @@ const IntroFeatures = ({ classes, header, intro, features }) => (
 
 IntroFeatures.propTypes = {
   classes: PropTypes.object.isRequired,
-  header: PropTypes.object.isRequired,
-  intro: PropTypes.object.isRequired,
-  features: PropTypes.array.isRequired
+  header: PropTypes.element.isRequired,
+  intro: PropTypes.element.isRequired,
+  features: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default withStyles(styles)(IntroFeatures);

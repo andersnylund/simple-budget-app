@@ -12,6 +12,7 @@ const Container = styled.div`
 
 const features = [
   {
+    id : 1,
     title: (
       <Container>
         <ThreeSixty />
@@ -28,6 +29,7 @@ const features = [
     )
   },
   {
+    id : 2,
     title: (
       <Container>
         <SettingsEthernet />
@@ -44,6 +46,7 @@ const features = [
     )
   },
   {
+    id : 3,
     title: (
       <Container>
         <Language />
@@ -52,7 +55,7 @@ const features = [
     ),
     description: (
       <Container>
-          <Container>
+        <Container>
           <Image src={require('../images/localize.png')} />
         </Container>
         <FormattedMessage id="landingPage.features.3.description" />

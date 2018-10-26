@@ -8,6 +8,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import InputIcon from '@material-ui/icons/Input';
 import CategoryIcon from '@material-ui/icons/Category';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
+import { FormattedMessage } from 'react-intl';
 
 const Container = styled.div`
   position: fixed;
@@ -15,7 +16,7 @@ const Container = styled.div`
   width: 100%;
 `;
 
-class SimpleBottomNavigation extends React.Component {
+class FooterNavigation extends React.Component {
   handleChange = (event, value) => {
     const { onChangePage } = this.props;
     onChangePage(value);
@@ -27,20 +28,20 @@ class SimpleBottomNavigation extends React.Component {
     return (
       <Container>
         <BottomNavigation value={activePageIndex} onChange={this.handleChange} showLabels>
-          <BottomNavigationAction label="Start" icon={<ArrowForward />} />
-          <BottomNavigationAction label="Info" icon={<InfoIcon />} />
-          <BottomNavigationAction label="Import" icon={<InputIcon />} />
-          <BottomNavigationAction label="Categorization" icon={<CategoryIcon />} />
-          <BottomNavigationAction label="Visualization" icon={<ShowChartIcon />} />
+          <BottomNavigationAction label={<FormattedMessage id="navigation.Start" />} icon={<ArrowForward />} />
+          <BottomNavigationAction label={<FormattedMessage id="navigation.Info" />} icon={<InfoIcon />} />
+          <BottomNavigationAction label={<FormattedMessage id="navigation.Import" />} icon={<InputIcon />} />
+          <BottomNavigationAction label={<FormattedMessage id="navigation.Categorization" />} icon={<CategoryIcon />} />
+          <BottomNavigationAction label={<FormattedMessage id="navigation.Visualization" />} icon={<ShowChartIcon />} />
         </BottomNavigation>
       </Container>
     );
   }
 }
 
-SimpleBottomNavigation.propTypes = {
+FooterNavigation.propTypes = {
   onChangePage: PropTypes.func.isRequired,
   activePageIndex: PropTypes.number.isRequired
 };
 
-export default SimpleBottomNavigation;
+export default FooterNavigation;

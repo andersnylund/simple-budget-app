@@ -2,13 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 import { ThreeSixty, SettingsEthernet, Language } from '@material-ui/icons';
+import Image from 'material-ui-image';
 import IntroFeatures from '../components/IntroFeatures';
 
 const Container = styled.div`
   text-align: center;
-  h2 {
-    margin: 3rem;
-  }
+  padding: 1rem;
 `;
 
 const features = [
@@ -19,7 +18,14 @@ const features = [
         <FormattedMessage id="landingPage.features.1.header" />
       </Container>
     ),
-    description: <FormattedMessage id="landingPage.features.1.description" />
+    description: (
+      <Container>
+        <Container>
+          <Image src={require('../images/graph.png')} />
+        </Container>
+        <FormattedMessage id="landingPage.features.1.description" />
+      </Container>
+    )
   },
   {
     title: (
@@ -28,7 +34,14 @@ const features = [
         <FormattedMessage id="landingPage.features.2.header" />
       </Container>
     ),
-    description: <FormattedMessage id="landingPage.features.2.description" />
+    description: (
+      <Container>
+        <Container>
+          <Image src={require('../images/privacy.png')} />
+        </Container>
+        <FormattedMessage id="landingPage.features.2.description" />
+      </Container>
+    )
   },
   {
     title: (
@@ -37,7 +50,14 @@ const features = [
         <FormattedMessage id="landingPage.features.3.header" />
       </Container>
     ),
-    description: <FormattedMessage id="landingPage.features.3.description" />
+    description: (
+      <Container>
+          <Container>
+          <Image src={require('../images/localize.png')} />
+        </Container>
+        <FormattedMessage id="landingPage.features.3.description" />
+      </Container>
+    )
   }
 ];
 

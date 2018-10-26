@@ -16,7 +16,7 @@ const Container = styled.div`
   width: 100%;
 `;
 
-class SimpleBottomNavigation extends React.Component {
+class FooterNavigation extends React.Component {
   handleChange = (event, value) => {
     const { onChangePage } = this.props;
     onChangePage(value);
@@ -39,9 +39,9 @@ class SimpleBottomNavigation extends React.Component {
   }
 }
 
-SimpleBottomNavigation.propTypes = {
+FooterNavigation.propTypes = {
   onChangePage: PropTypes.func.isRequired,
   activePageIndex: PropTypes.number.isRequired
 };
 
-export default SimpleBottomNavigation;
+export default FooterNavigation;

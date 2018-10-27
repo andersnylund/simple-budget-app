@@ -11,19 +11,22 @@ class Categorizer extends React.Component {
     activeCategory: undefined
   };
 
-  updateActiveCategory = newCategory => {
+  setActiveCategory = newCategory => {
     this.setState({
       activeCategory: newCategory
     });
   };
 
-  updateSelectedParties = newSelectedParties => {
+  setSelectedParties = newSelectedParties => {
     this.setState({
       selectedParties: [...newSelectedParties]
     });
   };
 
-  unCategorizedParties = (parties, categories) => {
+  unCategorizedParties = () => {
+    const { userState } = this.props;
+    const { categories, uniqueParties } = userState;
+
     const categorizedParties = [];
 
     if (categories && categories.length > 0) {
@@ -36,7 +39,7 @@ class Categorizer extends React.Component {
       });
     }
 
-    const unCategorizedParties = parties.filter(party => !categorizedParties.includes(party));
+    const unCategorizedParties = uniqueParties.filter(party => !categorizedParties.includes(party));
 
     return unCategorizedParties;
   };
@@ -68,23 +71,15 @@ class Categorizer extends React.Component {
   render() {
     const { userState } = this.props;
 
-    const availableParties = this.unCategorizedParties(
-      userState.uniqueParties,
-      userState.categories
-    );
+    const availableParties = this.unCategorizedParties();
+
     return (
       <Grid container spacing={24}>
         <Grid item md={6} xs={12}>
-          <PartyList
-            parties={availableParties}
-            updateSelectedParties={this.updateSelectedParties}
-          />
+          <PartyList parties={availableParties} updateSelectedParties={this.setSelectedParties} />
         </Grid>
         <Grid item md={6} xs={12}>
-          <CategoryList
-            data={userState.categories}
-            updateActiveCategory={this.updateActiveCategory}
-          />
+          <CategoryList data={userState.categories} updateActiveCategory={this.setActiveCategory} />
         </Grid>
         <Button onClick={this.updateState} variant="contained" component="span">
           Update

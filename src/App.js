@@ -1,25 +1,33 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import LandingPage from './pages/LandingPage';
 import ImportPage from './pages/ImportPage';
 import InfoPage from './pages/InfoPage';
 import BottomNavigation from './components/BottomNavigation';
 import VisualizationPage from './pages/VisualizationPage';
 import CategorizationPage from './pages/CategorizationPage';
+import ExportPage from './pages/ExportPage';
 import { INITIAL_CATEGORIES } from './constants';
+
+const initialState = {
+  initialTransactions: undefined,
+  selectedBank: undefined,
+  activePageIndex: 0,
+  userState: {
+    categories: INITIAL_CATEGORIES.map(c => ({ title: c, parties: [] })),
+    uniqueParties: []
+  }
+};
+
+const Container = styled.div`
+  margin-bottom: 5em;
+`;
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      initialTransactions: undefined,
-      selectedBank: undefined,
-      activePageIndex: 0,
-      userState: {
-        categories: INITIAL_CATEGORIES.map(c => ({ title: c, parties: [] })),
-        uniqueParties: []
-      }
-    };
+    this.state = { ...initialState };
   }
 
   componentDidMount() {
@@ -76,45 +84,52 @@ class App extends Component {
     }));
   };
 
+  resetState = () => {
+    this.setState({ ...initialState });
+  };
+
   showPage = pageIndex => {
     const { selectedBank, initialTransactions, userState } = this.state;
+    let page;
 
     if (pageIndex === 0) {
-      return <LandingPage />;
-    }
-    if (pageIndex === 1) {
-      return <InfoPage />;
-    }
-    if (pageIndex === 2) {
-      return (
+      page = <LandingPage />;
+    } else if (pageIndex === 1) {
+      page = <InfoPage />;
+    } else if (pageIndex === 2) {
+      page = (
         <ImportPage
           setInitialTransactions={this.setInitialTransactions}
           selectedBank={selectedBank}
           setBank={this.setBank}
+          setCategories={this.setCategories}
+          setUniqueParties={this.setUniqueParties}
+          resetState={this.resetState}
         />
       );
-    }
-    if (pageIndex === 3) {
-      return (
+    } else if (pageIndex === 3) {
+      page = (
         <CategorizationPage
           userState={userState}
           updateCategories={this.setCategories}
           updateUniqueParties={this.setUniqueParties}
         />
       );
+    } else if (pageIndex === 4) {
+      page = <VisualizationPage initialTransactions={initialTransactions} />;
+    } else if (pageIndex === 5) {
+      page = <ExportPage userState={userState} />;
     }
-    if (pageIndex === 4) {
-      return <VisualizationPage initialTransactions={initialTransactions} />;
-    }
-    return <LandingPage />;
+
+    return <Container>{page}</Container>;
   };
 
   render() {
     const { activePageIndex } = this.state;
 
     return (
-      <div className="app">
-        {this.showPage(activePageIndex)}
+      <div>
+        <div className="app">{this.showPage(activePageIndex)}</div>
         <BottomNavigation onChangePage={this.changePage} activePageIndex={activePageIndex} />
       </div>
     );

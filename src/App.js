@@ -6,8 +6,19 @@ import InfoPage from './pages/InfoPage';
 import BottomNavigation from './components/BottomNavigation';
 import VisualizationPage from './pages/VisualizationPage';
 import CategorizationPage from './pages/CategorizationPage';
+import ExportPage from './pages/ExportPage';
 import { saveStateToLocalStorage, hydrateStateWithLocalStorage } from './utils';
 import { INITIAL_CATEGORIES } from './constants';
+
+const initialState = {
+  initialTransactions: undefined,
+  selectedBank: undefined,
+  activePageIndex: 0,
+  userState: {
+    categories: INITIAL_CATEGORIES.map(c => ({ title: c, parties: [] })),
+    uniqueParties: []
+  }
+};
 
 const Container = styled.div`
   margin-bottom: 5em;
@@ -16,15 +27,7 @@ const Container = styled.div`
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      initialTransactions: undefined,
-      selectedBank: undefined,
-      activePageIndex: 0,
-      userState: {
-        categories: INITIAL_CATEGORIES.map(c => ({ title: c, parties: [] })),
-        uniqueParties: []
-      }
-    };
+    this.state = { ...initialState };
   }
 
   componentDidMount() {
@@ -79,26 +82,30 @@ class App extends Component {
     }));
   };
 
+  resetState = () => {
+    this.setState({ ...initialState });
+  };
+
   showPage = pageIndex => {
     const { selectedBank, initialTransactions, userState } = this.state;
     let page;
 
     if (pageIndex === 0) {
       page = <LandingPage />;
-    }
-    else if (pageIndex === 1) {
+    } else if (pageIndex === 1) {
       page = <InfoPage />;
-    }
-    else if (pageIndex === 2) {
+    } else if (pageIndex === 2) {
       page = (
         <ImportPage
           setInitialTransactions={this.setInitialTransactions}
           selectedBank={selectedBank}
           setBank={this.setBank}
+          setCategories={this.setCategories}
+          setUniqueParties={this.setUniqueParties}
+          resetState={this.resetState}
         />
       );
-    }
-    else if (pageIndex === 3) {
+    } else if (pageIndex === 3) {
       page = (
         <CategorizationPage
           userState={userState}
@@ -106,12 +113,13 @@ class App extends Component {
           updateUniqueParties={this.setUniqueParties}
         />
       );
-    }
-    else if (pageIndex === 4) {
+    } else if (pageIndex === 4) {
       page = <VisualizationPage initialTransactions={initialTransactions} />;
-    }
-    else {
+    } else {
       page = <LandingPage />;
+    }
+    if (pageIndex === 5) {
+      page = <ExportPage userState={userState} />;
     }
 
     return <Container>{page}</Container>;
@@ -122,9 +130,7 @@ class App extends Component {
 
     return (
       <div>
-        <div className="app">
-          {this.showPage(activePageIndex)}        
-        </div>
+        <div className="app">{this.showPage(activePageIndex)}</div>
         <BottomNavigation onChangePage={this.changePage} activePageIndex={activePageIndex} />
       </div>
     );

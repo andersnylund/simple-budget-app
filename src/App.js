@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import LandingPage from './pages/LandingPage';
 import ImportPage from './pages/ImportPage';
 import InfoPage from './pages/InfoPage';
@@ -18,6 +19,10 @@ const initialState = {
     uniqueParties: []
   }
 };
+
+const Container = styled.div`
+  margin-bottom: 5em;
+`;
 
 class App extends Component {
   constructor(props) {
@@ -83,15 +88,14 @@ class App extends Component {
 
   showPage = pageIndex => {
     const { selectedBank, initialTransactions, userState } = this.state;
+    let page;
 
     if (pageIndex === 0) {
-      return <LandingPage />;
-    }
-    if (pageIndex === 1) {
-      return <InfoPage />;
-    }
-    if (pageIndex === 2) {
-      return (
+      page = <LandingPage />;
+    } else if (pageIndex === 1) {
+      page = <InfoPage />;
+    } else if (pageIndex === 2) {
+      page = (
         <ImportPage
           setInitialTransactions={this.setInitialTransactions}
           selectedBank={selectedBank}
@@ -101,31 +105,32 @@ class App extends Component {
           resetState={this.resetState}
         />
       );
-    }
-    if (pageIndex === 3) {
-      return (
+    } else if (pageIndex === 3) {
+      page = (
         <CategorizationPage
           userState={userState}
           updateCategories={this.setCategories}
           updateUniqueParties={this.setUniqueParties}
         />
       );
-    }
-    if (pageIndex === 4) {
-      return <VisualizationPage initialTransactions={initialTransactions} />;
+    } else if (pageIndex === 4) {
+      page = <VisualizationPage initialTransactions={initialTransactions} />;
+    } else {
+      page = <LandingPage />;
     }
     if (pageIndex === 5) {
-      return <ExportPage userState={userState} />;
+      page = <ExportPage userState={userState} />;
     }
-    return <LandingPage />;
+
+    return <Container>{page}</Container>;
   };
 
   render() {
     const { activePageIndex } = this.state;
 
     return (
-      <div className="app">
-        {this.showPage(activePageIndex)}
+      <div>
+        <div className="app">{this.showPage(activePageIndex)}</div>
         <BottomNavigation onChangePage={this.changePage} activePageIndex={activePageIndex} />
       </div>
     );

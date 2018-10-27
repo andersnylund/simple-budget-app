@@ -8,7 +8,7 @@ import CategoryList from './CategoryList';
 class Categorizer extends React.Component {
   state = {
     selectedParties: [],
-    activeCategory: undefined
+    activeCategory: 'Housing' // @TODO Add this dynamically.
   };
 
   updateActiveCategory = newCategory => {
@@ -37,8 +37,30 @@ class Categorizer extends React.Component {
     }
 
     const unCategorizedParties = parties.filter(party => !categorizedParties.includes(party));
-
     return unCategorizedParties;
+  };
+
+  removeCategorizedParty = (partyToRemove, categoryTitleToBeModified) => {
+    const { updateCategories, userState } = this.props;
+
+    const currentCategories = userState.categories;
+
+    const categoryToBeModified = currentCategories.find(
+      category => category.title === categoryTitleToBeModified
+    );
+
+    const otherCategories = currentCategories.filter(
+      category => category.title !== categoryTitleToBeModified
+    );
+
+    const filteredParties = categoryToBeModified.parties.filter(party => party !== partyToRemove);
+
+    const modifiedCategory = {
+      title: categoryTitleToBeModified,
+      parties: [...filteredParties]
+    };
+
+    updateCategories([...otherCategories, modifiedCategory]);
   };
 
   updateState = () => {
@@ -77,13 +99,16 @@ class Categorizer extends React.Component {
         <Grid item md={6} xs={12}>
           <PartyList
             parties={availableParties}
+            selectedParties={this.state.selectedParties}
             updateSelectedParties={this.updateSelectedParties}
           />
         </Grid>
         <Grid item md={6} xs={12}>
           <CategoryList
+            activeCategory={this.state.activeCategory}
             data={userState.categories}
             updateActiveCategory={this.updateActiveCategory}
+            removeCategorizedParty={this.removeCategorizedParty}
           />
         </Grid>
         <Button onClick={this.updateState} variant="contained" component="span">

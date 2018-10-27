@@ -6,52 +6,30 @@ import FormControl from '@material-ui/core/FormControl';
 
 import Category from './Category';
 
-class CategoryList extends React.Component {
-  state = {
-    checkedCategory: 'Housing' // @TODO Add this dynamically.
-  };
-
-  componentDidMount() {
-    const { updateActiveCategory } = this.props;
-    const { checkedCategory } = this.state;
-
-    updateActiveCategory(checkedCategory);
-  }
-
-  setCheckedCategory = event => {
-    const { updateActiveCategory } = this.props;
-    const { checkedCategory } = this.state;
+const CategoryList = ({ data, activeCategory, updateActiveCategory, removeCategorizedParty }) => {
+  const setCheckedCategory = event => {
     const newTitle = event.target.name;
-    this.setState(
-      {
-        checkedCategory: newTitle
-      },
-      () => {
-        updateActiveCategory(checkedCategory);
-      }
-    );
+    updateActiveCategory(newTitle);
   };
 
-  render() {
-    const { data } = this.props;
-
-    const categories = data
-      ? data.map(category => (
+  const categories = data
+    ? data.map(category => (
         <Category
-            title={category.title}
-            parties={category.parties}
-            checked={this.state.checkedCategory === category.title}
-            onSelect={this.setCheckedCategory}
-          />
-        ))
-      : undefined;
-    return (
-      <FormControl component="fieldset">
-        <FormGroup>{categories}</FormGroup>
-      </FormControl>
-    );
-  }
-}
+          title={category.title}
+          parties={category.parties}
+          checked={activeCategory === category.title}
+          onSelect={setCheckedCategory}
+          onRemoveCategorizedParty={removeCategorizedParty}
+        />
+      ))
+    : undefined;
+
+  return (
+    <FormControl component="fieldset">
+      <FormGroup>{categories}</FormGroup>
+    </FormControl>
+  );
+};
 
 CategoryList.propTypes = {
   data: PropTypes.arrayOf(
@@ -60,7 +38,9 @@ CategoryList.propTypes = {
       parties: PropTypes.arrayOf(PropTypes.string)
     })
   ).isRequired,
-  updateActiveCategory: PropTypes.func.isRequired
+  activeCategory: PropTypes.string.isRequired,
+  updateActiveCategory: PropTypes.func.isRequired,
+  removeCategorizedParty: PropTypes.func.isRequired
 };
 
 export default CategoryList;

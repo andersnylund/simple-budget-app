@@ -6,45 +6,38 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControl from '@material-ui/core/FormControl';
 
-class PartyList extends React.Component {
-  state = {};
-
-  handleChange = name => event => {
-    const { parties, updateSelectedParties } = this.props;
-
-    this.setState({ [name]: event.target.checked }, () => {
-      const selectedParties = parties.filter(party => this.state[party]);
-      updateSelectedParties(selectedParties);
-    });
+const PartyList = ({ parties, selectedParties, updateSelectedParties }) => {
+  const handleChange = name => event => {
+    if (name && event.target.checked) {
+      const newSelectedParties = [...selectedParties, name];
+      updateSelectedParties(newSelectedParties);
+    }
   };
 
-  render() {
-    const { parties } = this.props;
+  const partyList = parties.map(party => (
+    <FormControlLabel
+      control={
+        <Checkbox
+          onChange={handleChange(party)}
+          name={party}
+          value={party}
+          checked={selectedParties.includes(party)}
+        />
+      }
+      label={party}
+    />
+  ));
 
-    const partyList = parties.map(party => (
-      <FormControlLabel
-        control={(
-<Checkbox
-            onChange={this.handleChange(party)}
-            name={party}
-            value={party}
-            checked={this.state[party] === true}
-          />
-)}
-        label={party}
-      />
-    ));
-
-    return (
-      <FormControl component="fieldset">
-        <FormGroup>{partyList}</FormGroup>
-      </FormControl>
-    );
-  }
-}
+  return (
+    <FormControl component="fieldset">
+      <FormGroup>{partyList}</FormGroup>
+    </FormControl>
+  );
+};
 
 PartyList.propTypes = {
   parties: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectedParties: PropTypes.arrayOf(PropTypes.string).isRequired,
   updateSelectedParties: PropTypes.func.isRequired
 };
 

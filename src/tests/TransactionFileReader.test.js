@@ -20,7 +20,7 @@ describe('<TransactionFileReader />', () => {
     };
   });
 
-  it('should render correctly', async () => {
+  it('should set initial transactions correctly', async () => {
     const wrapper = shallow(<TransactionFileReader {...props} />);
     const input = wrapper.find('StyledInput');
     await input.props().onChange(event);

@@ -7,6 +7,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import App from './App';
 import messagesEn from './translations/en.json';
 import * as serviceWorker from './serviceWorker';
+import { saveStateToLocalStorage, hydrateStateWithLocalStorage } from './utils';
+
+const props = { saveStateToLocalStorage, hydrateStateWithLocalStorage };
 
 addLocaleData([...en]);
 
@@ -17,7 +20,7 @@ const messages = {
 ReactDOM.render(
   <CssBaseline>
     <IntlProvider locale="en" messages={messages.en}>
-      <App />
+      <App {...props} />
     </IntlProvider>
   </CssBaseline>,
   document.getElementById('root')

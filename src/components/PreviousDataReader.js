@@ -7,6 +7,8 @@ const StyledInput = styled.input`
   display: none;
 `;
 
+StyledInput.displayName = 'StyledInput';
+
 const handleChange = async (e, setCategories, setUniqueParties) => {
   const file = e.target.files[0];
   const jsonString = await new Response(file).text();

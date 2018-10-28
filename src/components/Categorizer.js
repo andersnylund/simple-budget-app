@@ -11,32 +11,38 @@ class Categorizer extends React.Component {
     activeCategory: 'Housing' // @TODO Add this dynamically.
   };
 
-  updateActiveCategory = newCategory => {
+  setActiveCategory = newCategory => {
     this.setState({
       activeCategory: newCategory
     });
   };
 
-  updateSelectedParties = newSelectedParties => {
+  setSelectedParties = newSelectedParties => {
     this.setState({
       selectedParties: [...newSelectedParties]
     });
   };
 
-  unCategorizedParties = (parties, categories) => {
+  unCategorizedParties = () => {
+    const { userState } = this.props;
+    const { categories, uniqueParties } = userState;
+
     const categorizedParties = [];
 
     if (categories && categories.length > 0) {
       categories.forEach(category => {
-        category.parties.forEach(p => {
-          if (!categorizedParties.includes(p)) {
-            categorizedParties.push(p);
-          }
-        });
+        if (category.parties) {
+          category.parties.forEach(p => {
+            if (!categorizedParties.includes(p)) {
+              categorizedParties.push(p);
+            }
+          });
+        }
       });
     }
 
-    const unCategorizedParties = parties.filter(party => !categorizedParties.includes(party));
+    const unCategorizedParties = uniqueParties.filter(party => !categorizedParties.includes(party));
+
     return unCategorizedParties;
   };
 
@@ -91,24 +97,22 @@ class Categorizer extends React.Component {
     const { userState } = this.props;
     const { selectedParties, activeCategory } = this.state;
 
-    const availableParties = this.unCategorizedParties(
-      userState.uniqueParties,
-      userState.categories
-    );
+    const availableParties = this.unCategorizedParties();
+
     return (
       <Grid container spacing={24}>
         <Grid item md={6} xs={12}>
           <PartyList
             parties={availableParties}
             selectedParties={selectedParties}
-            updateSelectedParties={this.updateSelectedParties}
+            updateSelectedParties={this.setSelectedParties}
           />
         </Grid>
         <Grid item md={6} xs={12}>
           <CategoryList
             activeCategory={activeCategory}
             data={userState.categories}
-            updateActiveCategory={this.updateActiveCategory}
+            updateActiveCategory={this.setActiveCategory}
             removeCategorizedParty={this.removeCategorizedParty}
           />
         </Grid>

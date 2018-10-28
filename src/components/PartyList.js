@@ -24,7 +24,7 @@ const PartyList = ({ parties, selectedParties, updateSelectedParties }) => {
   );
 
   const partyList = parties.map(party => (
-    <FormControlLabel control={checkbox(party)} label={party} />
+    <FormControlLabel key={party} control={checkbox(party)} label={party} />
   ));
 
   return (

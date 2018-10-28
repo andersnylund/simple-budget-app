@@ -14,6 +14,7 @@ const CategoryList = ({ data, activeCategory, updateActiveCategory, removeCatego
 
   const categories = data.map(category => (
     <Category
+      key={category.title}
       title={category.title}
       parties={category.parties}
       checked={activeCategory === category.title}

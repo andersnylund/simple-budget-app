@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import LandingPage from './pages/LandingPage';
 import ImportPage from './pages/ImportPage';
@@ -7,7 +8,6 @@ import BottomNavigation from './components/BottomNavigation';
 import VisualizationPage from './pages/VisualizationPage';
 import CategorizationPage from './pages/CategorizationPage';
 import ExportPage from './pages/ExportPage';
-import { saveStateToLocalStorage, hydrateStateWithLocalStorage } from './utils';
 import { INITIAL_CATEGORIES } from './constants';
 
 const initialState = {
@@ -31,6 +31,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    const { hydrateStateWithLocalStorage, saveStateToLocalStorage } = this.props;
     hydrateStateWithLocalStorage(this);
     // add event listener to save state to localStorage
     // when user leaves/refreshes the page
@@ -38,6 +39,7 @@ class App extends Component {
   }
 
   componentWillUnmount() {
+    const { saveStateToLocalStorage } = this.props;
     window.removeEventListener('beforeunload', () => saveStateToLocalStorage(this));
     // saves if component has a chance to unmount
     saveStateToLocalStorage(this);
@@ -115,10 +117,7 @@ class App extends Component {
       );
     } else if (pageIndex === 4) {
       page = <VisualizationPage initialTransactions={initialTransactions} />;
-    } else {
-      page = <LandingPage />;
-    }
-    if (pageIndex === 5) {
+    } else if (pageIndex === 5) {
       page = <ExportPage userState={userState} />;
     }
 
@@ -136,5 +135,10 @@ class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  saveStateToLocalStorage: PropTypes.func.isRequired,
+  hydrateStateWithLocalStorage: PropTypes.func.isRequired
+};
 
 export default App;

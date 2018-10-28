@@ -9,6 +9,8 @@ const StyledInput = styled.input`
   display: none;
 `;
 
+StyledInput.displayName = 'StyledInput';
+
 const handleChange = async (e, setInitialTransactions, selectedBank) => {
   const file = e.target.files[0];
   const csvString = await new Response(file).text();

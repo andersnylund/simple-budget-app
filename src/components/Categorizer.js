@@ -89,6 +89,7 @@ class Categorizer extends React.Component {
 
   render() {
     const { userState } = this.props;
+    const { selectedParties, activeCategory } = this.state;
 
     const availableParties = this.unCategorizedParties(
       userState.uniqueParties,
@@ -99,13 +100,13 @@ class Categorizer extends React.Component {
         <Grid item md={6} xs={12}>
           <PartyList
             parties={availableParties}
-            selectedParties={this.state.selectedParties}
+            selectedParties={selectedParties}
             updateSelectedParties={this.updateSelectedParties}
           />
         </Grid>
         <Grid item md={6} xs={12}>
           <CategoryList
-            activeCategory={this.state.activeCategory}
+            activeCategory={activeCategory}
             data={userState.categories}
             updateActiveCategory={this.updateActiveCategory}
             removeCategorizedParty={this.removeCategorizedParty}

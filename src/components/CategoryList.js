@@ -12,17 +12,15 @@ const CategoryList = ({ data, activeCategory, updateActiveCategory, removeCatego
     updateActiveCategory(newTitle);
   };
 
-  const categories = data
-    ? data.map(category => (
-        <Category
-          title={category.title}
-          parties={category.parties}
-          checked={activeCategory === category.title}
-          onSelect={setCheckedCategory}
-          onRemoveCategorizedParty={removeCategorizedParty}
-        />
-      ))
-    : undefined;
+  const categories = data.map(category => (
+    <Category
+      title={category.title}
+      parties={category.parties}
+      checked={activeCategory === category.title}
+      onSelect={setCheckedCategory}
+      onRemoveCategorizedParty={removeCategorizedParty}
+    />
+  ));
 
   return (
     <FormControl component="fieldset">

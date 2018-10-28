@@ -14,18 +14,17 @@ const PartyList = ({ parties, selectedParties, updateSelectedParties }) => {
     }
   };
 
-  const partyList = parties.map(party => (
-    <FormControlLabel
-      control={
-        <Checkbox
-          onChange={handleChange(party)}
-          name={party}
-          value={party}
-          checked={selectedParties.includes(party)}
-        />
-      }
-      label={party}
+  const checkbox = party => (
+    <Checkbox
+      onChange={handleChange(party)}
+      name={party}
+      value={party}
+      checked={selectedParties.includes(party)}
     />
+  );
+
+  const partyList = parties.map(party => (
+    <FormControlLabel control={checkbox(party)} label={party} />
   ));
 
   return (

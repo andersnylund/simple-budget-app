@@ -26,8 +26,8 @@ describe('<TransactionFileReader />', () => {
     await input.props().onChange(event);
 
     expect(props.setInitialTransactions.mock.calls[0][0]).toEqual([
-      { amount: '-10,45', date: '2017-12-31T22:00:00.000Z', party: 'K-Market' },
-      { amount: '+5,45', date: '2018-01-01T22:00:00.000Z', party: 'Pekka' }
+      { amount: -10.45, date: '2017-12-31T22:00:00.000Z', party: 'K-Market' },
+      { amount: 5.45, date: '2018-01-01T22:00:00.000Z', party: 'Pekka' }
     ]);
   });
 });

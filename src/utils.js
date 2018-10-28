@@ -6,7 +6,7 @@ export const parse = (csvString, bank) => {
   const transactions = papa.parse(csvString).data.filter((j, i) => i !== 0); // remove first item
   const data = transactions.map(transaction => ({
     date: moment(transaction[bank.dateHeaderIndex], bank.dateHeaderFormat).toISOString(),
-    amount: transaction[bank.amountIndex],
+    amount: parseFloat(transaction[bank.amountIndex].replace(',', '.')),
     party: transaction[bank.partyIndex]
   }));
   return data;

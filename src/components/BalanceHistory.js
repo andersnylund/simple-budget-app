@@ -8,7 +8,7 @@ const BalanceHistory = ({ initialTransactions }) => {
   let result = [];
 
   initialTransactions.reduce((previous, current) => {
-    const balance = previous + parseInt(current.amount, 10);
+    const balance = previous + current.amount;
     result = result.concat({
       x: moment(current.date).format('dddd, MMMM Do YYYY'),
       y: balance

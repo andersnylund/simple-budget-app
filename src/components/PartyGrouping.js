@@ -8,9 +8,9 @@ const PartyGrouping = ({ initialTransactions }) => {
   // TODO make immutable!
   const result = initialTransactions.reduce((previous, current) => {
     if (_.has(previous, current.party)) {
-      previous[current.party] = previous[current.party] + parseInt(current.amount);
+      previous[current.party] = previous[current.party] + current.amount;
     } else {
-      previous[current.party] = parseInt(current.amount, 10);
+      previous[current.party] = current.amount;
     }
     return previous;
   }, {});

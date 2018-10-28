@@ -16,6 +16,7 @@ describe('<App />', () => {
       hydrateStateWithLocalStorage: jest.fn()
     };
 
+    // @TODO define some common test helpers where this kind of data is available
     initialTransactions = [
       {
         date: new Date().toISOString(),

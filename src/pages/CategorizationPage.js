@@ -23,10 +23,6 @@ const CategorizationPage = ({ userState, updateCategories }) => (
   </Container>
 );
 
-CategorizationPage.defaultProps = {
-  userState: undefined
-};
-
 CategorizationPage.propTypes = {
   userState: PropTypes.shape({
     uniqueParties: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -36,7 +32,7 @@ CategorizationPage.propTypes = {
         parties: PropTypes.arrayOf(PropTypes.string)
       })
     )
-  }),
+  }).isRequired,
   updateCategories: PropTypes.func.isRequired
 };
 

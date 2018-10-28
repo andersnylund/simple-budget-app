@@ -108,13 +108,7 @@ class App extends Component {
         />
       );
     } else if (pageIndex === 3) {
-      page = (
-        <CategorizationPage
-          userState={userState}
-          updateCategories={this.setCategories}
-          updateUniqueParties={this.setUniqueParties}
-        />
-      );
+      page = <CategorizationPage userState={userState} updateCategories={this.setCategories} />;
     } else if (pageIndex === 4) {
       page = <VisualizationPage initialTransactions={initialTransactions} />;
     } else if (pageIndex === 5) {

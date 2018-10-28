@@ -26,7 +26,7 @@ class BankSelector extends React.Component {
   };
 
   render() {
-    const { selectedBank, ...rest } = this.props;
+    const { selectedBank, setBank, ...rest } = this.props;
     const { open } = this.state;
 
     const value = selectedBank ? selectedBank.name : 'Other';
@@ -52,9 +52,6 @@ class BankSelector extends React.Component {
               id: 'demo-controlled-open-select'
             }}
           >
-            <MenuItem key="Other" value="Other">
-              Other
-            </MenuItem>
             {bankArray}
           </Select>
         </FormControl>

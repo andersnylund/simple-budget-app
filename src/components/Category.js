@@ -12,7 +12,7 @@ const Category = ({ title, parties, checked, onSelect, onRemoveCategorizedParty 
   };
 
   const selectedParties = parties.map(party => (
-    <SelectedParty party={party} removeParty={removeCategorizedParty} />
+    <SelectedParty key={party} party={party} removeParty={removeCategorizedParty} />
   ));
 
   return (

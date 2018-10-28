@@ -20,16 +20,11 @@ class CategoryList extends React.Component {
 
   setCheckedCategory = event => {
     const { updateActiveCategory } = this.props;
-    const { checkedCategory } = this.state;
     const newTitle = event.target.name;
-    this.setState(
-      {
-        checkedCategory: newTitle
-      },
-      () => {
-        updateActiveCategory(checkedCategory);
-      }
-    );
+    this.setState({
+      checkedCategory: newTitle
+    });
+    updateActiveCategory(newTitle);
   };
 
   render() {
@@ -38,6 +33,7 @@ class CategoryList extends React.Component {
     const categories = data
       ? data.map(category => (
         <Category
+            key={category.title}
             title={category.title}
             parties={category.parties}
             checked={this.state.checkedCategory === category.title}

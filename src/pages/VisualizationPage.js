@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
-import BalanceHistory from '../components/BalanceHistory';
-import PartyGrouping from '../components/PartyGrouping';
+import BalanceHistory from '../charts/BalanceHistory';
+import PartyGrouping from '../charts/PartyGrouping';
+import CategoryGrouping from '../charts/CategoryGrouping';
 
 const Container = styled.div`
   text-align: center;
@@ -14,7 +15,7 @@ const Container = styled.div`
   margin: 3rem auto;
 `;
 
-const Visualization = ({ initialTransactions }) => (
+const Visualization = ({ initialTransactions, categories }) => (
   <Container>
     <Typography variant="h2">Visualization</Typography>
     {!initialTransactions ? (
@@ -23,6 +24,7 @@ const Visualization = ({ initialTransactions }) => (
       <div>
         <BalanceHistory initialTransactions={initialTransactions} />
         <PartyGrouping initialTransactions={initialTransactions} />
+        <CategoryGrouping initialTransactions={initialTransactions} categories={categories} />
       </div>
     )}
   </Container>
@@ -34,6 +36,12 @@ Visualization.propTypes = {
       date: PropTypes.string.isRequired,
       amount: PropTypes.string.isRequired,
       party: PropTypes.string.isRequired
+    })
+  ).isRequired,
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string,
+      parties: PropTypes.arrayOf(PropTypes.string)
     })
   ).isRequired
 };

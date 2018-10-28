@@ -5,9 +5,9 @@ import App from './App';
 import LandingPage from './pages/LandingPage';
 import ImportPage from './pages/ImportPage';
 import InfoPage from './pages/InfoPage';
+import { initialTransactions } from './testHelpers';
 
 let props;
-let initialTransactions;
 
 describe('<App />', () => {
   beforeEach(() => {
@@ -15,15 +15,6 @@ describe('<App />', () => {
       saveStateToLocalStorage: jest.fn(),
       hydrateStateWithLocalStorage: jest.fn()
     };
-
-    // @TODO define some common test helpers where this kind of data is available
-    initialTransactions = [
-      {
-        date: new Date().toISOString(),
-        party: 'test',
-        amount: '10'
-      }
-    ];
   });
 
   it('renders without crashing', () => {

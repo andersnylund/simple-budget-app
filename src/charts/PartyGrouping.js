@@ -5,14 +5,16 @@ import Chart from 'react-apexcharts';
 import _ from 'lodash';
 
 const PartyGrouping = ({ initialTransactions }) => {
-  // TODO make immutable!
+  // TODO Extract function to utils
   const result = initialTransactions.reduce((previous, current) => {
+    const returnValue = _.cloneDeep(previous);
+
     if (_.has(previous, current.party)) {
-      previous[current.party] = previous[current.party] + current.amount;
+      returnValue[current.party] += current.amount;
     } else {
-      previous[current.party] = current.amount;
+      returnValue[current.party] = current.amount;
     }
-    return previous;
+    return returnValue;
   }, {});
 
   let array = [];
@@ -33,7 +35,7 @@ const PartyGrouping = ({ initialTransactions }) => {
 
   return (
     <div>
-      <Typography variant="h4">Grouped by party</Typography>
+      <Typography variant="h4">Parties</Typography>
       <Chart options={options} series={series} height={800} type="bar" />
     </div>
   );

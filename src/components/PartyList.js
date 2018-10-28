@@ -23,6 +23,7 @@ class PartyList extends React.Component {
 
     const partyList = parties.map(party => (
       <FormControlLabel
+        key={party}
         control={
           <Checkbox
             onChange={this.handleChange(party)}

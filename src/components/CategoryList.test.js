@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import CategoryList from '../components/CategoryList';
+import CategoryList from './CategoryList';
 import { INITIAL_CATEGORIES } from '../constants';
 
 let props;

@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { Button } from '@material-ui/core';
-import Categorizer from '../components/Categorizer';
-import PartyList from '../components/PartyList';
-import CategoryList from '../components/CategoryList';
+import Categorizer from './Categorizer';
+import PartyList from './PartyList';
+import CategoryList from './CategoryList';
 
 let props;
 

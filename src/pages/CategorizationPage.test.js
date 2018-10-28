@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import CategorizationPage from '../pages/CategorizationPage';
+import CategorizationPage from './CategorizationPage';
 import Categorizer from '../components/Categorizer';
 
 let props;

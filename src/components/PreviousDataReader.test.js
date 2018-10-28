@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import PreviousDataReader from '../components/PreviousDataReader';
+import PreviousDataReader from './PreviousDataReader';
 
 let props;
 let event;

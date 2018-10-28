@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import BottomNavigation from '../components/BottomNavigation';
-import App from '../App';
-import LandingPage from '../pages/LandingPage';
-import ImportPage from '../pages/ImportPage';
-import InfoPage from '../pages/InfoPage';
+import BottomNavigation from './components/BottomNavigation';
+import App from './App';
+import LandingPage from './pages/LandingPage';
+import ImportPage from './pages/ImportPage';
+import InfoPage from './pages/InfoPage';
 
 let props;
 let initialTransactions;

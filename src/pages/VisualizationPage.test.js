@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import VisualizationPage from '../pages/VisualizationPage';
+import VisualizationPage from './VisualizationPage';
 import BalanceHistory from '../components/BalanceHistory';
 import PartyGrouping from '../components/PartyGrouping';
 

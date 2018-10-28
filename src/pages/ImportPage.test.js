@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import ImportPage from '../pages/ImportPage';
+import ImportPage from './ImportPage';
 import { danske } from '../Bank';
 import TransactionFileReader from '../components/TransactionFileReader';
 import BankSelector from '../components/BankSelector';

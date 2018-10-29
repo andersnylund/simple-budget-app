@@ -6,8 +6,14 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import SelectedParty from './SelectedParty';
 
-const Category = ({ title, parties, checked, onSelect }) => {
-  const selectedParties = parties.map(party => <SelectedParty party={party} />);
+const Category = ({ title, parties, checked, onSelect, onRemoveCategorizedParty }) => {
+  const removeCategorizedParty = partyToRemove => {
+    onRemoveCategorizedParty(partyToRemove, title);
+  };
+
+  const selectedParties = parties.map(party => (
+    <SelectedParty key={party} party={party} removeParty={removeCategorizedParty} />
+  ));
 
   return (
     <div>
@@ -25,7 +31,8 @@ Category.propTypes = {
   title: PropTypes.string.isRequired,
   parties: PropTypes.arrayOf(PropTypes.string).isRequired,
   checked: PropTypes.bool.isRequired,
-  onSelect: PropTypes.func.isRequired
+  onSelect: PropTypes.func.isRequired,
+  onRemoveCategorizedParty: PropTypes.func.isRequired
 };
 
 export default Category;

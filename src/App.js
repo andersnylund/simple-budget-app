@@ -8,11 +8,12 @@ import BottomNavigation from './components/BottomNavigation';
 import VisualizationPage from './pages/VisualizationPage';
 import CategorizationPage from './pages/CategorizationPage';
 import ExportPage from './pages/ExportPage';
+import { danske } from './Bank';
 import { INITIAL_CATEGORIES } from './constants';
 
 const initialState = {
   initialTransactions: undefined,
-  selectedBank: undefined,
+  selectedBank: danske,
   activePageIndex: 0,
   userState: {
     categories: INITIAL_CATEGORIES.map(c => ({ title: c, parties: [] })),

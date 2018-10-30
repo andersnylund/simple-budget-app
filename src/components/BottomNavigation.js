@@ -30,27 +30,27 @@ class FooterNavigation extends React.Component {
       <Container>
         <BottomNavigation value={activePageIndex} onChange={this.handleChange} showLabels>
           <BottomNavigationAction
-            label={<FormattedMessage id="navigation.Start" />}
+            label={<FormattedMessage id="navigation.start" />}
             icon={<ArrowForward />}
           />
           <BottomNavigationAction
-            label={<FormattedMessage id="navigation.Info" />}
+            label={<FormattedMessage id="navigation.info" />}
             icon={<InfoIcon />}
           />
           <BottomNavigationAction
-            label={<FormattedMessage id="navigation.Import" />}
+            label={<FormattedMessage id="navigation.import" />}
             icon={<InputIcon />}
           />
           <BottomNavigationAction
-            label={<FormattedMessage id="navigation.Categorization" />}
+            label={<FormattedMessage id="navigation.categorization" />}
             icon={<CategoryIcon />}
           />
           <BottomNavigationAction
-            label={<FormattedMessage id="navigation.Visualization" />}
+            label={<FormattedMessage id="navigation.visualization" />}
             icon={<ShowChartIcon />}
           />
           <BottomNavigationAction
-            label={<FormattedMessage id="navigation.Export" />}
+            label={<FormattedMessage id="navigation.export" />}
             icon={<PublishIcon />}
           />
         </BottomNavigation>

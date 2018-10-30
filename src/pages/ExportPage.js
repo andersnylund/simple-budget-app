@@ -33,7 +33,7 @@ const ExportPage = ({ userState }) => {
 };
 
 ExportPage.propTypes = {
-  userState: PropTypes.string.isRequired
+  userState: PropTypes.object.isRequired
 };
 
 export default ExportPage;

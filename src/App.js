@@ -12,7 +12,7 @@ import { danske } from './Bank';
 import { INITIAL_CATEGORIES } from './constants';
 
 const initialState = {
-  initialTransactions: undefined,
+  initialTransactions: [],
   selectedBank: danske,
   activePageIndex: 0,
   userState: {

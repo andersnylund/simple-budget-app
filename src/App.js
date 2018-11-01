@@ -8,11 +8,12 @@ import BottomNavigation from './components/BottomNavigation';
 import VisualizationPage from './pages/VisualizationPage';
 import CategorizationPage from './pages/CategorizationPage';
 import ExportPage from './pages/ExportPage';
+import { danske } from './Bank';
 import { INITIAL_CATEGORIES } from './constants';
 
 const initialState = {
-  initialTransactions: undefined,
-  selectedBank: undefined,
+  initialTransactions: [],
+  selectedBank: danske,
   activePageIndex: 0,
   userState: {
     categories: INITIAL_CATEGORIES.map(c => ({ title: c, parties: [] })),
@@ -108,13 +109,7 @@ class App extends Component {
         />
       );
     } else if (pageIndex === 3) {
-      page = (
-        <CategorizationPage
-          userState={userState}
-          updateCategories={this.setCategories}
-          updateUniqueParties={this.setUniqueParties}
-        />
-      );
+      page = <CategorizationPage userState={userState} updateCategories={this.setCategories} />;
     } else if (pageIndex === 4) {
       page = <VisualizationPage initialTransactions={initialTransactions} />;
     } else if (pageIndex === 5) {

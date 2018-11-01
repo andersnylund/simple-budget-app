@@ -18,6 +18,7 @@ const Category = ({ title, parties, checked, onSelect, onRemoveCategorizedParty 
   return (
     <div>
       <FormControlLabel
+        key={title}
         onChange={onSelect}
         control={<Radio checked={checked} name={title} value={title} />}
         label={title}

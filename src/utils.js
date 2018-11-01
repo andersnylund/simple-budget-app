@@ -5,7 +5,7 @@ import _ from 'lodash';
 export const parse = (csvString, bank) => {
   const transactions = papa.parse(csvString).data.filter((j, i) => i !== 0); // remove first item
   const data = transactions.map(transaction => ({
-    date: moment(transaction[bank.dateHeaderIndex], bank.dateHeaderFormat).toISOString(),
+    date: moment.utc(transaction[bank.dateHeaderIndex], bank.dateHeaderFormat).toISOString(),
     amount: parseFloat(transaction[bank.amountIndex].replace(',', '.')),
     party: transaction[bank.partyIndex]
   }));

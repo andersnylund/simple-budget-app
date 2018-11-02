@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import LandingPage from './pages/LandingPage';
 import ImportPage from './pages/ImportPage';
 import InfoPage from './pages/InfoPage';
-import BottomNavigation from './components/BottomNavigation';
 import VisualizationPage from './pages/VisualizationPage';
 import CategorizationPage from './pages/CategorizationPage';
 import ExportPage from './pages/ExportPage';
 import { danske } from './Bank';
 import { INITIAL_CATEGORIES } from './constants';
+import NavigationAppBar from './components/NavigationAppBar';
 
 const initialState = {
   initialTransactions: [],
@@ -20,10 +19,6 @@ const initialState = {
     uniqueParties: []
   }
 };
-
-const Container = styled.div`
-  margin-bottom: 5em;
-`;
 
 class App extends Component {
   constructor(props) {
@@ -119,7 +114,7 @@ class App extends Component {
       page = <ExportPage userState={userState} />;
     }
 
-    return <Container>{page}</Container>;
+    return page;
   };
 
   render() {
@@ -127,8 +122,8 @@ class App extends Component {
 
     return (
       <div>
-        <div className="app">{this.showPage(activePageIndex)}</div>
-        <BottomNavigation onChangePage={this.changePage} activePageIndex={activePageIndex} />
+        <NavigationAppBar onChangePage={this.changePage} />
+        <div>{this.showPage(activePageIndex)}</div>
       </div>
     );
   }

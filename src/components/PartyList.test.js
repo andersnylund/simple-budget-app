@@ -10,6 +10,7 @@ describe('<PartyList />', () => {
   beforeEach(() => {
     props = {
       parties: ['party1', 'party2'],
+      selectedParties: ['party1'],
       updateSelectedParties: jest.fn()
     };
     event = {
@@ -25,43 +26,17 @@ describe('<PartyList />', () => {
     expect(formControls.length).toBe(2);
   });
 
-  it('should set the state', () => {
+  it('should set party2 to checked', () => {
     const wrapper = shallow(<PartyList {...props} />);
-    expect(wrapper.state()).toEqual({});
-  });
-
-  it('should handle the check of first party', () => {
-    const wrapper = shallow(<PartyList {...props} />);
-    const formControl = wrapper.find(FormControlLabel).first();
+    const formControl = wrapper.find(FormControlLabel).at(1);
     const { onChange } = formControl.props().control.props;
     onChange(event);
-    expect(wrapper.state()).toEqual({ party1: true });
+    expect(props.updateSelectedParties.mock.calls[0][0]).toEqual(['party1', 'party2']);
   });
 
-  it('should update selected parties', () => {
+  it('should show party1 checked', async () => {
     const wrapper = shallow(<PartyList {...props} />);
     const formControl = wrapper.find(FormControlLabel).first();
-    const { onChange } = formControl.props().control.props;
-    onChange(event);
-    expect(props.updateSelectedParties.mock.calls[0][0]).toEqual(['party1']);
-  });
-
-  it('should handle the check of both parties', () => {
-    const wrapper = shallow(<PartyList {...props} />);
-    const formControl1 = wrapper.find(FormControlLabel).at(0);
-    const formControl2 = wrapper.find(FormControlLabel).at(1);
-    formControl1.props().control.props.onChange(event);
-    formControl2.props().control.props.onChange(event);
-    expect(wrapper.state()).toEqual({ party1: true, party2: true });
-  });
-
-  it('should handle the unchecking of party1', () => {
-    const wrapper = shallow(<PartyList {...props} />);
-    const formControl1 = wrapper.find(FormControlLabel).at(0);
-    const formControl2 = wrapper.find(FormControlLabel).at(1);
-    formControl1.props().control.props.onChange(event);
-    formControl2.props().control.props.onChange(event);
-    formControl1.props().control.props.onChange({ target: { checked: false } });
-    expect(wrapper.state()).toEqual({ party1: false, party2: true });
+    expect(formControl.props().control.props.checked).toBe(true);
   });
 });

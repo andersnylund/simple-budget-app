@@ -3,22 +3,33 @@ import { shallow } from 'enzyme';
 import VisualizationPage from './VisualizationPage';
 import BalanceHistory from '../charts/BalanceHistory';
 import PartyGrouping from '../charts/PartyGrouping';
-import { initialTransactions } from '../testHelpers';
+import { initialTransactions, categories } from '../testHelpers';
 
 describe('<VisualizationPage />', () => {
-  it('renders charts when initialTransactions are given', () => {
-    const component = shallow(<VisualizationPage initialTransactions={initialTransactions} />);
+  it('initializes the state', () => {
+    const wrapper = shallow(
+      <VisualizationPage initialTransactions={initialTransactions} categories={categories} />
+    );
 
-    expect(component.find(BalanceHistory).exists()).toBe(true);
-    expect(component.find(PartyGrouping).exists()).toBe(true);
+    expect(wrapper.state()).toEqual({ value: 0 });
   });
 
-  it('does not render charts when initialTransactions are undefined', () => {
-    const component = shallow(<VisualizationPage />);
+  it('renders the correct chart', () => {
+    const wrapper = shallow(
+      <VisualizationPage initialTransactions={initialTransactions} categories={categories} />
+    );
 
-    expect(component.find(BalanceHistory).exists()).toBe(false);
-    expect(component.find(PartyGrouping).exists()).toBe(false);
+    expect(wrapper.find(BalanceHistory).exists()).toBe(true);
+  });
 
-    expect(component.contains('Select a file and bank on import page')).toBe(true);
+  it('can switch the chart', () => {
+    const wrapper = shallow(
+      <VisualizationPage initialTransactions={initialTransactions} categories={categories} />
+    );
+
+    wrapper.instance().handleChange(null, 1);
+    wrapper.update();
+
+    expect(wrapper.find(PartyGrouping).exists()).toBe(true);
   });
 });

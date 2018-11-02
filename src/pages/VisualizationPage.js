@@ -1,36 +1,57 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
+import { Paper, Tabs, Tab } from '@material-ui/core';
 import BalanceHistory from '../charts/BalanceHistory';
 import PartyGrouping from '../charts/PartyGrouping';
 import CategoryGrouping from '../charts/CategoryGrouping';
 
-const Container = styled.div`
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 60rem;
-  margin: 3rem auto;
+const TabContainer = styled(Paper)`
+  flex-grow: 1;
 `;
 
-const Visualization = ({ initialTransactions, categories }) => (
-  <Container>
-    <Typography variant="h2">Visualization</Typography>
-    {!initialTransactions ? (
-      <Typography variant="h4">Select a file and bank on import page</Typography>
-    ) : (
-      <div>
-        <BalanceHistory initialTransactions={initialTransactions} />
-        <PartyGrouping initialTransactions={initialTransactions} />
-        <CategoryGrouping initialTransactions={initialTransactions} categories={categories} />
-      </div>
-    )}
-  </Container>
-);
+class VisualizationPage extends React.Component {
+  state = { value: 0 };
 
-Visualization.propTypes = {
+  handleChange = (event, value) => {
+    this.setState({ value });
+  };
+
+  getChart = () => {
+    const { initialTransactions, categories } = this.props;
+    const { value } = this.state;
+    if (value === 0) return <BalanceHistory initialTransactions={initialTransactions} />;
+    if (value === 1) return <PartyGrouping initialTransactions={initialTransactions} />;
+    if (value === 2)
+      return <CategoryGrouping initialTransactions={initialTransactions} categories={categories} />;
+    return null;
+  };
+
+  render() {
+    const { value } = this.state;
+
+    return (
+      <div>
+        <TabContainer>
+          <Tabs
+            value={value}
+            onChange={this.handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            centered
+          >
+            <Tab label="Balance History" />
+            <Tab label="Parties" />
+            <Tab label="Categories" />
+          </Tabs>
+        </TabContainer>
+        <div>{this.getChart()}</div>
+      </div>
+    );
+  }
+}
+
+VisualizationPage.propTypes = {
   initialTransactions: PropTypes.arrayOf(
     PropTypes.shape({
       date: PropTypes.string.isRequired,
@@ -46,4 +67,4 @@ Visualization.propTypes = {
   ).isRequired
 };
 
-export default Visualization;
+export default VisualizationPage;

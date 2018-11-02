@@ -4,6 +4,9 @@ import { FormattedMessage } from 'react-intl';
 import { ThreeSixty, SettingsEthernet, Language } from '@material-ui/icons';
 import Image from 'material-ui-image';
 import IntroFeatures from '../components/IntroFeatures';
+import Graph from '../images/graph.png';
+import Privacy from '../images/privacy.png';
+import Localize from '../images/localize.png';
 
 const Container = styled.div`
   text-align: center;
@@ -12,7 +15,7 @@ const Container = styled.div`
 
 const features = [
   {
-    id : 1,
+    id: 1,
     title: (
       <Container>
         <ThreeSixty />
@@ -22,14 +25,14 @@ const features = [
     description: (
       <Container>
         <Container>
-          <Image src={require('../images/graph.png')} />
+          <Image src={Graph} />
         </Container>
         <FormattedMessage id="landingPage.features.1.description" />
       </Container>
     )
   },
   {
-    id : 2,
+    id: 2,
     title: (
       <Container>
         <SettingsEthernet />
@@ -39,14 +42,14 @@ const features = [
     description: (
       <Container>
         <Container>
-          <Image src={require('../images/privacy.png')} />
+          <Image src={Privacy} />
         </Container>
         <FormattedMessage id="landingPage.features.2.description" />
       </Container>
     )
   },
   {
-    id : 3,
+    id: 3,
     title: (
       <Container>
         <Language />
@@ -56,7 +59,7 @@ const features = [
     description: (
       <Container>
         <Container>
-          <Image src={require('../images/localize.png')} />
+          <Image src={Localize} />
         </Container>
         <FormattedMessage id="landingPage.features.3.description" />
       </Container>

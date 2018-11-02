@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
 import Chart from 'react-apexcharts';
 import _ from 'lodash';
+import ChartContainer from './ChartContainer';
 
 const PartyGrouping = ({ initialTransactions }) => {
   // TODO Extract function to utils
@@ -34,10 +34,9 @@ const PartyGrouping = ({ initialTransactions }) => {
   ];
 
   return (
-    <div>
-      <Typography variant="h4">Parties</Typography>
+    <ChartContainer>
       <Chart options={options} series={series} height={800} type="bar" />
-    </div>
+    </ChartContainer>
   );
 };
 

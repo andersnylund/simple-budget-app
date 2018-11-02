@@ -91,6 +91,7 @@ class App extends Component {
 
   showPage = pageIndex => {
     const { selectedBank, initialTransactions, userState } = this.state;
+    const { categories } = userState;
     let page;
 
     if (pageIndex === 0) {
@@ -111,7 +112,9 @@ class App extends Component {
     } else if (pageIndex === 3) {
       page = <CategorizationPage userState={userState} updateCategories={this.setCategories} />;
     } else if (pageIndex === 4) {
-      page = <VisualizationPage initialTransactions={initialTransactions} />;
+      page = (
+        <VisualizationPage initialTransactions={initialTransactions} categories={categories} />
+      );
     } else if (pageIndex === 5) {
       page = <ExportPage userState={userState} />;
     }

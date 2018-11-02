@@ -1,22 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import VisualizationPage from './VisualizationPage';
-import BalanceHistory from '../components/BalanceHistory';
-import PartyGrouping from '../components/PartyGrouping';
-
-let initialTransactions;
+import BalanceHistory from '../charts/BalanceHistory';
+import PartyGrouping from '../charts/PartyGrouping';
+import { initialTransactions } from '../testHelpers';
 
 describe('<VisualizationPage />', () => {
-  beforeEach(() => {
-    initialTransactions = [
-      {
-        date: new Date().toISOString(),
-        party: 'test',
-        amount: '10'
-      }
-    ];
-  });
-
   it('renders charts when initialTransactions are given', () => {
     const component = shallow(<VisualizationPage initialTransactions={initialTransactions} />);
 

@@ -39,9 +39,9 @@ const SectionMobile = styled.div`
   }
 `;
 
-const Title = styled(Typography)`
+const Title = styled.div`
   display: none;
-  @media (min-width: 60rem) {
+  @media (min-width: 37.5rem) {
     display: block;
   }
 `;
@@ -121,8 +121,10 @@ class NavigationAppBar extends React.Component {
       <Root>
         <AppBar position="static">
           <Toolbar>
-            <Title variant="h6" color="inherit" noWrap>
-              Simple Budgeting
+            <Title>
+              <Typography variant="h6" color="inherit" noWrap>
+                Simple Budgeting
+              </Typography>
             </Title>
             <Grow />
             <SectionDesktop>

@@ -5,6 +5,7 @@ import { Paper, Tabs, Tab } from '@material-ui/core';
 import BalanceHistory from '../charts/BalanceHistory';
 import PartyGrouping from '../charts/PartyGrouping';
 import CategoryGrouping from '../charts/CategoryGrouping';
+import TransactionHistory from '../charts/TransactionHistory';
 
 const TabContainer = styled(Paper)`
   flex-grow: 1;
@@ -20,9 +21,10 @@ class VisualizationPage extends React.Component {
   getChart = () => {
     const { initialTransactions, categories } = this.props;
     const { value } = this.state;
-    if (value === 0) return <BalanceHistory initialTransactions={initialTransactions} />;
-    if (value === 1) return <PartyGrouping initialTransactions={initialTransactions} />;
-    if (value === 2)
+    if (value === 0) return <TransactionHistory initialTransactions={initialTransactions} />;
+    if (value === 1) return <BalanceHistory initialTransactions={initialTransactions} />;
+    if (value === 2) return <PartyGrouping initialTransactions={initialTransactions} />;
+    if (value === 3)
       return <CategoryGrouping initialTransactions={initialTransactions} categories={categories} />;
     return null;
   };
@@ -40,6 +42,7 @@ class VisualizationPage extends React.Component {
             textColor="primary"
             centered
           >
+            <Tab label="Transaction History" />
             <Tab label="Balance History" />
             <Tab label="Parties" />
             <Tab label="Categories" />

@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import VisualizationPage from './VisualizationPage';
 import BalanceHistory from '../charts/BalanceHistory';
+import TransactionHistory from '../charts/TransactionHistory';
 import PartyGrouping from '../charts/PartyGrouping';
 import { initialTransactions, categories } from '../testHelpers';
 
@@ -19,7 +20,7 @@ describe('<VisualizationPage />', () => {
       <VisualizationPage initialTransactions={initialTransactions} categories={categories} />
     );
 
-    expect(wrapper.find(BalanceHistory).exists()).toBe(true);
+    expect(wrapper.find(TransactionHistory).exists()).toBe(true);
   });
 
   it('can switch the chart', () => {
@@ -29,7 +30,10 @@ describe('<VisualizationPage />', () => {
 
     wrapper.instance().handleChange(null, 1);
     wrapper.update();
+    expect(wrapper.find(BalanceHistory).exists()).toBe(true);
 
+    wrapper.instance().handleChange(null, 2);
+    wrapper.update();
     expect(wrapper.find(PartyGrouping).exists()).toBe(true);
   });
 });

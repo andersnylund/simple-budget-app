@@ -18,38 +18,38 @@ const PARTY_GROUPING = 2;
 const CATEGORY_GROUPING = 3;
 
 class VisualizationPage extends React.Component {
-  state = { value: TRANSACTION_HISTORY };
+  state = { activeTab: TRANSACTION_HISTORY };
 
   handleChange = (event, value) => {
-    this.setState({ value });
+    this.setState({ activeTab: value });
   };
 
   getChart = () => {
     const { initialTransactions, categories } = this.props;
-    const { value } = this.state;
-    if (value === TRANSACTION_HISTORY) {
+    const { activeTab } = this.state;
+    if (activeTab === TRANSACTION_HISTORY) {
       return <TransactionHistory initialTransactions={initialTransactions} />;
     }
-    if (value === BALANCE_HISTORY) {
+    if (activeTab === BALANCE_HISTORY) {
       return <BalanceHistory initialTransactions={initialTransactions} />;
     }
-    if (value === PARTY_GROUPING) {
+    if (activeTab === PARTY_GROUPING) {
       return <PartyGrouping initialTransactions={initialTransactions} />;
     }
-    if (value === CATEGORY_GROUPING) {
+    if (activeTab === CATEGORY_GROUPING) {
       return <CategoryGrouping initialTransactions={initialTransactions} categories={categories} />;
     }
     return null;
   };
 
   render() {
-    const { value } = this.state;
+    const { activeTab } = this.state;
 
     return (
       <div>
         <TabContainer>
           <Tabs
-            value={value}
+            value={activeTab}
             onChange={this.handleChange}
             indicatorColor="primary"
             textColor="primary"

@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import { Paper, Tabs, Tab } from '@material-ui/core';
 import BalanceHistory from '../charts/BalanceHistory';
 import PartyGrouping from '../charts/PartyGrouping';
 import CategoryGrouping from '../charts/CategoryGrouping';
 import TransactionHistory from '../charts/TransactionHistory';
+import Context from '../Context';
 
 const TabContainer = styled(Paper)`
   flex-grow: 1;
@@ -24,8 +24,7 @@ class VisualizationPage extends React.Component {
     this.setState({ activeTab: value });
   };
 
-  getChart = () => {
-    const { initialTransactions, categories } = this.props;
+  getChart = (initialTransactions, categories) => {
     const { activeTab } = this.state;
     if (activeTab === TRANSACTION_HISTORY) {
       return <TransactionHistory initialTransactions={initialTransactions} />;
@@ -46,42 +45,30 @@ class VisualizationPage extends React.Component {
     const { activeTab } = this.state;
 
     return (
-      <div>
-        <TabContainer>
-          <Tabs
-            value={activeTab}
-            onChange={this.handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            scrollable
-            scrollButtons="on"
-          >
-            <Tab label="Transaction History" />
-            <Tab label="Balance History" />
-            <Tab label="Parties" />
-            <Tab label="Categories" />
-          </Tabs>
-        </TabContainer>
-        <div>{this.getChart()}</div>
-      </div>
+      <Context.Consumer>
+        {({ initialTransactions, categories }) => (
+          <div>
+            <TabContainer>
+              <Tabs
+                value={activeTab}
+                onChange={this.handleChange}
+                indicatorColor="primary"
+                textColor="primary"
+                scrollable
+                scrollButtons="on"
+              >
+                <Tab label="Transaction History" />
+                <Tab label="Balance History" />
+                <Tab label="Parties" />
+                <Tab label="Categories" />
+              </Tabs>
+            </TabContainer>
+            <div>{this.getChart(initialTransactions, categories)}</div>
+          </div>
+        )}
+      </Context.Consumer>
     );
   }
 }
-
-VisualizationPage.propTypes = {
-  initialTransactions: PropTypes.arrayOf(
-    PropTypes.shape({
-      date: PropTypes.string.isRequired,
-      amount: PropTypes.string.isRequired,
-      party: PropTypes.string.isRequired
-    })
-  ).isRequired,
-  categories: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string,
-      parties: PropTypes.arrayOf(PropTypes.string)
-    })
-  ).isRequired
-};
 
 export default VisualizationPage;

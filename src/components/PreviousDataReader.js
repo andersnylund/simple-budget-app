@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
+import Context from '../Context';
 
 const StyledInput = styled.input`
   display: none;
@@ -17,26 +17,25 @@ const handleChange = async (e, setCategories, setUniqueParties) => {
   setUniqueParties(parsed.uniqueParties);
 };
 
-const PreviousDataReader = ({ setCategories, setUniqueParties, ...rest }) => (
-  <div {...rest}>
-    <label htmlFor="previous-input">
-      <StyledInput
-        accept=".json"
-        id="previous-input"
-        multiple={false}
-        type="file"
-        onChange={e => handleChange(e, setCategories, setUniqueParties)}
-      />
-      <Button variant="contained" component="span">
-        Upload previous data
-      </Button>
-    </label>
-  </div>
+const PreviousDataReader = props => (
+  <Context.Consumer>
+    {({ setCategories, setUniqueParties }) => (
+      <div {...props}>
+        <label htmlFor="previous-input">
+          <StyledInput
+              accept=".json"
+              id="previous-input"
+              multiple={false}
+              type="file"
+              onChange={e => handleChange(e, setCategories, setUniqueParties)}
+          />
+          <Button variant="contained" component="span">
+            Upload previous data
+            </Button>
+        </label>
+      </div>
+    )}
+  </Context.Consumer>
 );
-
-PreviousDataReader.propTypes = {
-  setCategories: PropTypes.func.isRequired,
-  setUniqueParties: PropTypes.func.isRequired
-};
 
 export default PreviousDataReader;

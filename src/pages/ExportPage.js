@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import PropTypes from 'prop-types';
+import Context from '../Context';
 
 const Container = styled.div`
   display: flex;
@@ -15,25 +15,25 @@ const Container = styled.div`
   }
 `;
 
-const ExportPage = ({ userState }) => {
-  const data = `data:application/json;charset=utf-8,${encodeURIComponent(
-    JSON.stringify(userState)
-  )}`;
+const ExportPage = () => (
+  <Context.Consumer>
+    {({ userState }) => {
+      const data = `data:application/json;charset=utf-8,${encodeURIComponent(
+        JSON.stringify(userState)
+      )}`;
 
-  return (
-    <Container>
-      <Typography variant="h2" className="item">
-        Export
-      </Typography>
-      <Button variant="contained" download="simple-budgeting.json" href={data}>
-        Export
-      </Button>
-    </Container>
-  );
-};
-
-ExportPage.propTypes = {
-  userState: PropTypes.object.isRequired
-};
+      return (
+        <Container>
+          <Typography variant="h2" className="item">
+            Export
+          </Typography>
+          <Button variant="contained" download="simple-budgeting.json" href={data}>
+            Export
+          </Button>
+        </Container>
+      );
+    }}
+  </Context.Consumer>
+);
 
 export default ExportPage;

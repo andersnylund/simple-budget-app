@@ -1,9 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 import { parse } from '../utils';
-import Bank from '../Bank';
+import Context from '../Context';
 
 const StyledInput = styled.input`
   display: none;
@@ -18,26 +17,25 @@ const handleChange = async (e, setInitialTransactions, selectedBank) => {
   setInitialTransactions(parsed);
 };
 
-const TransactionFileReader = ({ setInitialTransactions, selectedBank, ...rest }) => (
-  <div {...rest}>
-    <label htmlFor="transactions-input">
-      <StyledInput
-        accept=".csv"
-        id="transactions-input"
-        multiple={false}
-        type="file"
-        onChange={e => handleChange(e, setInitialTransactions, selectedBank)}
-      />
-      <Button variant="contained" component="span">
-        Upload transactions
-      </Button>
-    </label>
-  </div>
+const TransactionFileReader = props => (
+  <Context.Consumer>
+    {({ setInitialTransactions, selectedBank }) => (
+      <div {...props}>
+        <label htmlFor="transactions-input">
+          <StyledInput
+            accept=".csv"
+            id="transactions-input"
+            multiple={false}
+            type="file"
+            onChange={e => handleChange(e, setInitialTransactions, selectedBank)}
+          />
+          <Button variant="contained" component="span">
+            Upload transactions
+          </Button>
+        </label>
+      </div>
+    )}
+  </Context.Consumer>
 );
-
-TransactionFileReader.propTypes = {
-  setInitialTransactions: PropTypes.func.isRequired,
-  selectedBank: PropTypes.objectOf(Bank).isRequired
-};
 
 export default TransactionFileReader;

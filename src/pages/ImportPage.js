@@ -1,11 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
 import TransactionFileReader from '../components/TransactionFileReader';
 import PreviousDataReader from '../components/PreviousDataReader';
 import Selector from '../components/BankSelector';
-import Bank from '../Bank';
+import Context from '../Context';
 import Reset from '../components/Reset';
 
 const Container = styled.div`
@@ -19,40 +19,27 @@ const Container = styled.div`
   }
 `;
 
-const ImportPage = ({
-  setInitialTransactions,
-  selectedBank,
-  setBank,
-  setCategories,
-  setUniqueParties,
-  resetState
-}) => (
-  <Container>
-    <Typography variant="h2" className="item">
-      Import
-    </Typography>
-    <Selector selectedBank={selectedBank} setBank={setBank} className="item" />
-    <TransactionFileReader
-      setInitialTransactions={setInitialTransactions}
-      selectedBank={selectedBank}
-      className="item"
-    />
-    <PreviousDataReader
-      setCategories={setCategories}
-      setUniqueParties={setUniqueParties}
-      className="item"
-    />
-    <Reset resetState={resetState} className="item" />
-  </Container>
+const ImportPage = () => (
+  <Context.Consumer>
+    {({
+      selectedBank,
+      setBank,
+      setInitialTransactions,
+      setCategories,
+      setUniqueParties,
+      resetState
+    }) => (
+      <Container>
+        <Typography variant="h2" className="item">
+          <FormattedMessage id="navigation.import" />
+        </Typography>
+        <Selector className="item" />
+        <TransactionFileReader className="item" />
+        <PreviousDataReader className="item" />
+        <Reset className="item" />
+      </Container>
+    )}
+  </Context.Consumer>
 );
-
-ImportPage.propTypes = {
-  setInitialTransactions: PropTypes.func.isRequired,
-  selectedBank: PropTypes.objectOf(Bank).isRequired,
-  setBank: PropTypes.func.isRequired,
-  setUniqueParties: PropTypes.func.isRequired,
-  setCategories: PropTypes.func.isRequired,
-  resetState: PropTypes.func.isRequired
-};
 
 export default ImportPage;

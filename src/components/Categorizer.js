@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import PartyList from './PartyList';
 import CategoryList from './CategoryList';
+import Context from '../Context';
 
 class Categorizer extends React.Component {
   state = {
@@ -23,8 +23,7 @@ class Categorizer extends React.Component {
     });
   };
 
-  unCategorizedParties = () => {
-    const { userState } = this.props;
+  unCategorizedParties = userState => {
     const { categories, uniqueParties } = userState;
 
     const categorizedParties = [];
@@ -46,9 +45,7 @@ class Categorizer extends React.Component {
     return unCategorizedParties;
   };
 
-  removeCategorizedParty = (partyToRemove, categoryTitleToBeModified) => {
-    const { updateCategories, userState } = this.props;
-
+  removeCategorizedParty = (partyToRemove, categoryTitleToBeModified, userState, setCategories) => {
     const currentCategories = userState.categories;
 
     const categoryToBeModified = currentCategories.find(
@@ -66,11 +63,10 @@ class Categorizer extends React.Component {
       parties: [...filteredParties]
     };
 
-    updateCategories([...otherCategories, modifiedCategory]);
+    setCategories([...otherCategories, modifiedCategory]);
   };
 
-  updateState = () => {
-    const { updateCategories, userState } = this.props;
+  updateState = (userState, setCategories) => {
     const { activeCategory, selectedParties } = this.state;
 
     const currentCategories = userState.categories;
@@ -86,7 +82,7 @@ class Categorizer extends React.Component {
       parties: [...categoryOlderState.parties, ...selectedParties]
     };
 
-    updateCategories([...categoriesWithoutActiveCategory, newCategory]);
+    setCategories([...categoriesWithoutActiveCategory, newCategory]);
 
     this.setState({
       selectedParties: []
@@ -94,47 +90,44 @@ class Categorizer extends React.Component {
   };
 
   render() {
-    const { userState } = this.props;
     const { selectedParties, activeCategory } = this.state;
 
-    const availableParties = this.unCategorizedParties();
-
     return (
-      <Grid container spacing={24}>
-        <Grid item md={6} xs={12}>
-          <PartyList
-            parties={availableParties}
-            selectedParties={selectedParties}
-            updateSelectedParties={this.setSelectedParties}
-          />
-        </Grid>
-        <Grid item md={6} xs={12}>
-          <CategoryList
-            activeCategory={activeCategory}
-            data={userState.categories}
-            updateActiveCategory={this.setActiveCategory}
-            removeCategorizedParty={this.removeCategorizedParty}
-          />
-        </Grid>
-        <Button onClick={this.updateState} variant="contained" component="span">
-          Update
-        </Button>
-      </Grid>
+      <Context.Consumer>
+        {({ userState, setCategories }) => {
+          const availableParties = this.unCategorizedParties(userState);
+          return (
+            <Grid container spacing={24}>
+              <Grid item md={6} xs={12}>
+                  <PartyList
+                  parties={availableParties}
+                  selectedParties={selectedParties}
+                  updateSelectedParties={this.setSelectedParties}
+                />
+                </Grid>
+              <Grid item md={6} xs={12}>
+                  <CategoryList
+                  activeCategory={activeCategory}
+                  data={userState.categories}
+                  updateActiveCategory={this.setActiveCategory}
+                  removeCategorizedParty={(party, category) =>
+                    this.removeCategorizedParty(party, category, userState, setCategories)
+                  }
+                />
+                </Grid>
+              <Button
+                  onClick={e => this.updateState(userState, setCategories)}
+                  variant="contained"
+                  component="span"
+              >
+                Update
+                </Button>
+            </Grid>
+          );
+        }}
+      </Context.Consumer>
     );
   }
 }
-
-Categorizer.propTypes = {
-  userState: PropTypes.shape({
-    uniqueParties: PropTypes.arrayOf(PropTypes.string).isRequired,
-    categories: PropTypes.arrayOf(
-      PropTypes.shape({
-        title: PropTypes.string,
-        parties: PropTypes.arrayOf(PropTypes.string)
-      })
-    )
-  }).isRequired,
-  updateCategories: PropTypes.func.isRequired
-};
 
 export default Categorizer;

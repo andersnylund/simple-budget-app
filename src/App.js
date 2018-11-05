@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Context from './Context';
 import LandingPage from './pages/LandingPage';
 import ImportPage from './pages/ImportPage';
 import InfoPage from './pages/InfoPage';
@@ -90,7 +91,7 @@ class App extends Component {
   };
 
   showPage = pageIndex => {
-    const { selectedBank, initialTransactions, userState } = this.state;
+    const { userState, initialTransactions, selectedBank } = this.state;
     const { categories } = userState;
     let page;
 
@@ -99,27 +100,32 @@ class App extends Component {
     } else if (pageIndex === 1) {
       page = <InfoPage />;
     } else if (pageIndex === 2) {
-      page = (
-        <ImportPage
-          setInitialTransactions={this.setInitialTransactions}
-          selectedBank={selectedBank}
-          setBank={this.setBank}
-          setCategories={this.setCategories}
-          setUniqueParties={this.setUniqueParties}
-          resetState={this.resetState}
-        />
-      );
+      page = <ImportPage />;
     } else if (pageIndex === 3) {
-      page = <CategorizationPage userState={userState} updateCategories={this.setCategories} />;
+      page = <CategorizationPage />;
     } else if (pageIndex === 4) {
-      page = (
-        <VisualizationPage initialTransactions={initialTransactions} categories={categories} />
-      );
+      page = <VisualizationPage />;
     } else if (pageIndex === 5) {
-      page = <ExportPage userState={userState} />;
+      page = <ExportPage />;
     }
 
-    return <Container>{page}</Container>;
+    const mainContextValue = {
+      userState,
+      categories,
+      initialTransactions,
+      selectedBank,
+      setInitialTransactions: this.setInitialTransactions,
+      setBank: this.setBank,
+      setCategories: this.setCategories,
+      setUniqueParties: this.setUniqueParties,
+      resetState: this.resetState
+    };
+
+    return (
+      <Context.Provider value={mainContextValue}>
+        <Container>{page}</Container>
+      </Context.Provider>
+    );
   };
 
   render() {

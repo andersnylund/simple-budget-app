@@ -1,15 +1,15 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import PropTypes from 'prop-types';
+import Context from '../Context';
 
-const Reset = ({ resetState, ...rest }) => (
-  <div {...rest}>
-    <Button onClick={() => resetState()}>Reset all</Button>
-  </div>
+const Reset = props => (
+  <Context.Consumer>
+    {({ resetState }) => (
+      <div {...props}>
+        <Button onClick={() => resetState()}>Reset all</Button>
+      </div>
+    )}
+  </Context.Consumer>
 );
-
-Reset.propTypes = {
-  resetState: PropTypes.func.isRequired
-};
 
 export default Reset;

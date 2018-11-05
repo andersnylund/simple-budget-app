@@ -4,7 +4,8 @@ import styled from 'styled-components';
 
 const Div = styled.div`
   margin: 6rem auto;
-  width: 60rem;
+  max-width: 60rem;
+  width: 100%;
 `;
 
 const ChartContainer = ({ children }) => <Div>{children}</Div>;

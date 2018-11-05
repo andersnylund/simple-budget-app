@@ -9,10 +9,16 @@ import TransactionHistory from '../charts/TransactionHistory';
 
 const TabContainer = styled(Paper)`
   flex-grow: 1;
+  width: 100%;
 `;
 
+const TRANSACTION_HISTORY = 0;
+const BALANCE_HISTORY = 1;
+const PARTY_GROUPING = 2;
+const CATEGORY_GROUPING = 3;
+
 class VisualizationPage extends React.Component {
-  state = { value: 0 };
+  state = { value: TRANSACTION_HISTORY };
 
   handleChange = (event, value) => {
     this.setState({ value });
@@ -21,11 +27,18 @@ class VisualizationPage extends React.Component {
   getChart = () => {
     const { initialTransactions, categories } = this.props;
     const { value } = this.state;
-    if (value === 0) return <TransactionHistory initialTransactions={initialTransactions} />;
-    if (value === 1) return <BalanceHistory initialTransactions={initialTransactions} />;
-    if (value === 2) return <PartyGrouping initialTransactions={initialTransactions} />;
-    if (value === 3)
+    if (value === TRANSACTION_HISTORY) {
+      return <TransactionHistory initialTransactions={initialTransactions} />;
+    }
+    if (value === BALANCE_HISTORY) {
+      return <BalanceHistory initialTransactions={initialTransactions} />;
+    }
+    if (value === PARTY_GROUPING) {
+      return <PartyGrouping initialTransactions={initialTransactions} />;
+    }
+    if (value === CATEGORY_GROUPING) {
       return <CategoryGrouping initialTransactions={initialTransactions} categories={categories} />;
+    }
     return null;
   };
 
@@ -40,7 +53,8 @@ class VisualizationPage extends React.Component {
             onChange={this.handleChange}
             indicatorColor="primary"
             textColor="primary"
-            centered
+            scrollable
+            scrollButtons="on"
           >
             <Tab label="Transaction History" />
             <Tab label="Balance History" />

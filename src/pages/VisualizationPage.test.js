@@ -12,7 +12,7 @@ describe('<VisualizationPage />', () => {
       <VisualizationPage initialTransactions={initialTransactions} categories={categories} />
     );
 
-    expect(wrapper.state()).toEqual({ value: 0 });
+    expect(wrapper.state()).toEqual({ activeTab: 0 });
   });
 
   it('renders the correct chart', () => {

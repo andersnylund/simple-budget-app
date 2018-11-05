@@ -120,6 +120,7 @@ class NavigationAppBar extends React.Component {
             <Grow />
             <SectionDesktop>
               {/* TODO add highlight for selected page */}
+              {/* TODO add tooltip for each menu item */}
               <IconButton color="inherit" onClick={() => onChangePage(LANDING)}>
                 <ArrowForwardIcon />
               </IconButton>

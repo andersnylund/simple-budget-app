@@ -46,7 +46,7 @@ const IntroFeatures = ({ classes, header, intro, features }) => (
         </Typography>
       </div>
       <Grid container spacing={40} alignItems="flex-end">
-        {features.map(({id, title, description}) => (
+        {features.map(({ id, title, description }) => (
           <Grid item key={id} xs={12} sm={6} md={4}>
             <Card>
               <CardHeader

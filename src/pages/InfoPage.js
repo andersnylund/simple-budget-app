@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 import Image from 'material-ui-image';
 import InfoSteps from '../components/InfoSteps';
+import Privacy from '../images/privacy.png';
 
 const Container = styled.div`
   text-align: center;
@@ -18,22 +19,22 @@ const InfoPage = () => {
     {
       id: 1,
       label: <FormattedMessage id="navigation.import" />,
-      content: <Image src={require('../images/privacy.png')} />
+      content: <Image src={Privacy} />
     },
     {
       id: 2,
       label: <FormattedMessage id="navigation.categorization" />,
-      content: <Image src={require('../images/privacy.png')} />
+      content: <Image src={Privacy} />
     },
     {
       id: 3,
       label: <FormattedMessage id="navigation.visualization" />,
-      content: <Image src={require('../images/privacy.png')} />
+      content: <Image src={Privacy} />
     },
     {
       id: 4,
       label: <FormattedMessage id="navigation.export" />,
-      content: <Image src={require('../images/privacy.png')} />
+      content: <Image src={Privacy} />
     }
   ];
 

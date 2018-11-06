@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Chart from 'react-apexcharts';
-import Typography from '@material-ui/core/Typography';
 import moment from 'moment';
+import ChartContainer from './ChartContainer';
 
 const BalanceHistory = ({ initialTransactions }) => {
   let result = [];
@@ -26,10 +26,9 @@ const BalanceHistory = ({ initialTransactions }) => {
   ];
 
   return (
-    <div>
-      <Typography variant="h4">Balance history</Typography>
+    <ChartContainer>
       <Chart options={options} series={series} height={800} type="line" />
-    </div>
+    </ChartContainer>
   );
 };
 

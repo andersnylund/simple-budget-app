@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import BottomNavigation from './components/BottomNavigation';
 import App from './App';
 import LandingPage from './pages/LandingPage';
 import ImportPage from './pages/ImportPage';
 import InfoPage from './pages/InfoPage';
 import { initialTransactions } from './testHelpers';
+import NavigationAppBar from './components/NavigationAppBar';
 
 let props;
 
@@ -21,7 +21,7 @@ describe('<App />', () => {
     const app = shallow(<App {...props} />);
 
     expect(app.find(LandingPage).exists()).toBe(true);
-    expect(app.find(BottomNavigation).exists()).toBe(true);
+    expect(app.find(NavigationAppBar).exists()).toBe(true);
   });
 
   it('calls hydrateLocalStorage when mounted', () => {

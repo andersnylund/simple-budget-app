@@ -1,8 +1,8 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
-import { Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { amountByCategory } from '../utils';
+import ChartContainer from './ChartContainer';
 
 const CategoryGrouping = ({ initialTransactions, categories }) => {
   const byCategory = amountByCategory(initialTransactions, categories);
@@ -21,10 +21,9 @@ const CategoryGrouping = ({ initialTransactions, categories }) => {
   ];
 
   return (
-    <div>
-      <Typography variant="h4">Categories</Typography>
+    <ChartContainer>
       <Chart options={options} series={series} height={800} type="bar" />
-    </div>
+    </ChartContainer>
   );
 };
 

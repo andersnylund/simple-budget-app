@@ -88,6 +88,7 @@ const Categorizer = ({ userState, updateCategories }) => {
     if (!destination) {
       return;
     }
+    // @TODO handle case of reordering items in the same list.
 
     if (source.droppableId === partyListId && destination.droppableId !== partyListId) {
       // moving a party from uncategorized parties to a category.

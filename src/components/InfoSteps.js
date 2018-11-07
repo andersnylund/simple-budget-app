@@ -101,19 +101,25 @@ class InfoSteps extends React.Component {
   };
 
   skippedSteps() {
-    return this.state.skipped.size;
+    const { skipped } = this.state;
+    return skipped.size;
   }
 
   isStepSkipped(step) {
-    return this.state.skipped.has(step);
+    const { skipped } = this.state;
+    return skipped.has(step);
   }
 
   isStepComplete(step) {
-    return this.state.completed.has(step);
+    const { completed } = this.state;
+
+    return completed.has(step);
   }
 
   completedSteps() {
-    return this.state.completed.size;
+    const { completed } = this.state;
+
+    return completed;
   }
 
   allStepsCompleted() {
@@ -121,7 +127,9 @@ class InfoSteps extends React.Component {
   }
 
   isLastStep() {
-    return this.state.activeStep === this.totalSteps() - 1;
+    const { activeStep } = this.state;
+
+    return activeStep === this.totalSteps() - 1;
   }
 
   render() {

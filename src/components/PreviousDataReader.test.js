@@ -1,6 +1,7 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import PreviousDataReader from './PreviousDataReader';
+import Context from '../Context';
 
 let props;
 let event;
@@ -33,7 +34,11 @@ describe('<PreviousDataReader />', () => {
   });
 
   it('should set data correctly', async () => {
-    const wrapper = shallow(<PreviousDataReader {...props} />);
+    const wrapper = mount(
+      <Context.Provider value={props}>
+        <PreviousDataReader />
+      </Context.Provider>
+    );
 
     const input = wrapper.find('StyledInput');
     await input.props().onChange(event);

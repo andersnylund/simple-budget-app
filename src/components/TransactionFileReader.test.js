@@ -1,7 +1,8 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import TransactionFileReader from './TransactionFileReader';
 import { danske } from '../Bank';
+import Context from '../Context';
 
 let props;
 let event;
@@ -21,7 +22,11 @@ describe('<TransactionFileReader />', () => {
   });
 
   it('should set initial transactions correctly', async () => {
-    const wrapper = shallow(<TransactionFileReader {...props} />);
+    const wrapper = mount(
+      <Context.Provider value={props}>
+        <TransactionFileReader />
+      </Context.Provider>
+    );
     const input = wrapper.find('StyledInput');
     await input.props().onChange(event);
 

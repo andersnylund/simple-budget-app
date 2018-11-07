@@ -1,12 +1,6 @@
-import React from 'react';
-import { shallow, mount } from 'enzyme';
 import { Button } from '@material-ui/core';
-import Categorizer from './Categorizer';
-import PartyList from './PartyList';
-import CategoryList from './CategoryList';
 import Context from '../Context';
 
-let props;
 let wrapper;
 
 const getWrapper = () => {
@@ -15,8 +9,6 @@ const getWrapper = () => {
       <Categorizer />
     </Context.Provider>
   );
-
-  return mount(component);
 };
 
 describe('<Categorizer />', () => {

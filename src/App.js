@@ -8,7 +8,14 @@ import CategorizationPage from './pages/CategorizationPage';
 import ExportPage from './pages/ExportPage';
 import { danske } from './Bank';
 import { INITIAL_CATEGORIES } from './constants';
-import NavigationAppBar from './components/NavigationAppBar';
+import NavigationAppBar, {
+  LANDING,
+  INFO,
+  IMPORT,
+  CATEGORIZE,
+  VISUALIZE,
+  EXPORT
+} from './components/NavigationAppBar';
 
 const initialState = {
   initialTransactions: [],
@@ -89,11 +96,11 @@ class App extends Component {
     const { categories } = userState;
     let page;
 
-    if (pageIndex === 0) {
+    if (pageIndex === LANDING) {
       page = <LandingPage />;
-    } else if (pageIndex === 1) {
+    } else if (pageIndex === INFO) {
       page = <InfoPage />;
-    } else if (pageIndex === 2) {
+    } else if (pageIndex === IMPORT) {
       page = (
         <ImportPage
           setInitialTransactions={this.setInitialTransactions}
@@ -104,13 +111,13 @@ class App extends Component {
           resetState={this.resetState}
         />
       );
-    } else if (pageIndex === 3) {
+    } else if (pageIndex === CATEGORIZE) {
       page = <CategorizationPage userState={userState} updateCategories={this.setCategories} />;
-    } else if (pageIndex === 4) {
+    } else if (pageIndex === VISUALIZE) {
       page = (
         <VisualizationPage initialTransactions={initialTransactions} categories={categories} />
       );
-    } else if (pageIndex === 5) {
+    } else if (pageIndex === EXPORT) {
       page = <ExportPage userState={userState} />;
     }
 
@@ -122,7 +129,7 @@ class App extends Component {
 
     return (
       <div>
-        <NavigationAppBar onChangePage={this.changePage} />
+        <NavigationAppBar onChangePage={this.changePage} activePage={activePageIndex} />
         <div>{this.showPage(activePageIndex)}</div>
       </div>
     );

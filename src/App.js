@@ -80,6 +80,36 @@ class App extends Component {
     }));
   };
 
+  setNewCategory = newCategortyTitle => {
+    const newCategory = {
+      title: newCategortyTitle,
+      parties: []
+    };
+    this.setState(prevState => ({
+      userState: {
+        ...prevState.userState,
+        categories: [...prevState.userState.categories, newCategory]
+      }
+    }));
+  };
+
+  removeCategory = categoryTitle => {
+    const { userState } = this.state;
+    const categoryToBeRemoved = userState.categories.find(
+      category => category.title === categoryTitle
+    );
+    const filteredCategoriesList = userState.categories.filter(
+      category => category.title !== categoryTitle
+    );
+    this.setState(prevState => ({
+      userState: {
+        ...prevState.userState,
+        uniqueParties: [...prevState.userState.uniqueParties, ...categoryToBeRemoved.parties],
+        categories: [...filteredCategoriesList]
+      }
+    }));
+  };
+
   resetState = () => {
     this.setState({ ...initialState });
   };
@@ -105,7 +135,14 @@ class App extends Component {
         />
       );
     } else if (pageIndex === 3) {
-      page = <CategorizationPage userState={userState} updateCategories={this.setCategories} />;
+      page = (
+        <CategorizationPage
+          userState={userState}
+          updateCategories={this.setCategories}
+          removeCategory={this.removeCategory}
+          addNewCategory={this.setNewCategory}
+        />
+      );
     } else if (pageIndex === 4) {
       page = (
         <VisualizationPage initialTransactions={initialTransactions} categories={categories} />

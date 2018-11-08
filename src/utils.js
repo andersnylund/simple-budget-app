@@ -12,34 +12,6 @@ export const parse = (csvString, bank) => {
   return data;
 };
 
-export const hydrateStateWithLocalStorage = component => {
-  // for all items in state
-  Object.keys(component.state).forEach(key => {
-    // if the key exists in localStorage
-    if (_.has(localStorage, key)) {
-      // get the key's value from localStorage
-      let value = localStorage.getItem(key);
-      // parse the localStorage string and setState
-      try {
-        value = JSON.parse(value);
-        component.setState({ [key]: value });
-      } catch (e) {
-        // handle empty string
-        component.setState({ [key]: value });
-      }
-    }
-  });
-};
-
-export const saveStateToLocalStorage = component => {
-  // for every item in React state
-  Object.keys(component.state).forEach(key => {
-    // save to localStorage
-    const { [key]: value } = component.state;
-    localStorage.setItem(key, JSON.stringify(value));
-  });
-};
-
 export const categoryOfParty = (party, categories) => {
   let returnValue = null;
 

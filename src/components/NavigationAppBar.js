@@ -13,7 +13,9 @@ import CategoryIcon from '@material-ui/icons/Category';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
 import PublishIcon from '@material-ui/icons/Publish';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import MobileMenuItem from './MobileMenuItem';
+import { setPageIndex } from '../reducers/appReducer';
 
 const Root = styled.div`
   width: 100%;
@@ -157,4 +159,9 @@ NavigationAppBar.propTypes = {
   onChangePage: PropTypes.func.isRequired
 };
 
-export default NavigationAppBar;
+export default connect(
+  null,
+  {
+    onChangePage: setPageIndex
+  }
+)(NavigationAppBar);

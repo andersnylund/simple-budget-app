@@ -17,7 +17,8 @@ const Reset = ({ resetApp, resetUser, ...rest }) => (
 );
 
 Reset.propTypes = {
-  resetState: PropTypes.func.isRequired
+  resetApp: PropTypes.func.isRequired,
+  resetUser: PropTypes.func.isRequired
 };
 
 export default connect(

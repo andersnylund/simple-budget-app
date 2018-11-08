@@ -40,6 +40,7 @@ class BankSelector extends React.Component {
     ));
 
     return (
+      // TODO get rid of {...rest}
       <form autoComplete="off" {...rest}>
         <FormControl>
           <InputLabel htmlFor="demo-controlled-open-select">Bank</InputLabel>
@@ -64,7 +65,7 @@ class BankSelector extends React.Component {
 
 BankSelector.propTypes = {
   selectedBank: PropTypes.objectOf(Bank).isRequired,
-  setBank: PropTypes.func.isRequired
+  changeBank: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

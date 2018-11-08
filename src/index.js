@@ -21,7 +21,7 @@ const store = createStore(
     appReducer,
     userReducer
   }),
-  // persistedState,
+  persistedState,
   composeWithDevTools()
 );
 

@@ -18,7 +18,7 @@ const handleChange = async (e, setCats) => {
   setCats(parsed.categories);
 };
 
-const PreviousDataReader = ({ setCats, ...rest }) => (
+export const PreviousDataReader = ({ setCats, ...rest }) => (
   <div {...rest}>
     <label htmlFor="previous-input">
       <StyledInput

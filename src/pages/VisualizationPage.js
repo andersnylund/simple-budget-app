@@ -18,7 +18,7 @@ const BALANCE_HISTORY = 1;
 const PARTY_GROUPING = 2;
 const CATEGORY_GROUPING = 3;
 
-class VisualizationPage extends React.Component {
+export class VisualizationPage extends React.Component {
   state = { activeTab: TRANSACTION_HISTORY };
 
   handleChange = (event, value) => {

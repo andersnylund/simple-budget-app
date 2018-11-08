@@ -5,7 +5,7 @@ import reducer, {
   setPageIndex,
   resetAppState
 } from './appReducer';
-import { initialTransactions } from '../testHelpers';
+import { transactions } from '../testHelpers';
 import { op } from '../Bank';
 
 describe('userReducer', () => {
@@ -38,7 +38,7 @@ describe('userReducer', () => {
 
   it('should set the transactions', () => {
     Object.freeze(initialState);
-    const state = reducer(initialState, setTransactions(initialTransactions));
+    const state = reducer(initialState, setTransactions(transactions));
     expect(state.transactions.length).toEqual(4);
   });
 
@@ -50,7 +50,7 @@ describe('userReducer', () => {
 
   it('should reset the state', () => {
     Object.freeze(initialState);
-    const state = reducer(initialState, setTransactions(initialTransactions));
+    const state = reducer(initialState, setTransactions(transactions));
     expect(state.transactions.length).toEqual(4);
     const resetted = reducer(state, resetAppState());
     expect(resetted.transactions.length).toEqual(0);

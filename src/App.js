@@ -9,7 +9,7 @@ import CategorizationPage from './pages/CategorizationPage';
 import ExportPage from './pages/ExportPage';
 import NavigationAppBar from './components/NavigationAppBar';
 
-class App extends Component {
+export class App extends Component {
   showPage = pageIndex => {
     if (pageIndex === 0) {
       return <LandingPage />;

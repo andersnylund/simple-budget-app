@@ -20,7 +20,7 @@ const handleChange = async (e, setInitialTransactions, selectedBank) => {
   setInitialTransactions(parsed);
 };
 
-const TransactionFileReader = ({ setInitialTransactions, selectedBank, ...rest }) => (
+export const TransactionFileReader = ({ setInitialTransactions, selectedBank, ...rest }) => (
   <div {...rest}>
     <label htmlFor="transactions-input">
       <StyledInput

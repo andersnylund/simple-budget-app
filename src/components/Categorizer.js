@@ -7,7 +7,7 @@ import PartyList from './PartyList';
 import CategoryList from './CategoryList';
 import { addPartyToCategory, removePartyFromCategory } from '../reducers/userReducer';
 
-class Categorizer extends React.Component {
+export class Categorizer extends React.Component {
   state = {
     selectedParties: [],
     activeCategory: 'Housing' // @TODO Add this dynamically.

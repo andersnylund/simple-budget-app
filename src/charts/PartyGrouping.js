@@ -4,9 +4,9 @@ import Chart from 'react-apexcharts';
 import _ from 'lodash';
 import ChartContainer from './ChartContainer';
 
-const PartyGrouping = ({ initialTransactions }) => {
+const PartyGrouping = ({ transactions }) => {
   // TODO Extract function to utils
-  const result = initialTransactions.reduce((previous, current) => {
+  const result = transactions.reduce((previous, current) => {
     const returnValue = _.cloneDeep(previous);
 
     if (_.has(previous, current.party)) {
@@ -41,10 +41,10 @@ const PartyGrouping = ({ initialTransactions }) => {
 };
 
 PartyGrouping.propTypes = {
-  initialTransactions: PropTypes.arrayOf(
+  transactions: PropTypes.arrayOf(
     PropTypes.shape({
       date: PropTypes.string.isRequired,
-      amount: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired,
       party: PropTypes.string.isRequired
     })
   ).isRequired

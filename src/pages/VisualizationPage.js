@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Paper, Tabs, Tab } from '@material-ui/core';
+import { connect } from 'react-redux';
 import BalanceHistory from '../charts/BalanceHistory';
 import PartyGrouping from '../charts/PartyGrouping';
 import CategoryGrouping from '../charts/CategoryGrouping';
@@ -25,19 +26,19 @@ class VisualizationPage extends React.Component {
   };
 
   getChart = () => {
-    const { initialTransactions, categories } = this.props;
+    const { transactions, categories } = this.props;
     const { activeTab } = this.state;
     if (activeTab === TRANSACTION_HISTORY) {
-      return <TransactionHistory initialTransactions={initialTransactions} />;
+      return <TransactionHistory transactions={transactions} />;
     }
     if (activeTab === BALANCE_HISTORY) {
-      return <BalanceHistory initialTransactions={initialTransactions} />;
+      return <BalanceHistory transactions={transactions} />;
     }
     if (activeTab === PARTY_GROUPING) {
-      return <PartyGrouping initialTransactions={initialTransactions} />;
+      return <PartyGrouping transactions={transactions} />;
     }
     if (activeTab === CATEGORY_GROUPING) {
-      return <CategoryGrouping initialTransactions={initialTransactions} categories={categories} />;
+      return <CategoryGrouping transactions={transactions} categories={categories} />;
     }
     return null;
   };
@@ -69,10 +70,10 @@ class VisualizationPage extends React.Component {
 }
 
 VisualizationPage.propTypes = {
-  initialTransactions: PropTypes.arrayOf(
+  transactions: PropTypes.arrayOf(
     PropTypes.shape({
       date: PropTypes.string.isRequired,
-      amount: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired,
       party: PropTypes.string.isRequired
     })
   ).isRequired,
@@ -84,4 +85,9 @@ VisualizationPage.propTypes = {
   ).isRequired
 };
 
-export default VisualizationPage;
+const mapStateToProps = state => ({
+  transactions: state.appReducer.transactions,
+  categories: state.userReducer.categories
+});
+
+export default connect(mapStateToProps)(VisualizationPage);

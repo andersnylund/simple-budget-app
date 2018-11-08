@@ -112,7 +112,7 @@ Categorizer.propTypes = {
   transactions: PropTypes.arrayOf(
     PropTypes.shape({
       date: PropTypes.string.isRequired,
-      amount: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired,
       party: PropTypes.string.isRequired
     })
   ).isRequired,

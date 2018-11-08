@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
+import { connect } from 'react-redux';
 import { parse } from '../utils';
 import Bank from '../Bank';
+import { setTransactions } from '../reducers/appReducer';
 
 const StyledInput = styled.input`
   display: none;
@@ -35,9 +37,16 @@ const TransactionFileReader = ({ setInitialTransactions, selectedBank, ...rest }
   </div>
 );
 
+const mapStateToProps = state => ({
+  selectedBank: state.appReducer.bank
+});
+
 TransactionFileReader.propTypes = {
   setInitialTransactions: PropTypes.func.isRequired,
   selectedBank: PropTypes.objectOf(Bank).isRequired
 };
 
-export default TransactionFileReader;
+export default connect(
+  mapStateToProps,
+  { setInitialTransactions: setTransactions }
+)(TransactionFileReader);

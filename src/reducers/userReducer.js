@@ -35,6 +35,13 @@ const reducer = (state = initialState, action) => {
     }
   }
 
+  if (action.type === 'SET_CATEGORIES') {
+    return {
+      ...state,
+      categories: action.categories
+    };
+  }
+
   if (action.type === 'RESET_USER_STATE') {
     return {
       ...initialState
@@ -54,6 +61,11 @@ export const removePartyFromCategory = (party, category) => ({
   type: 'REMOVE_PARTY',
   category,
   party
+});
+
+export const setCategories = categories => ({
+  type: 'SET_CATEGORIES',
+  categories
 });
 
 export const resetUserState = () => ({

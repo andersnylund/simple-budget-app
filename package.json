@@ -48,6 +48,7 @@
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.11.1",
     "prettier": "^1.14.3",
-    "pretty-quick": "^1.8.0"
+    "pretty-quick": "^1.8.0",
+    "redux-devtools-extension": "^2.13.5"
   }
 }

@@ -4,7 +4,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import { connect } from 'react-redux';
 import Bank, { banks } from '../Bank';
+import { setBank } from '../reducers/appReducer';
 
 class BankSelector extends React.Component {
   state = {
@@ -12,9 +14,9 @@ class BankSelector extends React.Component {
   };
 
   handleChange = e => {
-    const { setBank } = this.props;
+    const { changeBank } = this.props;
     const bank = banks.find(b => b.name === e.target.value);
-    setBank(bank);
+    changeBank(bank);
   };
 
   handleClose = () => {
@@ -26,7 +28,7 @@ class BankSelector extends React.Component {
   };
 
   render() {
-    const { selectedBank, setBank, ...rest } = this.props;
+    const { selectedBank, ...rest } = this.props;
     const { open } = this.state;
 
     const value = selectedBank ? selectedBank.name : 'Other';
@@ -65,4 +67,13 @@ BankSelector.propTypes = {
   setBank: PropTypes.func.isRequired
 };
 
-export default BankSelector;
+const mapStateToProps = state => ({
+  selectedBank: state.appReducer.bank
+});
+
+export default connect(
+  mapStateToProps,
+  {
+    changeBank: setBank
+  }
+)(BankSelector);

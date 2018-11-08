@@ -7,6 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 import throttle from 'lodash/throttle';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import appReducer from './reducers/appReducer';
 import userReducer from './reducers/userReducer';
 import App from './App';
@@ -19,8 +20,9 @@ const store = createStore(
   combineReducers({
     appReducer,
     userReducer
-  })
-  // persistedState
+  }),
+  // persistedState,
+  composeWithDevTools()
 );
 
 // https://egghead.io/lessons/javascript-redux-persisting-the-state-to-the-local-storage

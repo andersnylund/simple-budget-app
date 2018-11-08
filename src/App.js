@@ -7,26 +7,33 @@ import InfoPage from './pages/InfoPage';
 import VisualizationPage from './pages/VisualizationPage';
 import CategorizationPage from './pages/CategorizationPage';
 import ExportPage from './pages/ExportPage';
-import NavigationAppBar from './components/NavigationAppBar';
+import NavigationAppBar, {
+  LANDING,
+  INFO,
+  IMPORT,
+  CATEGORIZE,
+  VISUALIZE,
+  EXPORT
+} from './components/NavigationAppBar';
 
 export class App extends Component {
   showPage = pageIndex => {
-    if (pageIndex === 0) {
+    if (pageIndex === LANDING) {
       return <LandingPage />;
     }
-    if (pageIndex === 1) {
+    if (pageIndex === INFO) {
       return <InfoPage />;
     }
-    if (pageIndex === 2) {
+    if (pageIndex === IMPORT) {
       return <ImportPage />;
     }
-    if (pageIndex === 3) {
+    if (pageIndex === CATEGORIZE) {
       return <CategorizationPage />;
     }
-    if (pageIndex === 4) {
+    if (pageIndex === VISUALIZE) {
       return <VisualizationPage />;
     }
-    if (pageIndex === 5) {
+    if (pageIndex === EXPORT) {
       return <ExportPage />;
     }
     return <LandingPage />;

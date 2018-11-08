@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import { connect } from 'react-redux';
 import PartyList from './PartyList';
 import CategoryList from './CategoryList';
+import { addPartyToCategory, removePartyFromCategory } from '../reducers/userReducer';
 
 class Categorizer extends React.Component {
   state = {
@@ -24,8 +26,7 @@ class Categorizer extends React.Component {
   };
 
   unCategorizedParties = () => {
-    const { userState } = this.props;
-    const { categories, uniqueParties } = userState;
+    const { categories, transactions } = this.props;
 
     const categorizedParties = [];
 
@@ -41,52 +42,24 @@ class Categorizer extends React.Component {
       });
     }
 
+    const uniqueParties = [...new Set(transactions.map(t => t.party))];
     const unCategorizedParties = uniqueParties.filter(party => !categorizedParties.includes(party));
 
     return unCategorizedParties;
   };
 
-  removeCategorizedParty = (partyToRemove, categoryTitleToBeModified) => {
-    const { updateCategories, userState } = this.props;
-
-    const currentCategories = userState.categories;
-
-    const categoryToBeModified = currentCategories.find(
-      category => category.title === categoryTitleToBeModified
-    );
-
-    const otherCategories = currentCategories.filter(
-      category => category.title !== categoryTitleToBeModified
-    );
-
-    const filteredParties = categoryToBeModified.parties.filter(party => party !== partyToRemove);
-
-    const modifiedCategory = {
-      title: categoryTitleToBeModified,
-      parties: [...filteredParties]
-    };
-
-    updateCategories([...otherCategories, modifiedCategory]);
+  removeCategorizedParty = (party, category) => {
+    const { removeParty } = this.props;
+    removeParty(party, category);
   };
 
   updateState = () => {
-    const { updateCategories, userState } = this.props;
+    const { addParty } = this.props;
     const { activeCategory, selectedParties } = this.state;
 
-    const currentCategories = userState.categories;
-    const categoryOlderState = currentCategories.find(
-      category => category.title === activeCategory
-    );
-    const categoriesWithoutActiveCategory = currentCategories.filter(
-      category => category.title !== activeCategory
-    );
-
-    const newCategory = {
-      title: activeCategory,
-      parties: [...categoryOlderState.parties, ...selectedParties]
-    };
-
-    updateCategories([...categoriesWithoutActiveCategory, newCategory]);
+    selectedParties.forEach(p => {
+      addParty(p, activeCategory);
+    });
 
     this.setState({
       selectedParties: []
@@ -94,7 +67,7 @@ class Categorizer extends React.Component {
   };
 
   render() {
-    const { userState } = this.props;
+    const { categories } = this.props;
     const { selectedParties, activeCategory } = this.state;
 
     const availableParties = this.unCategorizedParties();
@@ -111,7 +84,7 @@ class Categorizer extends React.Component {
         <Grid item md={6} xs={12}>
           <CategoryList
             activeCategory={activeCategory}
-            data={userState.categories}
+            data={categories}
             updateActiveCategory={this.setActiveCategory}
             removeCategorizedParty={this.removeCategorizedParty}
           />
@@ -124,17 +97,33 @@ class Categorizer extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  categories: state.userReducer.categories,
+  transactions: state.appReducer.transactions
+});
+
 Categorizer.propTypes = {
-  userState: PropTypes.shape({
-    uniqueParties: PropTypes.arrayOf(PropTypes.string).isRequired,
-    categories: PropTypes.arrayOf(
-      PropTypes.shape({
-        title: PropTypes.string,
-        parties: PropTypes.arrayOf(PropTypes.string)
-      })
-    )
-  }).isRequired,
-  updateCategories: PropTypes.func.isRequired
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string,
+      parties: PropTypes.arrayOf(PropTypes.string)
+    })
+  ).isRequired,
+  transactions: PropTypes.arrayOf(
+    PropTypes.shape({
+      date: PropTypes.string.isRequired,
+      amount: PropTypes.string.isRequired,
+      party: PropTypes.string.isRequired
+    })
+  ).isRequired,
+  addParty: PropTypes.func.isRequired,
+  removeParty: PropTypes.func.isRequired
 };
 
-export default Categorizer;
+export default connect(
+  mapStateToProps,
+  {
+    addParty: addPartyToCategory,
+    removeParty: removePartyFromCategory
+  }
+)(Categorizer);

@@ -39,4 +39,12 @@ describe('<PartyList />', () => {
     const formControl = wrapper.find(FormControlLabel).first();
     expect(formControl.props().control.props.checked).toBe(true);
   });
+
+  it('should uncheck a party', async () => {
+    const wrapper = shallow(<PartyList {...props} />);
+    const formControl = wrapper.find(FormControlLabel).first();
+    const { onChange } = formControl.props().control.props;
+    onChange({ target: { checked: false } });
+    expect(props.updateSelectedParties.mock.calls[0][0]).toEqual([]);
+  });
 });

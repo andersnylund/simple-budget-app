@@ -4,10 +4,12 @@ import { IntlProvider, addLocaleData } from 'react-intl';
 import en from 'react-intl/locale-data/en';
 import './index.css';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { Provider } from 'react-redux';
 import App from './App';
 import messagesEn from './translations/en.json';
 import * as serviceWorker from './serviceWorker';
 import { saveStateToLocalStorage, hydrateStateWithLocalStorage } from './utils';
+import store from './store';
 
 const props = { saveStateToLocalStorage, hydrateStateWithLocalStorage };
 
@@ -20,7 +22,9 @@ const messages = {
 ReactDOM.render(
   <CssBaseline>
     <IntlProvider locale="en" messages={messages.en}>
-      <App {...props} />
+      <Provider store={store}>
+        <App {...props} />
+      </Provider>
     </IntlProvider>
   </CssBaseline>,
   document.getElementById('root')

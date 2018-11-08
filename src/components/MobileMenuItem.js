@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { MenuItem, IconButton } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 
-const MobileMenuItem = ({ icon, formattedMessageId, onClick }) => (
-  <MenuItem onClick={onClick}>
+const MobileMenuItem = ({ icon, formattedMessageId, onClick, ...other }) => (
+  <MenuItem onClick={onClick} {...other}>
     <IconButton color="inherit">{icon}</IconButton>
-    <p>{<FormattedMessage id={formattedMessageId} />}</p>
+    <p>{<FormattedMessage id={formattedMessageId} {...other} />}</p>
   </MenuItem>
 );
 

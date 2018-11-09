@@ -3,15 +3,19 @@ export const initialState = {
   amountByCategories: []
 };
 
+const SET_AMOUNT_BY_PARTY = 'SET_AMOUNT_BY_PARTY';
+const SET_AMOUNT_OF_CATEGORY = 'SET_AMOUNT_OF_CATEGORY';
+const RESET_AMOUNT_STATE = 'RESET_AMOUNT_STATE';
+
 const reducer = (state = initialState, action) => {
-  if (action.type === 'SET_AMOUNT_BY_PARTY') {
+  if (action.type === SET_AMOUNT_BY_PARTY) {
     return {
       ...state,
       amountByParties: [...action.amountByParty]
     };
   }
 
-  if (action.type === 'SET_AMOUNT_OF_CATEGORY') {
+  if (action.type === SET_AMOUNT_OF_CATEGORY) {
     return {
       ...state,
       amountByCategories: [...state.amountByCategories]
@@ -20,7 +24,7 @@ const reducer = (state = initialState, action) => {
     };
   }
 
-  if (action.type === 'RESET_AMOUNT_STATE') {
+  if (action.type === RESET_AMOUNT_STATE) {
     return {
       amountByParties: [],
       amountByCategories: []
@@ -31,18 +35,18 @@ const reducer = (state = initialState, action) => {
 };
 
 export const setAmountByParties = amountByParty => ({
-  type: 'SET_AMOUNT_BY_PARTY',
+  type: SET_AMOUNT_BY_PARTY,
   amountByParty
 });
 
 export const setAmountOfCategory = (amount, categoryTitle) => ({
-  type: 'SET_AMOUNT_OF_CATEGORY',
+  type: SET_AMOUNT_OF_CATEGORY,
   amount,
   categoryTitle
 });
 
 export const resetAmountState = () => ({
-  type: 'RESET_AMOUNT_STATE'
+  type: RESET_AMOUNT_STATE
 });
 
 export default reducer;

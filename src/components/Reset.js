@@ -12,15 +12,16 @@ const handleClick = (resetApp, resetUser, resetAmount) => {
   resetAmount();
 };
 
-const Reset = ({ resetApp, resetUser, ...rest }) => (
+export const Reset = ({ resetApp, resetUser, resetAmount, ...rest }) => (
   <div {...rest}>
-    <Button onClick={() => handleClick(resetApp, resetUser)}>Reset all</Button>
+    <Button onClick={() => handleClick(resetApp, resetUser, resetAmount)}>Reset all</Button>
   </div>
 );
 
 Reset.propTypes = {
   resetApp: PropTypes.func.isRequired,
-  resetUser: PropTypes.func.isRequired
+  resetUser: PropTypes.func.isRequired,
+  resetAmount: PropTypes.func.isRequired
 };
 
 export default connect(

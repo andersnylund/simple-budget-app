@@ -3,15 +3,29 @@ import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
+import throttle from 'lodash/throttle';
 import PartyList from './PartyList';
 import CategoryList from './CategoryList';
 import { addPartyToCategory, removePartyFromCategory } from '../reducers/userReducer';
+import { setAmountOfCategory as setAmount } from '../reducers/amountReducer';
+import { combinedAmountOfParties } from '../utils';
 
 export class Categorizer extends React.Component {
   state = {
     selectedParties: [],
     activeCategory: 'Housing' // @TODO Add this dynamically.
   };
+
+  updateAmounts = throttle(() => {
+    const { setAmountOfCategory, transactions, categories } = this.props;
+    categories.forEach(category => {
+      setAmountOfCategory(combinedAmountOfParties(transactions, category.parties), category.title);
+    });
+  }, 2000);
+
+  componentWillUnmount() {
+    this.updateAmounts();
+  }
 
   setActiveCategory = newCategory => {
     this.setState({
@@ -51,6 +65,7 @@ export class Categorizer extends React.Component {
   removeCategorizedParty = (party, category) => {
     const { removeParty } = this.props;
     removeParty(party, category);
+    this.updateAmounts();
   };
 
   updateState = () => {
@@ -64,6 +79,8 @@ export class Categorizer extends React.Component {
     this.setState({
       selectedParties: []
     });
+
+    this.updateAmounts();
   };
 
   render() {
@@ -117,13 +134,15 @@ Categorizer.propTypes = {
     })
   ).isRequired,
   addParty: PropTypes.func.isRequired,
-  removeParty: PropTypes.func.isRequired
+  removeParty: PropTypes.func.isRequired,
+  setAmountOfCategory: PropTypes.func.isRequired
 };
 
 export default connect(
   mapStateToProps,
   {
     addParty: addPartyToCategory,
-    removeParty: removePartyFromCategory
+    removeParty: removePartyFromCategory,
+    setAmountOfCategory: setAmount
   }
 )(Categorizer);

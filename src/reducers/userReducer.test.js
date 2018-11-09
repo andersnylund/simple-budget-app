@@ -1,3 +1,4 @@
+import deepFreeze from 'deep-freeze';
 import reducer, {
   addPartyToCategory,
   removePartyFromCategory,
@@ -20,7 +21,8 @@ describe('userReducer', () => {
   });
 
   it('should add a party to category', () => {
-    const state = reducer(undefined, addPartyToCategory('Party1', 'Housing'));
+    const action = deepFreeze(addPartyToCategory('Party1', 'Housing'));
+    const state = reducer(undefined, action);
     const category = state.categories.find(c => c.title === 'Housing');
     expect(category).toEqual({
       title: 'Housing',
@@ -29,14 +31,17 @@ describe('userReducer', () => {
   });
 
   it('should remove a party from category', () => {
-    const state = reducer(undefined, addPartyToCategory('Party1', 'Housing'));
+    const action = deepFreeze(addPartyToCategory('Party1', 'Housing'));
+    const state = reducer(undefined, action);
     const category = state.categories.find(c => c.title === 'Housing');
     expect(category).toEqual({
       title: 'Housing',
       parties: ['Party1']
     });
 
-    const newState = reducer(state, removePartyFromCategory('Party1', 'Housing'));
+    const newState = deepFreeze(
+      reducer(state, deepFreeze(removePartyFromCategory('Party1', 'Housing')))
+    );
     const newCategory = newState.categories.find(c => c.title === 'Housing');
     expect(newCategory).toEqual({
       title: 'Housing',
@@ -45,7 +50,7 @@ describe('userReducer', () => {
   });
 
   it('should reset the user state', () => {
-    const state = reducer(undefined, addPartyToCategory('Party1', 'Housing'));
+    const state = reducer(undefined, deepFreeze(addPartyToCategory('Party1', 'Housing')));
     const resetted = reducer(state, resetUserState());
     expect(resetted).toEqual(initialState);
   });

@@ -14,7 +14,8 @@ describe('<Categorizer />', () => {
       categories,
       transactions,
       addParty: jest.fn(),
-      removeParty: jest.fn()
+      removeParty: jest.fn(),
+      setAmountOfCategory: jest.fn()
     };
   });
 
@@ -70,5 +71,14 @@ describe('<Categorizer />', () => {
     const wrapper = shallow(<Categorizer {...props} />);
 
     expect(wrapper.instance().unCategorizedParties()).toEqual(['party2', 'party3']);
+  });
+
+  it('calls setAmountOfCategory when updating', () => {
+    const wrapper = shallow(<Categorizer {...props} />);
+    wrapper.instance().setSelectedParties(['party1']);
+    wrapper.instance().setActiveCategory('category1');
+    wrapper.instance().updateState();
+
+    expect(props.setAmountOfCategory.mock.calls[0]).toEqual([20.2, 'category1']);
   });
 });

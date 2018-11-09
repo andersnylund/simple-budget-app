@@ -1,12 +1,10 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
 import PropTypes from 'prop-types';
-import { amountByCategory } from '../utils';
+import { connect } from 'react-redux';
 import ChartContainer from './ChartContainer';
 
-const CategoryGrouping = ({ transactions, categories }) => {
-  const byCategory = amountByCategory(transactions, categories);
-
+const CategoryGrouping = ({ byCategory }) => {
   const array = byCategory.map(category => ({
     x: category.title,
     y: category.amount
@@ -28,19 +26,16 @@ const CategoryGrouping = ({ transactions, categories }) => {
 };
 
 CategoryGrouping.propTypes = {
-  transactions: PropTypes.arrayOf(
+  byCategory: PropTypes.arrayOf(
     PropTypes.shape({
-      date: PropTypes.string.isRequired,
-      amount: PropTypes.number.isRequired,
-      party: PropTypes.string.isRequired
-    })
-  ).isRequired,
-  categories: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string,
-      parties: PropTypes.arrayOf(PropTypes.string)
+      title: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired
     })
   ).isRequired
 };
 
-export default CategoryGrouping;
+const mapStateToProps = state => ({
+  byCategory: state.amountReducer.amountByCategories
+});
+
+export default connect(mapStateToProps)(CategoryGrouping);

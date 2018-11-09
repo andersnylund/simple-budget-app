@@ -11,7 +11,8 @@ describe('<TransactionFileReader />', () => {
   beforeEach(() => {
     props = {
       selectedBank: danske,
-      setInitialTransactions: jest.fn()
+      setInitialTransactions: jest.fn(),
+      setAmount: jest.fn()
     };
     event = {
       target: {
@@ -28,6 +29,11 @@ describe('<TransactionFileReader />', () => {
     expect(props.setInitialTransactions.mock.calls[0][0]).toEqual([
       { amount: -10.45, date: '2018-01-01T00:00:00.000Z', party: 'K-Market' },
       { amount: 5.45, date: '2018-01-02T00:00:00.000Z', party: 'Pekka' }
+    ]);
+
+    expect(props.setAmount.mock.calls[0][0]).toEqual([
+      { amount: 5.45, title: 'Pekka' },
+      { amount: -10.45, title: 'K-Market' }
     ]);
   });
 });

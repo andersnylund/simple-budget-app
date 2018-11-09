@@ -1,6 +1,5 @@
 import papa from 'papaparse';
 import moment from 'moment';
-import _ from 'lodash';
 
 export const parse = (csvString, bank) => {
   const transactions = papa.parse(csvString).data.filter((j, i) => i !== 0); // remove first item
@@ -12,39 +11,36 @@ export const parse = (csvString, bank) => {
   return data;
 };
 
-export const categoryOfParty = (party, categories) => {
-  let returnValue = null;
+export const combinedAmountOfParties = (transactions, parties) => {
+  let amount = 0;
 
-  categories.forEach(category => {
-    if (category.parties.includes(party)) {
-      returnValue = category.title;
+  transactions.forEach(transaction => {
+    if (parties.includes(transaction.party)) {
+      amount += transaction.amount;
     }
   });
-  return returnValue;
+
+  return amount;
 };
 
-export const amountByCategory = (initialTransactions, categories) => {
-  const categoryMap = categories.reduce((prev, curr) => {
-    const temp = _.cloneDeep(prev);
-    temp[curr.title] = 0;
-    return temp;
-  }, {});
+export const amountByEachParty = transactions => {
+  const parties = [...new Set(transactions.map(t => t.party))].map(p => ({
+    title: p,
+    amount: 0
+  }));
 
-  initialTransactions.forEach(transaction => {
-    const category = categoryOfParty(transaction.party, categories);
-    if (category !== null) {
-      categoryMap[category] += transaction.amount;
+  transactions.forEach(t => {
+    const party = parties.find(p => p.title === t.party);
+    if (party) {
+      party.amount += t.amount;
     }
   });
 
-  return Object.keys(categoryMap).map(key => ({
-    title: key,
-    amount: categoryMap[key]
-  }));
+  return parties.sort((a, b) => a.amount < b.amount);
 };
 
 export default {
   parse,
-  amountByCategory,
-  categoryOfParty
+  combinedAmountOfParties,
+  amountByEachParty
 };

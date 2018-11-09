@@ -9,7 +9,7 @@ let jsonData;
 describe('<PreviousDataReader />', () => {
   beforeEach(() => {
     props = {
-      setCats: jest.fn()
+      categorize: jest.fn()
     };
     jsonData = {
       categories: [
@@ -37,6 +37,6 @@ describe('<PreviousDataReader />', () => {
     const input = wrapper.find('StyledInput');
     await input.props().onChange(event);
 
-    expect(props.setCats.mock.calls[0][0]).toEqual(jsonData.categories);
+    expect(props.categorize.mock.calls[0][0]).toEqual(jsonData.categories);
   });
 });

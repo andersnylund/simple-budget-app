@@ -2,7 +2,6 @@ import React from 'react';
 import Chart from 'react-apexcharts';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import ChartContainer from './ChartContainer';
 
 const CategoryGrouping = ({ byCategory }) => {
   const array = byCategory.map(category => ({
@@ -18,11 +17,7 @@ const CategoryGrouping = ({ byCategory }) => {
     }
   ];
 
-  return (
-    <ChartContainer>
-      <Chart options={options} series={series} height={800} type="bar" />
-    </ChartContainer>
-  );
+  return <Chart options={options} series={series} height={800} type="bar" />;
 };
 
 CategoryGrouping.propTypes = {

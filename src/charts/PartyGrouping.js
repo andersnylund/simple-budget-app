@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Chart from 'react-apexcharts';
 import { connect } from 'react-redux';
-import ChartContainer from './ChartContainer';
 
 const PartyGrouping = ({ byParty }) => {
   const array = byParty.map(party => ({
@@ -18,11 +17,7 @@ const PartyGrouping = ({ byParty }) => {
     }
   ];
 
-  return (
-    <ChartContainer>
-      <Chart options={options} series={series} height={800} type="bar" />
-    </ChartContainer>
-  );
+  return <Chart options={options} series={series} height={800} type="bar" />;
 };
 
 PartyGrouping.propTypes = {

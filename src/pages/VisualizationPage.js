@@ -1,11 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Paper, Tabs, Tab } from '@material-ui/core';
+import { Paper, Tabs, Tab, Typography } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import BalanceHistory from '../charts/BalanceHistory';
 import PartyGrouping from '../charts/PartyGrouping';
 import CategoryGrouping from '../charts/CategoryGrouping';
 import TransactionHistory from '../charts/TransactionHistory';
+import ChartContainer from '../charts/ChartContainer';
 
 const TabContainer = styled(Paper)`
   flex-grow: 1;
@@ -17,7 +20,7 @@ const BALANCE_HISTORY = 1;
 const PARTY_GROUPING = 2;
 const CATEGORY_GROUPING = 3;
 
-class VisualizationPage extends React.Component {
+export class VisualizationPage extends React.Component {
   state = { activeTab: TRANSACTION_HISTORY };
 
   handleChange = (event, value) => {
@@ -25,24 +28,25 @@ class VisualizationPage extends React.Component {
   };
 
   getChart = () => {
-    const { initialTransactions, categories } = this.props;
+    const { transactions, categories } = this.props;
     const { activeTab } = this.state;
     if (activeTab === TRANSACTION_HISTORY) {
-      return <TransactionHistory initialTransactions={initialTransactions} />;
+      return <TransactionHistory transactions={transactions} />;
     }
     if (activeTab === BALANCE_HISTORY) {
-      return <BalanceHistory initialTransactions={initialTransactions} />;
+      return <BalanceHistory transactions={transactions} />;
     }
     if (activeTab === PARTY_GROUPING) {
-      return <PartyGrouping initialTransactions={initialTransactions} />;
+      return <PartyGrouping transactions={transactions} />;
     }
     if (activeTab === CATEGORY_GROUPING) {
-      return <CategoryGrouping initialTransactions={initialTransactions} categories={categories} />;
+      return <CategoryGrouping transactions={transactions} categories={categories} />;
     }
     return null;
   };
 
   render() {
+    const { transactions } = this.props;
     const { activeTab } = this.state;
 
     return (
@@ -62,17 +66,25 @@ class VisualizationPage extends React.Component {
             <Tab label="Categories" />
           </Tabs>
         </TabContainer>
-        <div>{this.getChart()}</div>
+        <ChartContainer>
+          {transactions.length !== 0 ? (
+            <div>{this.getChart()}</div>
+          ) : (
+            <Typography variant="h4">
+              <FormattedMessage id="error.transactionsEmpty" />
+            </Typography>
+          )}
+        </ChartContainer>
       </div>
     );
   }
 }
 
 VisualizationPage.propTypes = {
-  initialTransactions: PropTypes.arrayOf(
+  transactions: PropTypes.arrayOf(
     PropTypes.shape({
       date: PropTypes.string.isRequired,
-      amount: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired,
       party: PropTypes.string.isRequired
     })
   ).isRequired,
@@ -84,4 +96,9 @@ VisualizationPage.propTypes = {
   ).isRequired
 };
 
-export default VisualizationPage;
+const mapStateToProps = state => ({
+  transactions: state.appReducer.transactions,
+  categories: state.userReducer.categories
+});
+
+export default connect(mapStateToProps)(VisualizationPage);

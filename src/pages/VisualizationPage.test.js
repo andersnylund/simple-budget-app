@@ -1,15 +1,15 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import VisualizationPage from './VisualizationPage';
+import { VisualizationPage } from './VisualizationPage';
 import BalanceHistory from '../charts/BalanceHistory';
 import TransactionHistory from '../charts/TransactionHistory';
 import PartyGrouping from '../charts/PartyGrouping';
-import { initialTransactions, categories } from '../testHelpers';
+import { transactions, categories } from '../testHelpers';
 
 describe('<VisualizationPage />', () => {
   it('initializes the state', () => {
     const wrapper = shallow(
-      <VisualizationPage initialTransactions={initialTransactions} categories={categories} />
+      <VisualizationPage transactions={transactions} categories={categories} />
     );
 
     expect(wrapper.state()).toEqual({ activeTab: 0 });
@@ -17,7 +17,7 @@ describe('<VisualizationPage />', () => {
 
   it('renders the correct chart', () => {
     const wrapper = shallow(
-      <VisualizationPage initialTransactions={initialTransactions} categories={categories} />
+      <VisualizationPage transactions={transactions} categories={categories} />
     );
 
     expect(wrapper.find(TransactionHistory).exists()).toBe(true);
@@ -25,7 +25,7 @@ describe('<VisualizationPage />', () => {
 
   it('can switch the chart', () => {
     const wrapper = shallow(
-      <VisualizationPage initialTransactions={initialTransactions} categories={categories} />
+      <VisualizationPage transactions={transactions} categories={categories} />
     );
 
     wrapper.instance().handleChange(null, 1);
@@ -35,5 +35,10 @@ describe('<VisualizationPage />', () => {
     wrapper.instance().handleChange(null, 2);
     wrapper.update();
     expect(wrapper.find(PartyGrouping).exists()).toBe(true);
+  });
+
+  it('should not show the charts if there is no transactions', () => {
+    const wrapper = shallow(<VisualizationPage transactions={[]} categories={[]} />);
+    expect(wrapper.find(TransactionHistory).exists()).toBe(false);
   });
 });

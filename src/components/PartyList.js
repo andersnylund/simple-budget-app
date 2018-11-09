@@ -8,8 +8,11 @@ import FormControl from '@material-ui/core/FormControl';
 
 const PartyList = ({ parties, selectedParties, updateSelectedParties }) => {
   const handleChange = name => event => {
-    if (name && event.target.checked) {
+    if (event.target.checked) {
       const newSelectedParties = [...selectedParties, name];
+      updateSelectedParties(newSelectedParties);
+    } else {
+      const newSelectedParties = [...selectedParties].filter(p => p !== name);
       updateSelectedParties(newSelectedParties);
     }
   };

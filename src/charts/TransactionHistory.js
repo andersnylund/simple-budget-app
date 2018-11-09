@@ -7,7 +7,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import styled from 'styled-components';
-import ChartContainer from './ChartContainer';
 
 const StyledPaper = styled(Paper)`
   width: 100%;
@@ -20,38 +19,36 @@ const addId = transaction => {
   return { id, party: transaction.party, amount: transaction.amount, date: transaction.date };
 };
 
-const SimpleTable = ({ initialTransactions }) => (
-  <ChartContainer>
-    <StyledPaper>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Party</TableCell>
-            <TableCell numeric>Amount</TableCell>
-            <TableCell numeric>Date</TableCell>
+const SimpleTable = ({ transactions }) => (
+  <StyledPaper>
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell>Party</TableCell>
+          <TableCell numeric>Amount</TableCell>
+          <TableCell numeric>Date</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {transactions.map(addId).map(t => (
+          <TableRow key={t.id}>
+            <TableCell component="th" scope="row">
+              {t.party}
+            </TableCell>
+            <TableCell numeric>{t.amount}</TableCell>
+            <TableCell numeric>{t.date}</TableCell>
           </TableRow>
-        </TableHead>
-        <TableBody>
-          {initialTransactions.map(addId).map(t => (
-            <TableRow key={t.id}>
-              <TableCell component="th" scope="row">
-                {t.party}
-              </TableCell>
-              <TableCell numeric>{t.amount}</TableCell>
-              <TableCell numeric>{t.date}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </StyledPaper>
-  </ChartContainer>
+        ))}
+      </TableBody>
+    </Table>
+  </StyledPaper>
 );
 
 SimpleTable.propTypes = {
-  initialTransactions: PropTypes.arrayOf(
+  transactions: PropTypes.arrayOf(
     PropTypes.shape({
       date: PropTypes.string.isRequired,
-      amount: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired,
       party: PropTypes.string.isRequired
     })
   ).isRequired

@@ -2,10 +2,9 @@ import React from 'react';
 import Chart from 'react-apexcharts';
 import PropTypes from 'prop-types';
 import { amountByCategory } from '../utils';
-import ChartContainer from './ChartContainer';
 
-const CategoryGrouping = ({ initialTransactions, categories }) => {
-  const byCategory = amountByCategory(initialTransactions, categories);
+const CategoryGrouping = ({ transactions, categories }) => {
+  const byCategory = amountByCategory(transactions, categories);
 
   const array = byCategory.map(category => ({
     x: category.title,
@@ -20,18 +19,14 @@ const CategoryGrouping = ({ initialTransactions, categories }) => {
     }
   ];
 
-  return (
-    <ChartContainer>
-      <Chart options={options} series={series} height={800} type="bar" />
-    </ChartContainer>
-  );
+  return <Chart options={options} series={series} height={800} type="bar" />;
 };
 
 CategoryGrouping.propTypes = {
-  initialTransactions: PropTypes.arrayOf(
+  transactions: PropTypes.arrayOf(
     PropTypes.shape({
       date: PropTypes.string.isRequired,
-      amount: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired,
       party: PropTypes.string.isRequired
     })
   ).isRequired,

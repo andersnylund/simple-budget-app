@@ -1,29 +1,20 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { Button } from '@material-ui/core';
-import Categorizer from './Categorizer';
+import { Categorizer } from './Categorizer';
 import PartyList from './PartyList';
 import CategoryList from './CategoryList';
+import { categories, transactions } from '../testHelpers';
 
 let props;
 
 describe('<Categorizer />', () => {
   beforeEach(() => {
     props = {
-      userState: {
-        uniqueParties: ['party1', 'party2'],
-        categories: [
-          {
-            title: 'category1',
-            parties: []
-          },
-          {
-            title: 'category2',
-            parties: []
-          }
-        ]
-      },
-      updateCategories: jest.fn()
+      categories,
+      transactions,
+      addParty: jest.fn(),
+      removeParty: jest.fn()
     };
   });
 
@@ -52,8 +43,6 @@ describe('<Categorizer />', () => {
   it('should categorize parties', () => {
     const wrapper = shallow(<Categorizer {...props} />);
 
-    const { updateCategories } = props;
-
     expect(wrapper.state().selectedParties).toEqual([]);
 
     wrapper.instance().setSelectedParties(['party1']);
@@ -63,20 +52,11 @@ describe('<Categorizer />', () => {
     expect(wrapper.state().selectedParties).toEqual([]);
     expect(wrapper.state().activeCategory).toEqual('category1');
 
-    expect(updateCategories.mock.calls[0][0]).toEqual([
-      {
-        parties: [],
-        title: 'category2'
-      },
-      {
-        parties: ['party1'],
-        title: 'category1'
-      }
-    ]);
+    expect(props.addParty.mock.calls[0]).toEqual(['party1', 'category1']);
   });
 
   it('unCategorizedParties() should return correct value', () => {
-    props.userState.categories = [
+    props.categories = [
       {
         title: 'category1',
         parties: ['party1']
@@ -89,6 +69,6 @@ describe('<Categorizer />', () => {
 
     const wrapper = shallow(<Categorizer {...props} />);
 
-    expect(wrapper.instance().unCategorizedParties()).toEqual(['party2']);
+    expect(wrapper.instance().unCategorizedParties()).toEqual(['party2', 'party3']);
   });
 });

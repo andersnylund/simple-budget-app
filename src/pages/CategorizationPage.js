@@ -1,8 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import { connect } from 'react-redux';
+import { arrayOf, shape, string, number } from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import Categorizer from '../components/Categorizer';
 
 const Container = styled.div`
@@ -10,30 +12,33 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
-const CategorizationPage = ({ userState, updateCategories }) => (
+export const CategorizationPage = ({ transactions }) => (
   <Container>
     <Grid container>
       <Typography variant="h2">Categorization</Typography>
-      {!userState ? (
-        <Typography variant="h4">Select a file and bank on import page</Typography>
+      {transactions.length !== 0 ? (
+        <Categorizer />
       ) : (
-        <Categorizer userState={userState} updateCategories={updateCategories} />
+        <Typography variant="h4">
+          <FormattedMessage id="error.transactionsEmpty" />
+        </Typography>
       )}
     </Grid>
   </Container>
 );
 
 CategorizationPage.propTypes = {
-  userState: PropTypes.shape({
-    uniqueParties: PropTypes.arrayOf(PropTypes.string).isRequired,
-    categories: PropTypes.arrayOf(
-      PropTypes.shape({
-        title: PropTypes.string,
-        parties: PropTypes.arrayOf(PropTypes.string)
-      })
-    )
-  }).isRequired,
-  updateCategories: PropTypes.func.isRequired
+  transactions: arrayOf(
+    shape({
+      date: string.isRequired,
+      amount: number.isRequired,
+      party: string.isRequired
+    })
+  ).isRequired
 };
 
-export default CategorizationPage;
+const mapStateToProps = state => ({
+  transactions: state.appReducer.transactions
+});
+
+export default connect(mapStateToProps)(CategorizationPage);

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Chart from 'react-apexcharts';
 import _ from 'lodash';
-import ChartContainer from './ChartContainer';
 
 const PartyGrouping = ({ transactions }) => {
   // TODO Extract function to utils
@@ -33,11 +32,7 @@ const PartyGrouping = ({ transactions }) => {
     }
   ];
 
-  return (
-    <ChartContainer>
-      <Chart options={options} series={series} height={800} type="bar" />
-    </ChartContainer>
-  );
+  return <Chart options={options} series={series} height={800} type="bar" />;
 };
 
 PartyGrouping.propTypes = {

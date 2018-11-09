@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Paper, Tabs, Tab } from '@material-ui/core';
+import { Paper, Tabs, Tab, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import BalanceHistory from '../charts/BalanceHistory';
 import PartyGrouping from '../charts/PartyGrouping';
 import CategoryGrouping from '../charts/CategoryGrouping';
 import TransactionHistory from '../charts/TransactionHistory';
+import ChartContainer from '../charts/ChartContainer';
 
 const TabContainer = styled(Paper)`
   flex-grow: 1;
@@ -44,6 +46,7 @@ export class VisualizationPage extends React.Component {
   };
 
   render() {
+    const { transactions } = this.props;
     const { activeTab } = this.state;
 
     return (
@@ -63,7 +66,15 @@ export class VisualizationPage extends React.Component {
             <Tab label="Categories" />
           </Tabs>
         </TabContainer>
-        <div>{this.getChart()}</div>
+        <ChartContainer>
+          {transactions.length !== 0 ? (
+            <div>{this.getChart()}</div>
+          ) : (
+            <Typography variant="h4">
+              <FormattedMessage id="error.transactionsEmpty" />
+            </Typography>
+          )}
+        </ChartContainer>
       </div>
     );
   }

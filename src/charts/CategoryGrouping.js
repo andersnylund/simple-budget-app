@@ -2,7 +2,6 @@ import React from 'react';
 import Chart from 'react-apexcharts';
 import PropTypes from 'prop-types';
 import { amountByCategory } from '../utils';
-import ChartContainer from './ChartContainer';
 
 const CategoryGrouping = ({ transactions, categories }) => {
   const byCategory = amountByCategory(transactions, categories);
@@ -20,11 +19,7 @@ const CategoryGrouping = ({ transactions, categories }) => {
     }
   ];
 
-  return (
-    <ChartContainer>
-      <Chart options={options} series={series} height={800} type="bar" />
-    </ChartContainer>
-  );
+  return <Chart options={options} series={series} height={800} type="bar" />;
 };
 
 CategoryGrouping.propTypes = {

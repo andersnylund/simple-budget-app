@@ -36,4 +36,9 @@ describe('<VisualizationPage />', () => {
     wrapper.update();
     expect(wrapper.find(PartyGrouping).exists()).toBe(true);
   });
+
+  it('should not show the charts if there is no transactions', () => {
+    const wrapper = shallow(<VisualizationPage transactions={[]} categories={[]} />);
+    expect(wrapper.find(TransactionHistory).exists()).toBe(false);
+  });
 });

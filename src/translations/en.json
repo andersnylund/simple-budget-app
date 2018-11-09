@@ -14,5 +14,6 @@
   "navigation.visualization": "Visualization",
   "navigation.export": "Export",
   "info.Back": "Back",
-  "info.Next": "Next"
+  "info.Next": "Next",
+  "error.transactionsEmpty": "Uh oh! There is no transactions to be found. Go back to the import page and import the required files"
 }

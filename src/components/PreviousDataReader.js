@@ -11,14 +11,14 @@ const StyledInput = styled.input`
 
 StyledInput.displayName = 'StyledInput';
 
-const handleChange = async (e, setCats) => {
+const handleChange = async (e, categorize) => {
   const file = e.target.files[0];
   const jsonString = await new Response(file).text();
   const parsed = JSON.parse(jsonString);
-  setCats(parsed.categories);
+  categorize(parsed.categories);
 };
 
-export const PreviousDataReader = ({ setCats, ...rest }) => (
+export const PreviousDataReader = ({ categorize, ...rest }) => (
   <div {...rest}>
     <label htmlFor="previous-input">
       <StyledInput
@@ -26,7 +26,7 @@ export const PreviousDataReader = ({ setCats, ...rest }) => (
         id="previous-input"
         multiple={false}
         type="file"
-        onChange={e => handleChange(e, setCats)}
+        onChange={e => handleChange(e, categorize)}
       />
       <Button variant="contained" component="span">
         Upload previous data
@@ -36,12 +36,12 @@ export const PreviousDataReader = ({ setCats, ...rest }) => (
 );
 
 PreviousDataReader.propTypes = {
-  setCats: PropTypes.func.isRequired
+  categorize: PropTypes.func.isRequired
 };
 
 export default connect(
   null,
   {
-    setCats: setCategories
+    categorize: setCategories
   }
 )(PreviousDataReader);

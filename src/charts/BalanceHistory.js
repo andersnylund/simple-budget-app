@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Chart from 'react-apexcharts';
 import moment from 'moment';
-import ChartContainer from './ChartContainer';
 
 const BalanceHistory = ({ transactions }) => {
   let result = [];
@@ -25,11 +24,7 @@ const BalanceHistory = ({ transactions }) => {
     }
   ];
 
-  return (
-    <ChartContainer>
-      <Chart options={options} series={series} height={800} type="line" />
-    </ChartContainer>
-  );
+  return <Chart options={options} series={series} height={800} type="line" />;
 };
 
 BalanceHistory.propTypes = {

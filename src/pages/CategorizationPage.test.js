@@ -1,9 +1,17 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import { CategorizationPage } from './CategorizationPage';
+import { transactions } from '../testHelpers';
+import Categorizer from '../components/Categorizer';
+
 describe('<CategorizationPage />', () => {
-  it('renders when state is given', () => {
-    // TODO implement functionality and test
+  it('should render without crashing', () => {
+    const wrapper = shallow(<CategorizationPage transactions={transactions} />);
+    expect(wrapper.find(Categorizer).exists()).toBe(true);
   });
 
-  it('does not render when userState is undefined', () => {
-    // TODO implement functionality and test
+  it('should not render if transactions empty', () => {
+    const wrapper = shallow(<CategorizationPage transactions={[]} />);
+    expect(wrapper.find(Categorizer).exists()).toBe(false);
   });
 });

@@ -7,7 +7,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import styled from 'styled-components';
-import ChartContainer from './ChartContainer';
 
 const StyledPaper = styled(Paper)`
   width: 100%;
@@ -21,30 +20,28 @@ const addId = transaction => {
 };
 
 const SimpleTable = ({ transactions }) => (
-  <ChartContainer>
-    <StyledPaper>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Party</TableCell>
-            <TableCell numeric>Amount</TableCell>
-            <TableCell numeric>Date</TableCell>
+  <StyledPaper>
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell>Party</TableCell>
+          <TableCell numeric>Amount</TableCell>
+          <TableCell numeric>Date</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {transactions.map(addId).map(t => (
+          <TableRow key={t.id}>
+            <TableCell component="th" scope="row">
+              {t.party}
+            </TableCell>
+            <TableCell numeric>{t.amount}</TableCell>
+            <TableCell numeric>{t.date}</TableCell>
           </TableRow>
-        </TableHead>
-        <TableBody>
-          {transactions.map(addId).map(t => (
-            <TableRow key={t.id}>
-              <TableCell component="th" scope="row">
-                {t.party}
-              </TableCell>
-              <TableCell numeric>{t.amount}</TableCell>
-              <TableCell numeric>{t.date}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </StyledPaper>
-  </ChartContainer>
+        ))}
+      </TableBody>
+    </Table>
+  </StyledPaper>
 );
 
 SimpleTable.propTypes = {

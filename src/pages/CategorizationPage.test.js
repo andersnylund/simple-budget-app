@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { CategorizationPage } from './CategorizationPage';
 import { transactions } from '../testHelpers';
-import Categorizer from '../components/Categorizer';
+import Categorizer from '../components/categorize/Categorizer';
 
 describe('<CategorizationPage />', () => {
   it('should render without crashing', () => {

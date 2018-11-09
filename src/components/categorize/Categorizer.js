@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 import throttle from 'lodash/throttle';
 import PartyList from './PartyList';
 import CategoryList from './CategoryList';
-import { addPartyToCategory, removePartyFromCategory } from '../reducers/userReducer';
-import { setAmountOfCategory as setAmount } from '../reducers/amountReducer';
-import { combinedAmountOfParties } from '../utils';
+import { addPartyToCategory, removePartyFromCategory } from '../../reducers/userReducer';
+import { setAmountOfCategory as setAmount } from '../../reducers/amountReducer';
+import { combinedAmountOfParties } from '../../utils';
 
 export class Categorizer extends React.Component {
   state = {

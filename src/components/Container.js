@@ -8,10 +8,10 @@ const Div = styled.div`
   width: 100%;
 `;
 
-const ChartContainer = ({ children }) => <Div>{children}</Div>;
+const Container = ({ children }) => <Div>{children}</Div>;
 
-ChartContainer.propTypes = {
+Container.propTypes = {
   children: PropTypes.node.isRequired
 };
 
-export default ChartContainer;
+export default Container;

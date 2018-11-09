@@ -4,7 +4,7 @@ import { Button } from '@material-ui/core';
 import { Categorizer } from './Categorizer';
 import PartyList from './PartyList';
 import CategoryList from './CategoryList';
-import { categories, transactions } from '../testHelpers';
+import { categories, transactions } from '../../testHelpers';
 
 let props;
 

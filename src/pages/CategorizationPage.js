@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 import { arrayOf, shape, string, number } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import Categorizer from '../components/Categorizer';
+import Categorizer from '../components/categorize/Categorizer';
 
 const Container = styled.div`
   max-width: 30rem;

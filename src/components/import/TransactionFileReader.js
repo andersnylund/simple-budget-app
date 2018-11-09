@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
-import { parse, significantParties } from '../utils';
-import Bank from '../Bank';
-import { setTransactions } from '../reducers/appReducer';
-import { setSignificantParties } from '../reducers/amountReducer';
+import { parse, significantParties } from '../../utils';
+import Bank from '../../Bank';
+import { setSignificantParties } from '../../reducers/amountReducer';
+import { setTransactions } from '../../reducers/appReducer';
 
 const StyledInput = styled.input`
   display: none;

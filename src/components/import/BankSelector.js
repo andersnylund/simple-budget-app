@@ -5,8 +5,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { connect } from 'react-redux';
-import Bank, { banks } from '../Bank';
-import { setBank } from '../reducers/appReducer';
+import Bank, { banks } from '../../Bank';
+import { setBank } from '../../reducers/appReducer';
 
 class BankSelector extends React.Component {
   state = {

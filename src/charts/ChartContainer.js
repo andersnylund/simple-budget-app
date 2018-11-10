@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Div = styled.div`
-  margin: 6rem auto;
+  margin: 3rem auto;
   max-width: 60rem;
   width: 100%;
 `;

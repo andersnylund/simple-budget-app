@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Chart from 'react-apexcharts';
 import { connect } from 'react-redux';
+import Paper from '@material-ui/core/Paper';
 
 const PartyGrouping = ({ byParty }) => {
   const array = byParty.map(party => ({
@@ -12,12 +13,16 @@ const PartyGrouping = ({ byParty }) => {
   const options = {};
   const series = [
     {
-      name: 'Party',
+      name: 'Amount',
       data: array
     }
   ];
 
-  return <Chart options={options} series={series} height={800} type="bar" />;
+  return (
+    <Paper>
+      <Chart options={options} series={series} height={800} type="bar" />
+    </Paper>
+  );
 };
 
 PartyGrouping.propTypes = {

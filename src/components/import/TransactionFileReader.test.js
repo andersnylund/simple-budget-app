@@ -23,7 +23,7 @@ describe('<TransactionFileReader />', () => {
 
   it('should set initial transactions correctly', async () => {
     const wrapper = shallow(<TransactionFileReader {...props} />);
-    const input = wrapper.find('StyledInput');
+    const input = wrapper.find('input');
     await input.props().onChange(event);
 
     expect(props.setInitialTransactions.mock.calls[0][0]).toEqual([

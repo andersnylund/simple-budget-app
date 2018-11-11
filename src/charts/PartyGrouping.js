@@ -4,8 +4,8 @@ import Chart from 'react-apexcharts';
 import { connect } from 'react-redux';
 import Paper from '@material-ui/core/Paper';
 
-const PartyGrouping = ({ byParty }) => {
-  const array = byParty.map(party => ({
+const PartyGrouping = ({ significantParties }) => {
+  const array = significantParties.map(party => ({
     x: party.title,
     y: party.amount
   }));
@@ -26,7 +26,7 @@ const PartyGrouping = ({ byParty }) => {
 };
 
 PartyGrouping.propTypes = {
-  byParty: PropTypes.arrayOf(
+  significantParties: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       amount: PropTypes.number.isRequired
@@ -35,7 +35,7 @@ PartyGrouping.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  byParty: state.amountReducer.amountByParties
+  significantParties: state.amountReducer.significantParties
 });
 
 export default connect(mapStateToProps)(PartyGrouping);

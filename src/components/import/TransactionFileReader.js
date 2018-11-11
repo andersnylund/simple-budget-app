@@ -1,18 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { parse, significantParties } from '../../utils';
 import Bank from '../../Bank';
 import { setSignificantParties } from '../../reducers/amountReducer';
 import { setTransactions } from '../../reducers/appReducer';
-
-const StyledInput = styled.input`
-  display: none;
-`;
-
-StyledInput.displayName = 'StyledInput';
 
 const handleChange = async (e, setInitialTransactions, selectedBank, setParties) => {
   const file = e.target.files[0];
@@ -23,15 +16,11 @@ const handleChange = async (e, setInitialTransactions, selectedBank, setParties)
   setParties(byParty);
 };
 
-export const TransactionFileReader = ({
-  setInitialTransactions,
-  selectedBank,
-  setParties,
-  ...rest
-}) => (
-  <div {...rest}>
+export const TransactionFileReader = ({ setInitialTransactions, selectedBank, setParties }) => (
+  <div>
     <label htmlFor="transactions-input">
-      <StyledInput
+      <input
+        style={{ display: 'none' }}
         accept=".csv"
         id="transactions-input"
         multiple={false}
@@ -52,7 +41,7 @@ const mapStateToProps = state => ({
 TransactionFileReader.propTypes = {
   setParties: PropTypes.func.isRequired,
   setInitialTransactions: PropTypes.func.isRequired,
-  selectedBank: PropTypes.objectOf(Bank).isRequired
+  selectedBank: PropTypes.shape(Bank).isRequired
 };
 
 export default connect(

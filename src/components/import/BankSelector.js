@@ -28,7 +28,7 @@ class BankSelector extends React.Component {
   };
 
   render() {
-    const { selectedBank, ...rest } = this.props;
+    const { selectedBank } = this.props;
     const { open } = this.state;
 
     const value = selectedBank ? selectedBank.name : 'Other';
@@ -40,31 +40,32 @@ class BankSelector extends React.Component {
     ));
 
     return (
-      // TODO get rid of {...rest}
-      <form autoComplete="off" {...rest}>
-        <FormControl>
-          <InputLabel htmlFor="demo-controlled-open-select">Bank</InputLabel>
-          <Select
-            open={open}
-            onClose={this.handleClose}
-            onOpen={this.handleOpen}
-            value={value}
-            onChange={this.handleChange}
-            inputProps={{
-              name: 'bank',
-              id: 'demo-controlled-open-select'
-            }}
-          >
-            {bankArray}
-          </Select>
-        </FormControl>
-      </form>
+      <div>
+        <form autoComplete="off">
+          <FormControl>
+            <InputLabel htmlFor="demo-controlled-open-select">Bank</InputLabel>
+            <Select
+              open={open}
+              onClose={this.handleClose}
+              onOpen={this.handleOpen}
+              value={value}
+              onChange={this.handleChange}
+              inputProps={{
+                name: 'bank',
+                id: 'demo-controlled-open-select'
+              }}
+            >
+              {bankArray}
+            </Select>
+          </FormControl>
+        </form>
+      </div>
     );
   }
 }
 
 BankSelector.propTypes = {
-  selectedBank: PropTypes.objectOf(Bank).isRequired,
+  selectedBank: PropTypes.shape(Bank).isRequired,
   changeBank: PropTypes.func.isRequired
 };
 

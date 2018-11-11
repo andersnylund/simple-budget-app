@@ -14,7 +14,7 @@ const Container = styled.div`
   justify-content: space-around;
   width: 100%;
 `;
-export const Categorizer = ({ categories, removeParty, transactions, addParty }) => {
+export const Categorizer = ({ categories, removeParty, parties, addParty }) => {
   const partyListId = 'uncategorized-parties';
 
   const unCategorizedParties = () => {
@@ -32,41 +32,8 @@ export const Categorizer = ({ categories, removeParty, transactions, addParty })
       });
     }
 
-    const uniqueParties = [...new Set(transactions.map(t => t.party))];
-    return uniqueParties.filter(party => !categorizedParties.includes(party));
-    // return unCategorizedParties;
+    return parties.filter(party => !categorizedParties.includes(party));
   };
-
-  // const removeCategorizedParty = (party, category) => {
-  //   removeParty(party, category);
-  //   // const currentCategories = categories;
-
-  //   // const categoryToBeModified = currentCategories.find(
-  //   //   category => category.title === categoryTitleToBeModified
-  //   // );
-
-  //   // const otherCategories = currentCategories.filter(
-  //   //   category => category.title !== categoryTitleToBeModified
-  //   // );
-
-  //   // const filteredParties = categoryToBeModified.parties.filter(party => party !== partyToRemove);
-
-  //   // const modifiedCategory = {
-  //   //   title: categoryTitleToBeModified,
-  //   //   parties: [...filteredParties]
-  //   // };
-
-  //   // updateCategories([...otherCategories, modifiedCategory]);
-  // };
-
-  // removeCategorizedParty = (party, category) => {
-  //   const { removeParty } = this.props;
-  //   removeParty(party, category);
-  // };
-
-  // const addPartyToCategory = (party, category) => {
-  //   addParty(party, category);
-  // };
 
   const onDragEnd = result => {
     const { source, destination, draggableId } = result;
@@ -79,7 +46,7 @@ export const Categorizer = ({ categories, removeParty, transactions, addParty })
     if (source.droppableId === partyListId && destination.droppableId !== partyListId) {
       // moving a party from uncategorized parties to a category.
       const categoryTitleToBeModified = destination.droppableId;
-      addParty(draggableId, categoryTitleToBeModified);
+      addParty(draggableId, categoryTitleToBeModified, destination.index);
     } else if (destination.droppableId === partyListId && source.droppableId !== partyListId) {
       // removing a party from a category to the uncategorized list.
       const categoryTitleToBeModified = source.droppableId;
@@ -92,18 +59,15 @@ export const Categorizer = ({ categories, removeParty, transactions, addParty })
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Container>
-        <div>
-          <CategoryList data={categories} />
-          <PartyList parties={availableParties} id={partyListId} />
-        </div>
+        <CategoryList data={categories} />
+        <PartyList parties={availableParties} id={partyListId} />
       </Container>
     </DragDropContext>
   );
 };
 
 const mapStateToProps = state => ({
-  categories: state.userReducer.categories,
-  transactions: state.appReducer.transactions
+  categories: state.userReducer.categories
 });
 
 Categorizer.propTypes = {
@@ -113,13 +77,7 @@ Categorizer.propTypes = {
       parties: PropTypes.arrayOf(PropTypes.string)
     })
   ).isRequired,
-  transactions: PropTypes.arrayOf(
-    PropTypes.shape({
-      date: PropTypes.string.isRequired,
-      amount: PropTypes.number.isRequired,
-      party: PropTypes.string.isRequired
-    })
-  ).isRequired,
+  parties: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   addParty: PropTypes.func.isRequired,
   removeParty: PropTypes.func.isRequired
 };

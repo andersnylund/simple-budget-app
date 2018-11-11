@@ -8,7 +8,8 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { FormattedMessage } from 'react-intl';
 import Categorizer from '../components/Categorizer';
-// import CategoriesOverview from '../components/CategoriesOverview';
+import CategoriesOverview from '../components/CategoriesOverview';
+import TransactionsOverview from '../components/TransactionsOverview';
 
 const Container = styled.div`
   max-width: 30rem;
@@ -18,31 +19,41 @@ const Container = styled.div`
 
 const Section = styled.div`
   padding: 2rem 0;
+  width: 100%;
+`;
+
+const SectionNavigationContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 2rem 0;
 `;
 
 class CategorizationPage extends React.Component {
   maxSections = 2;
 
-  state = {
-    currentSection: 1
+  sectionTitleMapper = {
+    0: 'Transactions',
+    1: 'Categories',
+    2: 'Grouping'
   };
 
-  showSection = index => {
-    const { transactions } = this.props;
+  state = {
+    currentSection: 0
+  };
 
+  showSection = (index, uniqueParties) => {
     if (index === 0) {
-      // @TODO add transactions list here.
-      return '';
+      return <TransactionsOverview parties={uniqueParties} />;
     }
-    // if (index === 1) {
-    //   return <CategoriesOverview />;
-    // }
 
-    return !transactions ? (
-      <Typography variant="h4">Select a file and bank on import page</Typography>
-    ) : (
-      <Categorizer />
-    );
+    if (index === 1) {
+      return <CategoriesOverview />;
+    }
+
+    return <Categorizer parties={uniqueParties} />;
   };
 
   navigateBack = () => {
@@ -66,16 +77,22 @@ class CategorizationPage extends React.Component {
   render() {
     const { currentSection } = this.state;
     const { transactions } = this.props;
+    const uniqueParties = [...new Set(transactions.map(t => t.party))];
+
     return (
       <Container>
         <Grid container>
-          <Typography variant="h3">Categorization</Typography>
+          <Typography variant="h3" gutterBottom>
+            Categorization
+          </Typography>
           {transactions.length !== 0 ? (
             <Section>
-              <ArrowBackIosIcon onClick={this.navigateBack} />
-              <ArrowForwardIosIcon onClick={this.navigateForward} />
-
-              {this.showSection(currentSection)}
+              <SectionNavigationContainer>
+                <ArrowBackIosIcon onClick={this.navigateBack} />
+                <Typography variant="h4">{this.sectionTitleMapper[currentSection]}</Typography>
+                <ArrowForwardIosIcon onClick={this.navigateForward} />
+              </SectionNavigationContainer>
+              {this.showSection(currentSection, uniqueParties)}
             </Section>
           ) : (
             <Typography variant="h4">
@@ -97,6 +114,7 @@ CategorizationPage.propTypes = {
     })
   ).isRequired
 };
+
 const mapStateToProps = state => ({
   transactions: state.appReducer.transactions
 });

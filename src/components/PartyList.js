@@ -18,7 +18,9 @@ const PartyList = ({ parties, id }) => {
 
   return (
     <div>
-      <Typography variant="h4">Uncategorized parties</Typography>
+      <Typography variant="h4" gutterBottom>
+        Uncategorized Parties
+      </Typography>
       <Droppable droppableId={id}>
         {(provided, snapshot) => (
           <div ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>

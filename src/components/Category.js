@@ -10,7 +10,8 @@ import Party from './Party';
 const Category = ({ title, parties }) => {
   const styles = {
     Card: {
-      minHeight: '20rem'
+      minHeight: '20rem',
+      width: '100%'
     }
   };
 
@@ -18,7 +19,10 @@ const Category = ({ title, parties }) => {
 
   const getListStyle = isDraggingOver => ({
     background: isDraggingOver ? 'lightblue' : 'lightgrey',
-    padding: grid
+    padding: grid,
+    width: '80%',
+    display: 'inline-block',
+    overflow: 'hidden'
   });
 
   const partyList = parties.map((party, index) => (
@@ -26,23 +30,21 @@ const Category = ({ title, parties }) => {
   ));
 
   return (
-    <div>
-      <Droppable droppableId={title}>
-        {(provided, snapshot) => (
-          <div
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-            style={getListStyle(snapshot.isDraggingOver)}
-          >
-            <Card style={styles.Card}>
-              <CardContent>{title}</CardContent>
-              <CardContent>{partyList}</CardContent>
-            </Card>
+    <Droppable droppableId={title}>
+      {(provided, snapshot) => (
+        <div
+          {...provided.droppableProps}
+          ref={provided.innerRef}
+          style={getListStyle(snapshot.isDraggingOver)}
+        >
+          <Card style={styles.Card}>
+            <CardContent>{title}</CardContent>
+            <CardContent>{partyList}</CardContent>
             {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </div>
+          </Card>
+        </div>
+      )}
+    </Droppable>
   );
 };
 

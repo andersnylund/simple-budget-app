@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import { FormattedMessage } from 'react-intl';
 import Categorizer from '../components/Categorizer';
 // import CategoriesOverview from '../components/CategoriesOverview';
 
@@ -64,25 +65,28 @@ class CategorizationPage extends React.Component {
 
   render() {
     const { currentSection } = this.state;
+    const { transactions } = this.props;
     return (
       <Container>
         <Grid container>
           <Typography variant="h3">Categorization</Typography>
-          <Section>
-            <ArrowBackIosIcon onClick={this.navigateBack} />
-            <ArrowForwardIosIcon onClick={this.navigateForward} />
+          {transactions.length !== 0 ? (
+            <Section>
+              <ArrowBackIosIcon onClick={this.navigateBack} />
+              <ArrowForwardIosIcon onClick={this.navigateForward} />
 
-            {this.showSection(currentSection)}
-          </Section>
+              {this.showSection(currentSection)}
+            </Section>
+          ) : (
+            <Typography variant="h4">
+              <FormattedMessage id="error.transactionsEmpty" />
+            </Typography>
+          )}
         </Grid>
       </Container>
     );
   }
 }
-
-const mapStateToProps = state => ({
-  transactions: state.appReducer.transactions
-});
 
 CategorizationPage.propTypes = {
   transactions: PropTypes.arrayOf(
@@ -93,14 +97,8 @@ CategorizationPage.propTypes = {
     })
   ).isRequired
 };
-
-// const CategorizationPage = () => (
-//   <Container>
-//     <Grid container>
-//       <Typography variant="h2">Categorization</Typography>
-//       <Categorizer />
-//     </Grid>
-//   </Container>
-// );
+const mapStateToProps = state => ({
+  transactions: state.appReducer.transactions
+});
 
 export default connect(mapStateToProps)(CategorizationPage);

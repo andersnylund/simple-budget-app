@@ -32,7 +32,7 @@ export const Categorizer = ({ categories, removeParty, parties, addParty }) => {
       });
     }
 
-    return parties.filter(party => !categorizedParties.includes(party));
+    return parties ? parties.filter(party => !categorizedParties.includes(party)) : undefined;
   };
 
   const onDragEnd = result => {

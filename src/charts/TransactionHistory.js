@@ -20,7 +20,7 @@ const addId = transaction => {
   return { id, party: transaction.party, amount: transaction.amount, date: transaction.date };
 };
 
-const SimpleTable = ({ initialTransactions }) => (
+const SimpleTable = ({ transactions }) => (
   <ChartContainer>
     <StyledPaper>
       <Table>
@@ -32,7 +32,7 @@ const SimpleTable = ({ initialTransactions }) => (
           </TableRow>
         </TableHead>
         <TableBody>
-          {initialTransactions.map(addId).map(t => (
+          {transactions.map(addId).map(t => (
             <TableRow key={t.id}>
               <TableCell component="th" scope="row">
                 {t.party}
@@ -48,10 +48,10 @@ const SimpleTable = ({ initialTransactions }) => (
 );
 
 SimpleTable.propTypes = {
-  initialTransactions: PropTypes.arrayOf(
+  transactions: PropTypes.arrayOf(
     PropTypes.shape({
       date: PropTypes.string.isRequired,
-      amount: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired,
       party: PropTypes.string.isRequired
     })
   ).isRequired

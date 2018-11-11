@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 const Container = styled.div`
   display: flex;
@@ -33,7 +34,18 @@ const ExportPage = ({ userState }) => {
 };
 
 ExportPage.propTypes = {
-  userState: PropTypes.object.isRequired
+  userState: PropTypes.shape({
+    categories: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string,
+        parties: PropTypes.arrayOf(PropTypes.string)
+      })
+    ).isRequired
+  }).isRequired
 };
 
-export default ExportPage;
+const mapStateToProps = state => ({
+  userState: state.userReducer
+});
+
+export default connect(mapStateToProps)(ExportPage);

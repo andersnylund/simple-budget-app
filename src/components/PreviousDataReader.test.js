@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import PreviousDataReader from './PreviousDataReader';
+import { PreviousDataReader } from './PreviousDataReader';
 
 let props;
 let event;
@@ -9,8 +9,7 @@ let jsonData;
 describe('<PreviousDataReader />', () => {
   beforeEach(() => {
     props = {
-      setCategories: jest.fn(),
-      setUniqueParties: jest.fn()
+      setCats: jest.fn()
     };
     jsonData = {
       categories: [
@@ -38,7 +37,6 @@ describe('<PreviousDataReader />', () => {
     const input = wrapper.find('StyledInput');
     await input.props().onChange(event);
 
-    expect(props.setCategories.mock.calls[0][0]).toEqual(jsonData.categories);
-    expect(props.setUniqueParties.mock.calls[0][0]).toEqual(jsonData.uniqueParties);
+    expect(props.setCats.mock.calls[0][0]).toEqual(jsonData.categories);
   });
 });

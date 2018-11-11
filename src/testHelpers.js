@@ -1,4 +1,4 @@
-export const initialTransactions = [
+export const transactions = [
   {
     date: new Date().toISOString(),
     party: 'party1',
@@ -32,4 +32,4 @@ export const categories = [
   }
 ];
 
-export default { initialTransactions, categories };
+export default { transactions, categories };

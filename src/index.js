@@ -4,12 +4,33 @@ import { IntlProvider, addLocaleData } from 'react-intl';
 import en from 'react-intl/locale-data/en';
 import './index.css';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { Provider } from 'react-redux';
+import { createStore, combineReducers } from 'redux';
+import throttle from 'lodash/throttle';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import appReducer from './reducers/appReducer';
+import userReducer from './reducers/userReducer';
 import App from './App';
 import messagesEn from './translations/en.json';
 import * as serviceWorker from './serviceWorker';
-import { saveStateToLocalStorage, hydrateStateWithLocalStorage } from './utils';
+import { loadState, saveState } from './localStorage';
 
-const props = { saveStateToLocalStorage, hydrateStateWithLocalStorage };
+const persistedState = loadState();
+const store = createStore(
+  combineReducers({
+    appReducer,
+    userReducer
+  }),
+  persistedState,
+  composeWithDevTools()
+);
+
+// https://egghead.io/lessons/javascript-redux-persisting-the-state-to-the-local-storage
+store.subscribe(
+  throttle(() => {
+    saveState(store.getState());
+  }, 1000)
+);
 
 addLocaleData([...en]);
 
@@ -20,7 +41,9 @@ const messages = {
 ReactDOM.render(
   <CssBaseline>
     <IntlProvider locale="en" messages={messages.en}>
-      <App {...props} />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </IntlProvider>
   </CssBaseline>,
   document.getElementById('root')

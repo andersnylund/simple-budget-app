@@ -4,10 +4,10 @@ import Chart from 'react-apexcharts';
 import moment from 'moment';
 import ChartContainer from './ChartContainer';
 
-const BalanceHistory = ({ initialTransactions }) => {
+const BalanceHistory = ({ transactions }) => {
   let result = [];
 
-  initialTransactions.reduce((previous, current) => {
+  transactions.reduce((previous, current) => {
     const balance = previous + current.amount;
     result = result.concat({
       x: moment(current.date).format('dddd, MMMM Do YYYY'),
@@ -33,10 +33,10 @@ const BalanceHistory = ({ initialTransactions }) => {
 };
 
 BalanceHistory.propTypes = {
-  initialTransactions: PropTypes.arrayOf(
+  transactions: PropTypes.arrayOf(
     PropTypes.shape({
       date: PropTypes.string.isRequired,
-      amount: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired,
       party: PropTypes.string.isRequired
     })
   ).isRequired

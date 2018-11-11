@@ -1,9 +1,9 @@
 import { amountByCategory, categoryOfParty } from './utils';
-import { initialTransactions, categories } from './testHelpers';
+import { transactions, categories } from './testHelpers';
 
 describe('utils.js', () => {
   it('should return correct value in spendingByCategory', () => {
-    const result = amountByCategory(initialTransactions, categories);
+    const result = amountByCategory(transactions, categories);
     expect(result).toEqual([
       {
         title: 'category1',

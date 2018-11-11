@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import TransactionFileReader from './TransactionFileReader';
+import { TransactionFileReader } from './TransactionFileReader';
 import { danske } from '../Bank';
 
 let props;

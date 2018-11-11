@@ -1,12 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Categorizer from '../components/Categorizer';
-import CategoriesOverview from '../components/CategoriesOverview';
+// import CategoriesOverview from '../components/CategoriesOverview';
 
 const Container = styled.div`
   max-width: 30rem;
@@ -26,25 +27,20 @@ class CategorizationPage extends React.Component {
   };
 
   showSection = index => {
-    const { userState, addNewCategory, removeCategory, updateCategories } = this.props;
+    const { transactions } = this.props;
 
     if (index === 0) {
       // @TODO add transactions list here.
       return '';
     }
-    if (index === 1) {
-      return (
-        <CategoriesOverview
-          categories={userState.categories}
-          addCategory={addNewCategory}
-          removeCategory={removeCategory}
-        />
-      );
-    }
-    return !userState ? (
+    // if (index === 1) {
+    //   return <CategoriesOverview />;
+    // }
+
+    return !transactions ? (
       <Typography variant="h4">Select a file and bank on import page</Typography>
     ) : (
-      <Categorizer userState={userState} updateCategories={updateCategories} />
+      <Categorizer />
     );
   };
 
@@ -84,19 +80,27 @@ class CategorizationPage extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  transactions: state.appReducer.transactions
+});
+
 CategorizationPage.propTypes = {
-  userState: PropTypes.shape({
-    uniqueParties: PropTypes.arrayOf(PropTypes.string).isRequired,
-    categories: PropTypes.arrayOf(
-      PropTypes.shape({
-        title: PropTypes.string,
-        parties: PropTypes.arrayOf(PropTypes.string)
-      })
-    )
-  }).isRequired,
-  updateCategories: PropTypes.func.isRequired,
-  removeCategory: PropTypes.func.isRequired,
-  addNewCategory: PropTypes.func.isRequired
+  transactions: PropTypes.arrayOf(
+    PropTypes.shape({
+      date: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired,
+      party: PropTypes.string.isRequired
+    })
+  ).isRequired
 };
 
-export default CategorizationPage;
+// const CategorizationPage = () => (
+//   <Container>
+//     <Grid container>
+//       <Typography variant="h2">Categorization</Typography>
+//       <Categorizer />
+//     </Grid>
+//   </Container>
+// );
+
+export default connect(mapStateToProps)(CategorizationPage);

@@ -31,7 +31,7 @@ const SectionNavigationContainer = styled.div`
   padding: 2rem 0;
 `;
 
-class CategorizationPage extends React.Component {
+export class CategorizationPage extends React.Component {
   maxSections = 2;
 
   sectionTitleMapper = {

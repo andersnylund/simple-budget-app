@@ -6,6 +6,8 @@ import { Draggable } from 'react-beautiful-dnd';
 const Party = ({ party, index }) => {
   const grid = 8;
 
+  // @TODO replace the styles object with a styled component.
+  // for reference check: https://www.styled-components.com/docs/basics#adapting-based-on-props
   const getItemStyle = (isDragging, draggableStyle) => ({
     // some basic styles to make the items look a bit nicer
     userSelect: 'none',

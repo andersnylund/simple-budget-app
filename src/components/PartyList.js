@@ -7,6 +7,9 @@ import Party from './Party';
 
 const PartyList = ({ parties, id }) => {
   const grid = 8;
+
+  // @TODO replace the styles object with a styled component.
+  // for reference check: https://www.styled-components.com/docs/basics#adapting-based-on-props
   const getListStyle = isDraggingOver => ({
     background: isDraggingOver ? 'lightblue' : 'lightgrey',
     padding: grid

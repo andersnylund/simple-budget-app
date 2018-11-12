@@ -16,36 +16,6 @@ import NavigationAppBar, {
   EXPORT
 } from './components/NavigationAppBar';
 
-// setNewCategory = newCategortyTitle => {
-//   const newCategory = {
-//     title: newCategortyTitle,
-//     parties: []
-//   };
-//   this.setState(prevState => ({
-//     userState: {
-//       ...prevState.userState,
-//       categories: [...prevState.userState.categories, newCategory]
-//     }
-//   }));
-// };
-
-// removeCategory = categoryTitle => {
-//   const { userState } = this.state;
-//   const categoryToBeRemoved = userState.categories.find(
-//     category => category.title === categoryTitle
-//   );
-//   const filteredCategoriesList = userState.categories.filter(
-//     category => category.title !== categoryTitle
-//   );
-//   this.setState(prevState => ({
-//     userState: {
-//       ...prevState.userState,
-//       uniqueParties: [...prevState.userState.uniqueParties, ...categoryToBeRemoved.parties],
-//       categories: [...filteredCategoriesList]
-//     }
-//   }));
-// };
-
 export class App extends Component {
   showPage = pageIndex => {
     if (pageIndex === LANDING) {

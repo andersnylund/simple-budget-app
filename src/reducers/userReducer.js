@@ -34,11 +34,13 @@ const reducer = (state = initialState, action) => {
       categories: [...newCategories]
     };
   }
+
   if (action.type === ADD_PARTY) {
     const existingCategoryIndex = state.categories.findIndex(c => c.title === action.category);
     const existingCategory = state.categories[existingCategoryIndex];
     if (existingCategory) {
       const parties = existingCategory.parties.slice(0); // Clones the array.
+
       parties.splice(action.index, 0, action.party); // Adds the party to a specific index inside the parties array.
       const newCategory = {
         title: existingCategory.title,
@@ -60,17 +62,28 @@ const reducer = (state = initialState, action) => {
   }
 
   if (action.type === REMOVE_PARTY) {
-    const prevValue = state.categories.find(c => c.title === action.category);
-    if (prevValue) {
+    // @TODO Refactor REMOVE_PARTY && ADD_PARTY common logic into util Fns.
+
+    const existingCategoryIndex = state.categories.findIndex(c => c.title === action.category);
+    const existingCategory = state.categories[existingCategoryIndex];
+
+    if (existingCategory) {
+      const parties = existingCategory.parties.slice(0); // Clones the array.
+
       const newCategory = {
-        title: prevValue.title,
-        parties: [...prevValue.parties].filter(p => p !== action.party)
+        title: existingCategory.title,
+        parties: [...parties].filter(p => p !== action.party)
       };
+
+      const categoriesList = state.categories
+        .filter(c => c.title !== existingCategory.title) // Removes existing category.
+        .slice(0);
+
+      categoriesList.splice(existingCategoryIndex, 0, newCategory); // Adds the new category at the same index of the removed category.
+
       return {
         ...state,
-        categories: [...state.categories]
-          .filter(c => c.title !== prevValue.title)
-          .concat(newCategory)
+        categories: [...categoriesList]
       };
     }
   }

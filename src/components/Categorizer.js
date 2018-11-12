@@ -51,6 +51,12 @@ export const Categorizer = ({ categories, removeParty, parties, addParty }) => {
       // removing a party from a category to the uncategorized list.
       const categoryTitleToBeModified = source.droppableId;
       removeParty(draggableId, categoryTitleToBeModified);
+    } else if (source.droppableId !== partyListId && destination.droppableId !== partyListId) {
+      // moving a party from one category to another
+      const categoryTitleToBeModified = source.droppableId;
+      removeParty(draggableId, categoryTitleToBeModified);
+      const categoryTitleToBeModified2 = destination.droppableId;
+      addParty(draggableId, categoryTitleToBeModified2, destination.index);
     }
   };
 

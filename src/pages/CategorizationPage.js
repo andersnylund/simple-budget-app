@@ -31,6 +31,12 @@ const SectionNavigationContainer = styled.div`
   padding: 2rem 0;
 `;
 
+// @TODO replace the styles object with a styled component.
+// for reference check: https://www.styled-components.com/docs/basics#adapting-based-on-props
+const getIconStyle = isHidden => ({
+  visibility: isHidden ? 'hidden' : 'visible'
+});
+
 export class CategorizationPage extends React.Component {
   maxSections = 2;
 
@@ -88,9 +94,15 @@ export class CategorizationPage extends React.Component {
           {transactions.length !== 0 ? (
             <Section>
               <SectionNavigationContainer>
-                <ArrowBackIosIcon onClick={this.navigateBack} />
+                <ArrowBackIosIcon
+                  onClick={this.navigateBack}
+                  style={getIconStyle(currentSection === 0)}
+                />
                 <Typography variant="h4">{this.sectionTitleMapper[currentSection]}</Typography>
-                <ArrowForwardIosIcon onClick={this.navigateForward} />
+                <ArrowForwardIosIcon
+                  onClick={this.navigateForward}
+                  style={getIconStyle(currentSection === this.maxSections)}
+                />
               </SectionNavigationContainer>
               {this.showSection(currentSection, uniqueParties)}
             </Section>

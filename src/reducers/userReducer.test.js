@@ -20,7 +20,7 @@ describe('userReducer', () => {
   });
 
   it('should add a party to category', () => {
-    const state = reducer(undefined, addPartyToCategory('Party1', 'Housing'));
+    const state = reducer(undefined, addPartyToCategory('Party1', 'Housing', 0));
     const category = state.categories.find(c => c.title === 'Housing');
     expect(category).toEqual({
       title: 'Housing',
@@ -45,7 +45,7 @@ describe('userReducer', () => {
   });
 
   it('should reset the user state', () => {
-    const state = reducer(undefined, addPartyToCategory('Party1', 'Housing'));
+    const state = reducer(undefined, addPartyToCategory('Party1', 'Housing', 0));
     const resetted = reducer(state, resetUserState());
     expect(resetted).toEqual(initialState);
   });

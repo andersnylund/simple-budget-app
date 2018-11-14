@@ -1,33 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
+import { DragDropContext } from 'react-beautiful-dnd';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import PartyList from './PartyList';
 import CategoryList from './CategoryList';
 import { addPartyToCategory, removePartyFromCategory } from '../reducers/userReducer';
 
-export class Categorizer extends React.Component {
-  state = {
-    selectedParties: [],
-    activeCategory: 'Housing' // @TODO Add this dynamically.
-  };
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+`;
+export const Categorizer = ({ categories, removeParty, parties, addParty }) => {
+  const partyListId = 'uncategorized-parties';
 
-  setActiveCategory = newCategory => {
-    this.setState({
-      activeCategory: newCategory
-    });
-  };
-
-  setSelectedParties = newSelectedParties => {
-    this.setState({
-      selectedParties: [...newSelectedParties]
-    });
-  };
-
-  unCategorizedParties = () => {
-    const { categories, transactions } = this.props;
-
+  const unCategorizedParties = () => {
     const categorizedParties = [];
 
     if (categories && categories.length > 0) {
@@ -42,64 +32,48 @@ export class Categorizer extends React.Component {
       });
     }
 
-    const uniqueParties = [...new Set(transactions.map(t => t.party))];
-    const unCategorizedParties = uniqueParties.filter(party => !categorizedParties.includes(party));
-
-    return unCategorizedParties;
+    return parties ? parties.filter(party => !categorizedParties.includes(party)) : undefined;
   };
 
-  removeCategorizedParty = (party, category) => {
-    const { removeParty } = this.props;
-    removeParty(party, category);
+  const onDragEnd = result => {
+    const { source, destination, draggableId } = result;
+
+    if (!destination) {
+      return;
+    }
+    // @TODO handle case of reordering items in the same list.
+
+    if (source.droppableId === partyListId && destination.droppableId !== partyListId) {
+      // moving a party from uncategorized parties to a category.
+      const categoryTitleToBeModified = destination.droppableId;
+      addParty(draggableId, categoryTitleToBeModified, destination.index);
+    } else if (destination.droppableId === partyListId && source.droppableId !== partyListId) {
+      // removing a party from a category to the uncategorized list.
+      const categoryTitleToBeModified = source.droppableId;
+      removeParty(draggableId, categoryTitleToBeModified);
+    } else if (source.droppableId !== partyListId && destination.droppableId !== partyListId) {
+      // moving a party from one category to another
+      const categoryTitleToBeModified = source.droppableId;
+      removeParty(draggableId, categoryTitleToBeModified);
+      const categoryTitleToBeModified2 = destination.droppableId;
+      addParty(draggableId, categoryTitleToBeModified2, destination.index);
+    }
   };
 
-  updateState = () => {
-    const { addParty } = this.props;
-    const { activeCategory, selectedParties } = this.state;
+  const availableParties = unCategorizedParties();
 
-    selectedParties.forEach(p => {
-      addParty(p, activeCategory);
-    });
-
-    this.setState({
-      selectedParties: []
-    });
-  };
-
-  render() {
-    const { categories } = this.props;
-    const { selectedParties, activeCategory } = this.state;
-
-    const availableParties = this.unCategorizedParties();
-
-    return (
-      <Grid container spacing={24}>
-        <Grid item md={6} xs={12}>
-          <PartyList
-            parties={availableParties}
-            selectedParties={selectedParties}
-            updateSelectedParties={this.setSelectedParties}
-          />
-        </Grid>
-        <Grid item md={6} xs={12}>
-          <CategoryList
-            activeCategory={activeCategory}
-            data={categories}
-            updateActiveCategory={this.setActiveCategory}
-            removeCategorizedParty={this.removeCategorizedParty}
-          />
-        </Grid>
-        <Button onClick={this.updateState} variant="contained" component="span">
-          Update
-        </Button>
-      </Grid>
-    );
-  }
-}
+  return (
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Container>
+        <CategoryList data={categories} />
+        <PartyList parties={availableParties} id={partyListId} />
+      </Container>
+    </DragDropContext>
+  );
+};
 
 const mapStateToProps = state => ({
-  categories: state.userReducer.categories,
-  transactions: state.appReducer.transactions
+  categories: state.userReducer.categories
 });
 
 Categorizer.propTypes = {
@@ -109,13 +83,7 @@ Categorizer.propTypes = {
       parties: PropTypes.arrayOf(PropTypes.string)
     })
   ).isRequired,
-  transactions: PropTypes.arrayOf(
-    PropTypes.shape({
-      date: PropTypes.string.isRequired,
-      amount: PropTypes.number.isRequired,
-      party: PropTypes.string.isRequired
-    })
-  ).isRequired,
+  parties: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   addParty: PropTypes.func.isRequired,
   removeParty: PropTypes.func.isRequired
 };

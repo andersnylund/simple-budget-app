@@ -23,6 +23,18 @@ export const combinedAmountOfParties = (transactions, parties) => {
   return amount;
 };
 
+export const combinedSpendingOfParties = (transactions, parties) => {
+  let spending = 0;
+
+  transactions.filter(t => t.amount < 0).forEach(t => {
+    if (parties.includes(t.party)) {
+      spending += t.amount;
+    }
+  });
+
+  return spending;
+};
+
 export const significantParties = transactions => {
   const parties = [...new Set(transactions.map(t => t.party))].map(p => ({
     title: p,

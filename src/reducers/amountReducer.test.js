@@ -2,7 +2,8 @@ import deepFreeze from 'deep-freeze';
 import reducer, {
   setSignificantParties,
   setAmountOfCategory,
-  resetAmountState
+  resetAmountState,
+  setSpendingOfCategory
 } from './amountReducer';
 
 describe('amountReducer', () => {
@@ -23,8 +24,29 @@ describe('amountReducer', () => {
       significantParties: [
         { amount: 123125, title: 'Party1' },
         { amount: -234.123, title: 'Party2' }
-      ]
+      ],
+      spendingByCategories: []
     });
+  });
+
+  it('should set the spending of category', () => {
+    const state1 = reducer(undefined, deepFreeze(setSpendingOfCategory(2134.234, 'category1')));
+    expect(state1.spendingByCategories).toEqual([{ spending: 2134.234, title: 'category1' }]);
+
+    const state2 = reducer(
+      deepFreeze(state1),
+      deepFreeze(setSpendingOfCategory(1234, 'category2'))
+    );
+    expect(state2.spendingByCategories).toEqual([
+      { spending: 2134.234, title: 'category1' },
+      { spending: 1234, title: 'category2' }
+    ]);
+
+    const state3 = reducer(deepFreeze(state2), deepFreeze(setSpendingOfCategory(1, 'category1')));
+    expect(state3.spendingByCategories).toEqual([
+      { spending: 1234, title: 'category2' },
+      { spending: 1, title: 'category1' }
+    ]);
   });
 
   it('should set the amount of category', () => {
@@ -49,7 +71,8 @@ describe('amountReducer', () => {
     const state2 = reducer(deepFreeze(state1), deepFreeze(resetAmountState()));
     expect(state2).toEqual({
       amountByCategories: [],
-      significantParties: []
+      significantParties: [],
+      spendingByCategories: []
     });
   });
 });

@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import styled from 'styled-components';
 import TransactionFileReader from '../components/import/TransactionFileReader';
-import PreviousDataReader from '../components/categorize/PreviousDataReader';
+import PreviousDataReader from '../components/import/PreviousDataReader';
 import Selector from '../components/import/BankSelector';
 import Reset from '../components/import/Reset';
 import Container from '../components/Container';

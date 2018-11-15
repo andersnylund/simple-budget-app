@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 import { ThreeSixty, SettingsEthernet, Language } from '@material-ui/icons';
 import Image from 'material-ui-image';
-import IntroFeatures from '../components/IntroFeatures';
+import IntroFeatures from '../components/landing/IntroFeatures';
 import Graph from '../images/graph.png';
 import Privacy from '../images/privacy.png';
 import Localize from '../images/localize.png';

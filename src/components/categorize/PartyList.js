@@ -1,46 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Droppable } from 'react-beautiful-dnd';
 
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControl from '@material-ui/core/FormControl';
+import Typography from '@material-ui/core/Typography';
+import Party from './Party';
 
-const PartyList = ({ parties, selectedParties, updateSelectedParties }) => {
-  const handleChange = name => event => {
-    if (event.target.checked) {
-      const newSelectedParties = [...selectedParties, name];
-      updateSelectedParties(newSelectedParties);
-    } else {
-      const newSelectedParties = [...selectedParties].filter(p => p !== name);
-      updateSelectedParties(newSelectedParties);
-    }
-  };
+const PartyList = ({ parties, id }) => {
+  const grid = 8;
 
-  const checkbox = party => (
-    <Checkbox
-      onChange={handleChange(party)}
-      name={party}
-      value={party}
-      checked={selectedParties.includes(party)}
-    />
-  );
+  // @TODO replace the styles object with a styled component.
+  // for reference check: https://www.styled-components.com/docs/basics#adapting-based-on-props
+  const getListStyle = isDraggingOver => ({
+    background: isDraggingOver ? 'lightblue' : 'lightgrey',
+    padding: grid
+  });
 
-  const partyList = parties.map(party => (
-    <FormControlLabel key={party} control={checkbox(party)} label={party} />
+  const partyList = parties.map((party, index) => (
+    <Party party={party} index={index} key={party} />
   ));
 
   return (
-    <FormControl component="fieldset">
-      <FormGroup>{partyList}</FormGroup>
-    </FormControl>
+    <div>
+      <Typography variant="h4" gutterBottom>
+        Uncategorized Parties
+      </Typography>
+      <Droppable droppableId={id}>
+        {(provided, snapshot) => (
+          <div ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
+            <div>{partyList}</div>
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </div>
   );
 };
 
 PartyList.propTypes = {
   parties: PropTypes.arrayOf(PropTypes.string).isRequired,
-  selectedParties: PropTypes.arrayOf(PropTypes.string).isRequired,
-  updateSelectedParties: PropTypes.func.isRequired
+  id: PropTypes.string.isRequired
 };
 
 export default PartyList;

@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 import Image from 'material-ui-image';
-import InfoSteps from '../components/InfoSteps';
+import InfoSteps from '../components/info/InfoSteps';
 import Privacy from '../images/privacy.png';
 
 const Container = styled.div`

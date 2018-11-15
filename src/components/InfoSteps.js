@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepButton from '@material-ui/core/StepButton';
-import Button from '@material-ui/core/Button';
-import { FormattedMessage } from 'react-intl';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 
@@ -27,7 +28,7 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit * 3,
     [theme.breakpoints.up(900 + theme.spacing.unit * 3 * 2)]: {
-      width: 600,
+      width: 900,
       marginLeft: 'auto',
       marginRight: 'auto'
     }
@@ -42,6 +43,9 @@ const styles = theme => ({
     display: 'inline-block'
   },
   instructions: {
+    width: '100%',
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit
   },
@@ -137,7 +141,52 @@ class InfoSteps extends React.Component {
     const { activeStep } = this.state;
 
     return (
-      <div className={classes.root}>
+      <div>
+        <div className={classes.root}>
+          <Stepper alternativeLabel nonLinear activeStep={activeStep}>
+            {steps.map((step, index) => {
+              const props = {};
+              const buttonProps = {};
+              if (this.isStepSkipped(index)) {
+                props.completed = false;
+              }
+              return (
+                <Step key={step.id} {...props}>
+                  <StepButton
+                    onClick={this.handleStep(index)}
+                    completed={this.isStepComplete(index)}
+                    {...buttonProps}
+                  >
+                    {step.label}
+                  </StepButton>
+                </Step>
+              );
+            })}
+
+            <div>
+              <IconButton
+                size="small"
+                color="primary"
+                disabled={activeStep === 0}
+                onClick={this.handleBack}
+                className={classes.button}
+              >
+                <ArrowBackIosIcon />
+              </IconButton>
+
+              <IconButton
+                size="small"
+                variant="contained"
+                color="primary"
+                onClick={this.handleNext}
+                className={classes.button}
+              >
+                <ArrowForwardIosIcon />
+              </IconButton>
+            </div>
+          </Stepper>
+        </div>
+
         <div className={classes.instructions}>
           <AutoPlaySwipeableViews axis="x" index={activeStep}>
             {steps.map((step, index) => (
@@ -146,46 +195,6 @@ class InfoSteps extends React.Component {
               </div>
             ))}
           </AutoPlaySwipeableViews>
-        </div>
-        <Stepper alternativeLabel nonLinear activeStep={activeStep}>
-          {steps.map((step, index) => {
-            const props = {};
-            const buttonProps = {};
-            if (this.isStepSkipped(index)) {
-              props.completed = false;
-            }
-            return (
-              <Step key={step.id} {...props}>
-                <StepButton
-                  onClick={this.handleStep(index)}
-                  completed={this.isStepComplete(index)}
-                  {...buttonProps}
-                >
-                  {step.label}
-                </StepButton>
-              </Step>
-            );
-          })}
-        </Stepper>
-
-        <div>
-          <Button
-            size="small"
-            disabled={activeStep === 0}
-            onClick={this.handleBack}
-            className={classes.button}
-          >
-            <FormattedMessage id="info.Back" />
-          </Button>
-          <Button
-            size="small"
-            variant="contained"
-            color="primary"
-            onClick={this.handleNext}
-            className={classes.button}
-          >
-            <FormattedMessage id="info.Next" />
-          </Button>
         </div>
       </div>
     );

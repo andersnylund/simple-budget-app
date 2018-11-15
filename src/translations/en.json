@@ -15,5 +15,11 @@
   "navigation.export": "Export",
   "info.Back": "Back",
   "info.Next": "Next",
-  "error.transactionsEmpty": "Uh oh! There is no transactions to be found. Go back to the import page and import the required files"
+  "error.transactionsEmpty": "Uh oh! There is no transactions to be found. Go back to the import page and import the required files",
+  "info.import": "Firstly, you need to select your bank from our Import page and import your transaction data (CSV file). Please refer to the user manual of your bank's online service for more info on how to export transaction data.",
+  "info.createCategoriesHeader": "Create categories",
+  "info.createCategories": "Now, you could start categorizing your transactions based on the payee. To get started, you need to create your own categories",
+  "info.categorization": "Then you just need to drag the payee into the corresponding category. Categorization helps us visualize where most of your money goes into!",
+  "info.visualization": "Here comes the moment of truth. You can now see how well you manage financially.",
+  "info.export": "In case you want to save your categories, you can export the data through our Export page. And you can import them back from the Import page"
 }

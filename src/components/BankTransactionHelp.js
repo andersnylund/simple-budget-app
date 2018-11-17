@@ -33,26 +33,14 @@ class BankTransactionHelp extends React.Component {
     const { open, title, content } = this.state;
     return (
       <div>
-        <Button>
-          <img
-            alt="Danske"
-            src={Danske}
-            onClick={this.handleClickOpen('Danske', <img alt="Danske" src={DanskeGuide} />)}
-          />
+        <Button onClick={this.handleClickOpen('Danske', <img alt="Danske" src={DanskeGuide} />)}>
+          <img alt="Danske" src={Danske} />
         </Button>
-        <Button>
-          <img
-            alt="OP"
-            src={Op}
-            onClick={this.handleClickOpen('OP', <img alt="OP" src={OpGuide} />)}
-          />
+        <Button onClick={this.handleClickOpen('OP', <img alt="OP" src={OpGuide} />)}>
+          <img alt="OP" src={Op} />
         </Button>
-        <Button>
-          <img
-            alt="Nordea"
-            src={Nordea}
-            onClick={this.handleClickOpen('Nordea', <img alt="Nordea" src={NordeaGuide} />)}
-          />
+        <Button onClick={this.handleClickOpen('Nordea', <img alt="Nordea" src={NordeaGuide} />)}>
+          <img alt="Nordea" src={Nordea} />
         </Button>
         <Dialog
           fullScreen={fullScreen}

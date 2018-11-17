@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 import Image from 'material-ui-image';
 import InfoSteps from '../components/InfoSteps';
+import BankTransactionHelp from '../components/BankTransactionHelp';
 import InfoImport from '../images/infoImport.png';
 import InfoCreateCategories from '../images/infoCreateCategories.png';
 import InfoCategorization from '../images/infoCategorization.png';
@@ -28,6 +29,7 @@ const InfoPage = () => {
       content: (
         <Typography {...TypoStyle}>
           <FormattedMessage id="info.import" />
+          <BankTransactionHelp />
           <Image src={InfoImport} imageStyle={ImageStyle} />
         </Typography>
       )

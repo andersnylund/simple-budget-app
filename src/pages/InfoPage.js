@@ -18,7 +18,7 @@ const Container = styled.div`
   }
 `;
 
-const ImageStyle = { width: '100%', height: 'auto', 'object-fit': 'cover' };
+const ImageStyle = { width: '100%', height: 'auto' };
 const TypoStyle = { variant: 'h6', color: 'textSecondary' };
 
 const InfoPage = () => {

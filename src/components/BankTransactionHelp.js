@@ -2,12 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
-import { FormattedMessage } from 'react-intl';
 import Danske from '../images/danske.png';
 import DanskeGuide from '../images/danskeGuide.png';
 import Nordea from '../images/nordea.png';
@@ -59,13 +57,15 @@ class BankTransactionHelp extends React.Component {
         <Dialog
           fullScreen={fullScreen}
           open={open}
-          maxWidth="false"
+          maxWidth={false}
           onClose={this.handleClose}
           scroll="paper"
           TransitionComponent={Grow}
           aria-labelledby="bank-transaction-help-dialog-title"
         >
-          <DialogTitle id="bank-transaction-help-dialog-title">{title}</DialogTitle>
+          <DialogTitle id="bank-transaction-help-dialog-title">
+            <div>{title}</div>
+          </DialogTitle>
           <Paper onClick={this.handleClose}>{content}</Paper>
         </Dialog>
       </div>

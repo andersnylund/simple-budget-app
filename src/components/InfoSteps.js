@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import Slide from '@material-ui/core/Slide';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepButton from '@material-ui/core/StepButton';
@@ -146,7 +147,9 @@ class InfoSteps extends React.Component {
 
         <AutoPlaySwipeableViews axis="x" index={activeStep}>
           {steps.map((step, index) => (
-            <div key={step.id}>{Math.abs(activeStep - index) <= 2 ? step.content : null}</div>
+            <Slide key={step.id} in timeout={{ enter: 500 }}>
+              <div>{Math.abs(activeStep - index) <= 2 ? step.content : null}</div>
+            </Slide>
           ))}
         </AutoPlaySwipeableViews>
       </Root>

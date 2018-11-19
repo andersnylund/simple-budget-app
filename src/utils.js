@@ -48,6 +48,14 @@ export const sumAndSpendingOfParties = (transactions, listOfParties) => {
   return { sum, spending, spendingByMonth };
 };
 
+export const getMonthsFromTransactions = transactions => {
+  const months = new Set();
+  transactions.forEach(t => {
+    months.add(moment(t.date).format('YYYY-MM'));
+  });
+  return months;
+};
+
 export const significantParties = transactions => {
   const parties = [...new Set(transactions.map(t => t.party))].map(p => ({
     title: p,

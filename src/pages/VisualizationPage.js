@@ -11,6 +11,7 @@ import TransactionHistory from '../charts/TransactionHistory';
 import SpendingByCategory from '../charts/SpendingByCategory';
 import Container from '../components/Container';
 import SpendingByMonth from '../charts/SpendingByMonth';
+import AverageMonthSpending from '../charts/AverageMonthSpending';
 
 const TabContainer = styled(Paper)`
   flex-grow: 1;
@@ -23,6 +24,7 @@ const PARTY_GROUPING = 2;
 const CATEGORY_GROUPING = 3;
 const SPENDING_BY_CATEGORY = 4;
 const SPENDING_BY_MONTH = 5;
+const AVERAGE_SPENDING = 6;
 
 export class VisualizationPage extends React.Component {
   state = { activeTab: TRANSACTION_HISTORY };
@@ -52,6 +54,9 @@ export class VisualizationPage extends React.Component {
     if (activeTab === SPENDING_BY_MONTH) {
       return <SpendingByMonth />;
     }
+    if (activeTab === AVERAGE_SPENDING) {
+      return <AverageMonthSpending />;
+    }
     return null;
   };
 
@@ -76,6 +81,7 @@ export class VisualizationPage extends React.Component {
             <Tab label="Categories" />
             <Tab label="Spending" />
             <Tab label="Spending by month" />
+            <Tab label="Average spending in a month" />
           </Tabs>
         </TabContainer>
         <Container>

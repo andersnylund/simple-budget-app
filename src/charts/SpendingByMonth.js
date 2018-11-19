@@ -1,19 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { arrayOf, shape, string, object } from 'prop-types';
+import { arrayOf, shape, string, object, number } from 'prop-types';
 import Chart from 'react-apexcharts';
 import Paper from '@material-ui/core/Paper';
+import { getMonthsFromTransactions } from '../utils';
 
-const SpendingByMonth = ({ spendingByMonth }) => {
-  const months = new Set();
+const SpendingByMonth = ({ spendingByMonth, transactions }) => {
+  const months = getMonthsFromTransactions(transactions);
   let series = [];
-
-  spendingByMonth.forEach(category => {
-    const spending = category.spendingByMonth;
-    Object.keys(spending).forEach(month => {
-      months.add(month);
-    });
-  });
 
   spendingByMonth.forEach(category => {
     const spending = category.spendingByMonth;
@@ -44,6 +38,8 @@ const SpendingByMonth = ({ spendingByMonth }) => {
     }
   };
 
+  console.log('series', series);
+
   return (
     <Paper>
       <Chart options={options} series={series} type="bar" />
@@ -57,11 +53,19 @@ SpendingByMonth.propTypes = {
       title: string.isRequired,
       spendingByMonth: object.isRequired
     })
+  ).isRequired,
+  transactions: arrayOf(
+    shape({
+      date: string.isRequired,
+      amount: number.isRequired,
+      party: string.isRequired
+    })
   ).isRequired
 };
 
 const mapStateToProps = state => ({
-  spendingByMonth: state.amountReducer.spendingByMonth
+  spendingByMonth: state.amountReducer.spendingByMonth,
+  transactions: state.appReducer.transactions
 });
 
 export default connect(mapStateToProps)(SpendingByMonth);

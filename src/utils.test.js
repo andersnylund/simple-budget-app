@@ -1,4 +1,4 @@
-import { significantParties, sumAndSpendingOfParties } from './utils';
+import { significantParties, sumAndSpendingOfParties, getMonthsFromTransactions } from './utils';
 import { transactions, categories } from './testHelpers';
 
 describe('utils.js', () => {
@@ -55,5 +55,27 @@ describe('utils.js', () => {
 
     const result = sumAndSpendingOfParties(transacts, ['party1', 'party2', 'party3']);
     expect(result.spending).toBe(-3.5);
+  });
+
+  it(`should return correct value from ${getMonthsFromTransactions.name}`, () => {
+    const transacts = [
+      {
+        date: new Date('2018-11-17T10:39:49+00:00').toISOString()
+      },
+      {
+        date: new Date('2018-11-17T10:39:49+00:00').toISOString()
+      },
+      {
+        date: new Date('2018-12-17T10:39:49+00:00').toISOString()
+      },
+      {
+        date: new Date('2019-01-17T10:39:49+00:00').toISOString()
+      }
+    ];
+    const result = [...getMonthsFromTransactions(transacts).values()];
+    expect(result.length).toBe(3);
+    expect(result.includes('2018-11')).toBe(true);
+    expect(result.includes('2018-12')).toBe(true);
+    expect(result.includes('2019-01')).toBe(true);
   });
 });

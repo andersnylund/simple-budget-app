@@ -6,7 +6,6 @@ import TransactionFileReader from '../components/import/TransactionFileReader';
 import PreviousDataReader from '../components/import/PreviousDataReader';
 import Selector from '../components/import/BankSelector';
 import Reset from '../components/import/Reset';
-import Container from '../components/Container';
 import PageItem from '../components/import/PageItem';
 
 const StyledPaper = styled(Paper)`
@@ -14,7 +13,7 @@ const StyledPaper = styled(Paper)`
 `;
 
 const ImportPage = () => (
-  <Container>
+  <div>
     <StyledPaper>
       <Grid container spacing={40} direction="column">
         <PageItem item={<Selector />} helpText="Select your bank." />
@@ -32,7 +31,7 @@ const ImportPage = () => (
         />
       </Grid>
     </StyledPaper>
-  </Container>
+  </div>
 );
 
 export default ImportPage;

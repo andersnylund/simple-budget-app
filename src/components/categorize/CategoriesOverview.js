@@ -31,11 +31,6 @@ const InputContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 2rem 0;
-`;
-
-const Container = styled.div`
-  margin: 0 auto;
 `;
 
 // const CategoriesOverview = ({ categories, removeCategory, addCategory }) => {
@@ -67,7 +62,7 @@ class CategoriesOverview extends React.Component {
       </Category>
     ));
     return (
-      <Container>
+      <div>
         <Typography variant="body2" gutterBottom>
           Now lets create some categories!
           <br />
@@ -86,7 +81,7 @@ class CategoriesOverview extends React.Component {
             Add New Category
           </Button>
         </InputContainer>
-      </Container>
+      </div>
     );
   }
 }

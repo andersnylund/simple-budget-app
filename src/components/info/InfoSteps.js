@@ -13,12 +13,6 @@ import styled from 'styled-components';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-const Root = styled.div`
-  max-width: 60rem;
-  margin-left: auto;
-  margin-right: auto;
-`;
-
 const StyledStepper = styled(Stepper)`
   overflow: auto;
 `;
@@ -108,7 +102,7 @@ class InfoSteps extends React.Component {
     const { activeStep } = this.state;
 
     return (
-      <Root>
+      <div>
         <StyledStepper alternativeLabel nonLinear activeStep={activeStep}>
           {steps.map((step, index) => {
             const props = {};
@@ -152,7 +146,7 @@ class InfoSteps extends React.Component {
             </Slide>
           ))}
         </AutoPlaySwipeableViews>
-      </Root>
+      </div>
     );
   }
 }

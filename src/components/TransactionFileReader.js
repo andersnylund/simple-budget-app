@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { parse } from '../utils';
 import Bank from '../Bank';
@@ -24,14 +25,14 @@ export const TransactionFileReader = ({ setInitialTransactions, selectedBank, ..
   <div {...rest}>
     <label htmlFor="transactions-input">
       <StyledInput
-        accept=".csv"
+        accept=".csv, .txt"
         id="transactions-input"
         multiple={false}
         type="file"
         onChange={e => handleChange(e, setInitialTransactions, selectedBank)}
       />
       <Button variant="contained" component="span">
-        Upload transactions
+        <FormattedMessage id="import.uploadTransactions" />
       </Button>
     </label>
   </div>

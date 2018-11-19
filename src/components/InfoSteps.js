@@ -1,56 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import Slide from '@material-ui/core/Slide';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepButton from '@material-ui/core/StepButton';
-import Button from '@material-ui/core/Button';
-import { FormattedMessage } from 'react-intl';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
+import styled from 'styled-components';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-const styles = theme => ({
-  root: {
-    width: 'auto',
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
-    [theme.breakpoints.up(900 + theme.spacing.unit * 3 * 2)]: {
-      width: 900,
-      marginLeft: 'auto',
-      marginRight: 'auto'
-    }
-  },
-  stepContent: {
-    width: '70%',
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
-    [theme.breakpoints.up(900 + theme.spacing.unit * 3 * 2)]: {
-      width: 600,
-      marginLeft: 'auto',
-      marginRight: 'auto'
-    }
-  },
-  button: {
-    marginRight: theme.spacing.unit
-  },
-  backButton: {
-    marginRight: theme.spacing.unit
-  },
-  completed: {
-    display: 'inline-block'
-  },
-  instructions: {
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit
-  },
-  contentRoot: {
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2
-  }
-});
+const Root = styled.div`
+  max-width: 60rem;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+const StyledStepper = styled(Stepper)`
+  overflow: auto;
+`;
 
 class InfoSteps extends React.Component {
   state = {
@@ -133,21 +104,12 @@ class InfoSteps extends React.Component {
   }
 
   render() {
-    const { classes, steps } = this.props;
+    const { steps } = this.props;
     const { activeStep } = this.state;
 
     return (
-      <div className={classes.root}>
-        <div className={classes.instructions}>
-          <AutoPlaySwipeableViews axis="x" index={activeStep}>
-            {steps.map((step, index) => (
-              <div className={classes.stepContent} key={step.id}>
-                {Math.abs(activeStep - index) <= 2 ? step.content : null}
-              </div>
-            ))}
-          </AutoPlaySwipeableViews>
-        </div>
-        <Stepper alternativeLabel nonLinear activeStep={activeStep}>
+      <Root>
+        <StyledStepper alternativeLabel nonLinear activeStep={activeStep}>
           {steps.map((step, index) => {
             const props = {};
             const buttonProps = {};
@@ -166,34 +128,36 @@ class InfoSteps extends React.Component {
               </Step>
             );
           })}
-        </Stepper>
 
-        <div>
-          <Button
-            size="small"
-            disabled={activeStep === 0}
-            onClick={this.handleBack}
-            className={classes.button}
-          >
-            <FormattedMessage id="info.Back" />
-          </Button>
-          <Button
-            size="small"
-            variant="contained"
-            color="primary"
-            onClick={this.handleNext}
-            className={classes.button}
-          >
-            <FormattedMessage id="info.Next" />
-          </Button>
-        </div>
-      </div>
+          <div>
+            <IconButton
+              size="small"
+              color="primary"
+              disabled={activeStep === 0}
+              onClick={this.handleBack}
+            >
+              <ArrowBackIosIcon />
+            </IconButton>
+
+            <IconButton size="small" variant="contained" color="primary" onClick={this.handleNext}>
+              <ArrowForwardIosIcon />
+            </IconButton>
+          </div>
+        </StyledStepper>
+
+        <AutoPlaySwipeableViews axis="x" index={activeStep}>
+          {steps.map((step, index) => (
+            <Slide key={step.id} in timeout={{ enter: 500 }}>
+              <div>{Math.abs(activeStep - index) <= 2 ? step.content : null}</div>
+            </Slide>
+          ))}
+        </AutoPlaySwipeableViews>
+      </Root>
     );
   }
 }
 
 InfoSteps.propTypes = {
-  classes: PropTypes.object.isRequired,
   steps: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.element.isRequired,
@@ -202,4 +166,4 @@ InfoSteps.propTypes = {
   ).isRequired
 };
 
-export default withStyles(styles)(InfoSteps);
+export default InfoSteps;

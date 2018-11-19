@@ -16,8 +16,7 @@ describe('<Categorizer />', () => {
       parties,
       addParty: jest.fn(),
       removeParty: jest.fn(),
-      setAmountOfCategory: jest.fn(),
-      setSpendingOfCategory: jest.fn()
+      updateAllAmounts: jest.fn()
     };
   });
 

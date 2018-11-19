@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 const PartyGrouping = ({ significantParties }) => {
   const array = significantParties.map(party => ({
     x: party.title,
-    y: party.amount
+    y: party.sum
   }));
 
   const options = {};
@@ -29,7 +29,7 @@ PartyGrouping.propTypes = {
   significantParties: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
-      amount: PropTypes.number.isRequired
+      sum: PropTypes.number.isRequired
     })
   ).isRequired
 };

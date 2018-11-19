@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 const CategoryGrouping = ({ byCategory }) => {
   const array = byCategory.map(category => ({
     x: category.title,
-    y: category.amount
+    y: category.sum
   }));
 
   const options = {};
@@ -29,13 +29,13 @@ CategoryGrouping.propTypes = {
   byCategory: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
-      amount: PropTypes.number.isRequired
+      sum: PropTypes.number.isRequired
     })
   ).isRequired
 };
 
 const mapStateToProps = state => ({
-  byCategory: state.amountReducer.amountByCategories
+  byCategory: state.amountReducer.sumByCategories
 });
 
 export default connect(mapStateToProps)(CategoryGrouping);

@@ -32,4 +32,19 @@ export const categories = [
   }
 ];
 
+export const spending = [
+  {
+    title: 'category1',
+    spending: -124
+  },
+  {
+    title: 'category2',
+    spending: -2354.5
+  },
+  {
+    title: 'category1',
+    spending: -1243.1
+  }
+];
+
 export default { transactions, categories };

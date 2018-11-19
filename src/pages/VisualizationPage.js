@@ -8,7 +8,9 @@ import BalanceHistory from '../charts/BalanceHistory';
 import PartyGrouping from '../charts/PartyGrouping';
 import CategoryGrouping from '../charts/CategoryGrouping';
 import TransactionHistory from '../charts/TransactionHistory';
+import SpendingByCategory from '../charts/SpendingByCategory';
 import Container from '../components/Container';
+import SpendingByMonth from '../charts/SpendingByMonth';
 
 const TabContainer = styled(Paper)`
   flex-grow: 1;
@@ -19,6 +21,8 @@ const TRANSACTION_HISTORY = 0;
 const BALANCE_HISTORY = 1;
 const PARTY_GROUPING = 2;
 const CATEGORY_GROUPING = 3;
+const SPENDING_BY_CATEGORY = 4;
+const SPENDING_BY_MONTH = 5;
 
 export class VisualizationPage extends React.Component {
   state = { activeTab: TRANSACTION_HISTORY };
@@ -28,7 +32,7 @@ export class VisualizationPage extends React.Component {
   };
 
   getChart = () => {
-    const { transactions, categories } = this.props;
+    const { transactions, categories, spending } = this.props;
     const { activeTab } = this.state;
     if (activeTab === TRANSACTION_HISTORY) {
       return <TransactionHistory transactions={transactions} />;
@@ -41,6 +45,12 @@ export class VisualizationPage extends React.Component {
     }
     if (activeTab === CATEGORY_GROUPING) {
       return <CategoryGrouping transactions={transactions} categories={categories} />;
+    }
+    if (activeTab === SPENDING_BY_CATEGORY) {
+      return <SpendingByCategory spendingByCategories={spending} />;
+    }
+    if (activeTab === SPENDING_BY_MONTH) {
+      return <SpendingByMonth />;
     }
     return null;
   };
@@ -64,6 +74,8 @@ export class VisualizationPage extends React.Component {
             <Tab label="Balance History" />
             <Tab label="Parties" />
             <Tab label="Categories" />
+            <Tab label="Spending" />
+            <Tab label="Spending by month" />
           </Tabs>
         </TabContainer>
         <Container>
@@ -93,12 +105,19 @@ VisualizationPage.propTypes = {
       title: PropTypes.string,
       parties: PropTypes.arrayOf(PropTypes.string)
     })
+  ).isRequired,
+  spending: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      spending: PropTypes.number.isRequired
+    })
   ).isRequired
 };
 
 const mapStateToProps = state => ({
   transactions: state.appReducer.transactions,
-  categories: state.userReducer.categories
+  categories: state.userReducer.categories,
+  spending: state.amountReducer.spendingByCategories
 });
 
 export default connect(mapStateToProps)(VisualizationPage);

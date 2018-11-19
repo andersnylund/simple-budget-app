@@ -6,21 +6,19 @@ import throttle from 'lodash/throttle';
 import PartyList from './PartyList';
 import CategoryList from './CategoryList';
 import { addPartyToCategory, removePartyFromCategory } from '../../reducers/userReducer';
-import { setAmountOfCategory as setAmount } from '../../reducers/amountReducer';
-import { combinedAmountOfParties } from '../../utils';
+import { updateAllAmounts as updateAllActionCreator } from '../../reducers/amountReducer';
 
 const partyListId = 'uncategorized-parties';
 
 export class Categorizer extends React.Component {
-  updateAmounts = throttle(() => {
-    const { setAmountOfCategory, transactions, categories } = this.props;
-    categories.forEach(category => {
-      setAmountOfCategory(combinedAmountOfParties(transactions, category.parties), category.title);
-    });
+  throttledUpdate = throttle(() => {
+    const { updateAllAmounts } = this.props;
+    updateAllAmounts();
   }, 2000);
 
   componentWillUnmount() {
-    this.updateAmounts();
+    const { updateAllAmounts } = this.props;
+    updateAllAmounts();
   }
 
   unCategorizedParties = () => {
@@ -66,7 +64,7 @@ export class Categorizer extends React.Component {
       const categoryTitleToBeModified2 = destination.droppableId;
       addParty(draggableId, categoryTitleToBeModified2, destination.index);
     }
-    this.updateAmounts();
+    this.throttledUpdate();
   };
 
   render() {
@@ -94,17 +92,10 @@ Categorizer.propTypes = {
       parties: PropTypes.arrayOf(PropTypes.string)
     })
   ).isRequired,
-  transactions: PropTypes.arrayOf(
-    PropTypes.shape({
-      date: PropTypes.string.isRequired,
-      amount: PropTypes.number.isRequired,
-      party: PropTypes.string.isRequired
-    })
-  ).isRequired,
   parties: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   addParty: PropTypes.func.isRequired,
   removeParty: PropTypes.func.isRequired,
-  setAmountOfCategory: PropTypes.func.isRequired
+  updateAllAmounts: PropTypes.func.isRequired
 };
 
 export default connect(
@@ -112,6 +103,6 @@ export default connect(
   {
     addParty: addPartyToCategory,
     removeParty: removePartyFromCategory,
-    setAmountOfCategory: setAmount
+    updateAllAmounts: updateAllActionCreator
   }
 )(Categorizer);

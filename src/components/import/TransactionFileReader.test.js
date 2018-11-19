@@ -32,8 +32,8 @@ describe('<TransactionFileReader />', () => {
     ]);
 
     expect(props.setParties.mock.calls[0][0]).toEqual([
-      { amount: 5.45, title: 'Pekka' },
-      { amount: -10.45, title: 'K-Market' }
+      { sum: 5.45, title: 'Pekka' },
+      { sum: -10.45, title: 'K-Market' }
     ]);
   });
 });

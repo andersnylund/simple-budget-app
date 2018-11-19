@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
-import { setCategories } from '../reducers/userReducer';
+import { setCategories } from '../../reducers/userReducer';
 
 const StyledInput = styled.input`
   display: none;

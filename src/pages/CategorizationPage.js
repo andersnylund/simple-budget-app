@@ -7,9 +7,9 @@ import Grid from '@material-ui/core/Grid';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { FormattedMessage } from 'react-intl';
-import Categorizer from '../components/Categorizer';
-import CategoriesOverview from '../components/CategoriesOverview';
-import TransactionsOverview from '../components/TransactionsOverview';
+import Categorizer from '../components/categorize/Categorizer';
+import CategoriesOverview from '../components/categorize/CategoriesOverview';
+import TransactionsOverview from '../components/categorize/TransactionsOverview';
 
 const Container = styled.div`
   max-width: 30rem;

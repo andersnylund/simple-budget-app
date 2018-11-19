@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { TransactionFileReader } from './TransactionFileReader';
-import { danske } from '../Bank';
+import { danske } from '../../Bank';
 
 let props;
 let event;
@@ -12,7 +12,7 @@ describe('<TransactionFileReader />', () => {
     props = {
       selectedBank: danske,
       setInitialTransactions: jest.fn(),
-      setAmount: jest.fn()
+      setParties: jest.fn()
     };
     event = {
       target: {
@@ -23,7 +23,7 @@ describe('<TransactionFileReader />', () => {
 
   it('should set initial transactions correctly', async () => {
     const wrapper = shallow(<TransactionFileReader {...props} />);
-    const input = wrapper.find('StyledInput');
+    const input = wrapper.find('input');
     await input.props().onChange(event);
 
     expect(props.setInitialTransactions.mock.calls[0][0]).toEqual([
@@ -31,7 +31,7 @@ describe('<TransactionFileReader />', () => {
       { amount: 5.45, date: '2018-01-02T00:00:00.000Z', party: 'Pekka' }
     ]);
 
-    expect(props.setAmount.mock.calls[0][0]).toEqual([
+    expect(props.setParties.mock.calls[0][0]).toEqual([
       { amount: 5.45, title: 'Pekka' },
       { amount: -10.45, title: 'K-Market' }
     ]);

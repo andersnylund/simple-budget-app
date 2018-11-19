@@ -23,7 +23,7 @@ export const combinedAmountOfParties = (transactions, parties) => {
   return amount;
 };
 
-export const amountByEachParty = transactions => {
+export const significantParties = transactions => {
   const parties = [...new Set(transactions.map(t => t.party))].map(p => ({
     title: p,
     amount: 0
@@ -36,11 +36,17 @@ export const amountByEachParty = transactions => {
     }
   });
 
-  return parties.sort((a, b) => a.amount < b.amount);
+  const sorted = parties.sort((a, b) => a.amount < b.amount);
+
+  const most = sorted.slice(0, Math.min(sorted.length - 1, 5));
+  const least = sorted.slice(Math.max(0, sorted.length - 5), sorted.length);
+
+  const result = [...new Set(most.concat(...least))];
+  return result;
 };
 
 export default {
   parse,
   combinedAmountOfParties,
-  amountByEachParty
+  significantParties
 };

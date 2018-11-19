@@ -1,5 +1,5 @@
 export const initialState = {
-  amountByParties: [],
+  significantParties: [],
   amountByCategories: []
 };
 
@@ -11,7 +11,7 @@ const reducer = (state = initialState, action) => {
   if (action.type === SET_AMOUNT_BY_PARTY) {
     return {
       ...state,
-      amountByParties: [...action.amountByParty]
+      significantParties: [...action.amountByParty]
     };
   }
 
@@ -26,7 +26,7 @@ const reducer = (state = initialState, action) => {
 
   if (action.type === RESET_AMOUNT_STATE) {
     return {
-      amountByParties: [],
+      significantParties: [],
       amountByCategories: []
     };
   }
@@ -34,7 +34,7 @@ const reducer = (state = initialState, action) => {
   return state;
 };
 
-export const setAmountByParties = amountByParty => ({
+export const setSignificantParties = amountByParty => ({
   type: SET_AMOUNT_BY_PARTY,
   amountByParty
 });

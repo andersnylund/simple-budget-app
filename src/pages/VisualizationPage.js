@@ -8,7 +8,7 @@ import BalanceHistory from '../charts/BalanceHistory';
 import PartyGrouping from '../charts/PartyGrouping';
 import CategoryGrouping from '../charts/CategoryGrouping';
 import TransactionHistory from '../charts/TransactionHistory';
-import ChartContainer from '../charts/ChartContainer';
+import Container from '../components/Container';
 
 const TabContainer = styled(Paper)`
   flex-grow: 1;
@@ -66,7 +66,7 @@ export class VisualizationPage extends React.Component {
             <Tab label="Categories" />
           </Tabs>
         </TabContainer>
-        <ChartContainer>
+        <Container>
           {transactions.length !== 0 ? (
             <div>{this.getChart()}</div>
           ) : (
@@ -74,7 +74,7 @@ export class VisualizationPage extends React.Component {
               <FormattedMessage id="error.transactionsEmpty" />
             </Typography>
           )}
-        </ChartContainer>
+        </Container>
       </div>
     );
   }

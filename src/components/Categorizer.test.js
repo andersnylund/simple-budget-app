@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { Categorizer } from './Categorizer';
 import PartyList from './PartyList';
 import CategoryList from './CategoryList';
-import { categories } from '../testHelpers';
+import { categories, transactions } from '../testHelpers';
 
 let props;
 
@@ -12,9 +12,11 @@ describe('<Categorizer />', () => {
     const parties = ['party1'];
     props = {
       categories,
+      transactions,
       parties,
       addParty: jest.fn(),
-      removeParty: jest.fn()
+      removeParty: jest.fn(),
+      setAmountOfCategory: jest.fn()
     };
   });
 

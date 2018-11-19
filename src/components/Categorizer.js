@@ -1,24 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DragDropContext } from 'react-beautiful-dnd';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
+import throttle from 'lodash/throttle';
 import PartyList from './PartyList';
 import CategoryList from './CategoryList';
 import { addPartyToCategory, removePartyFromCategory } from '../reducers/userReducer';
+import { setAmountOfCategory as setAmount } from '../reducers/amountReducer';
+import { combinedAmountOfParties } from '../utils';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  width: 100%;
-`;
-export const Categorizer = ({ categories, removeParty, parties, addParty }) => {
-  const partyListId = 'uncategorized-parties';
+const partyListId = 'uncategorized-parties';
 
-  const unCategorizedParties = () => {
+export class Categorizer extends React.Component {
+  updateAmounts = throttle(() => {
+    const { setAmountOfCategory, transactions, categories } = this.props;
+    categories.forEach(category => {
+      setAmountOfCategory(combinedAmountOfParties(transactions, category.parties), category.title);
+    });
+  }, 2000);
+
+  componentWillUnmount() {
+    this.updateAmounts();
+  }
+
+  unCategorizedParties = () => {
     const categorizedParties = [];
+    const { categories, parties } = this.props;
 
     if (categories && categories.length > 0) {
       categories.forEach(category => {
@@ -35,8 +42,9 @@ export const Categorizer = ({ categories, removeParty, parties, addParty }) => {
     return parties ? parties.filter(party => !categorizedParties.includes(party)) : undefined;
   };
 
-  const onDragEnd = result => {
+  onDragEnd = result => {
     const { source, destination, draggableId } = result;
+    const { addParty, removeParty } = this.props;
 
     if (!destination) {
       return;
@@ -58,22 +66,25 @@ export const Categorizer = ({ categories, removeParty, parties, addParty }) => {
       const categoryTitleToBeModified2 = destination.droppableId;
       addParty(draggableId, categoryTitleToBeModified2, destination.index);
     }
+    this.updateAmounts();
   };
 
-  const availableParties = unCategorizedParties();
+  render() {
+    const availableParties = this.unCategorizedParties();
+    const { categories } = this.props;
 
-  return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Container>
+    return (
+      <DragDropContext onDragEnd={this.onDragEnd}>
         <CategoryList data={categories} />
         <PartyList parties={availableParties} id={partyListId} />
-      </Container>
-    </DragDropContext>
-  );
-};
+      </DragDropContext>
+    );
+  }
+}
 
 const mapStateToProps = state => ({
-  categories: state.userReducer.categories
+  categories: state.userReducer.categories,
+  transactions: state.appReducer.transactions
 });
 
 Categorizer.propTypes = {
@@ -83,15 +94,24 @@ Categorizer.propTypes = {
       parties: PropTypes.arrayOf(PropTypes.string)
     })
   ).isRequired,
+  transactions: PropTypes.arrayOf(
+    PropTypes.shape({
+      date: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired,
+      party: PropTypes.string.isRequired
+    })
+  ).isRequired,
   parties: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   addParty: PropTypes.func.isRequired,
-  removeParty: PropTypes.func.isRequired
+  removeParty: PropTypes.func.isRequired,
+  setAmountOfCategory: PropTypes.func.isRequired
 };
 
 export default connect(
   mapStateToProps,
   {
     addParty: addPartyToCategory,
-    removeParty: removePartyFromCategory
+    removeParty: removePartyFromCategory,
+    setAmountOfCategory: setAmount
   }
 )(Categorizer);

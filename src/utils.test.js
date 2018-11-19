@@ -1,28 +1,18 @@
-import { amountByCategory, categoryOfParty } from './utils';
+import { combinedAmountOfParties, amountByEachParty } from './utils';
 import { transactions, categories } from './testHelpers';
 
 describe('utils.js', () => {
-  it('should return correct value in spendingByCategory', () => {
-    const result = amountByCategory(transactions, categories);
+  it('should return correct value from amountByCategory', () => {
+    const result = combinedAmountOfParties(transactions, categories[1].parties);
+    expect(result).toEqual(131.6);
+  });
+
+  it('should return correct value from amountByParty', () => {
+    const result = amountByEachParty(transactions);
     expect(result).toEqual([
-      {
-        title: 'category1',
-        amount: 20.2
-      },
-      {
-        title: 'category2',
-        amount: 131.6
-      }
+      { amount: 121, title: 'party3' },
+      { amount: 20.2, title: 'party1' },
+      { amount: 10.6, title: 'party2' }
     ]);
-  });
-
-  it('should return category of party', () => {
-    const result = categoryOfParty('party1', categories);
-    expect(result).toEqual('category1');
-  });
-
-  it('should return null when party is not categorized', () => {
-    const result = categoryOfParty('party4', categories);
-    expect(result).toEqual(null);
   });
 });

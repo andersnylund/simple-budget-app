@@ -1,28 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Chart from 'react-apexcharts';
-import _ from 'lodash';
+import { connect } from 'react-redux';
 
-const PartyGrouping = ({ transactions }) => {
-  // TODO Extract function to utils
-  const result = transactions.reduce((previous, current) => {
-    const returnValue = _.cloneDeep(previous);
-
-    if (_.has(previous, current.party)) {
-      returnValue[current.party] += current.amount;
-    } else {
-      returnValue[current.party] = current.amount;
-    }
-    return returnValue;
-  }, {});
-
-  let array = [];
-
-  Object.keys(result).forEach(key => {
-    array = array.concat({ x: key, y: result[key] });
-  });
-
-  array = array.sort((a, b) => a.y < b.y);
+const PartyGrouping = ({ byParty }) => {
+  const array = byParty.map(party => ({
+    x: party.title,
+    y: party.amount
+  }));
 
   const options = {};
   const series = [
@@ -36,13 +21,16 @@ const PartyGrouping = ({ transactions }) => {
 };
 
 PartyGrouping.propTypes = {
-  transactions: PropTypes.arrayOf(
+  byParty: PropTypes.arrayOf(
     PropTypes.shape({
-      date: PropTypes.string.isRequired,
-      amount: PropTypes.number.isRequired,
-      party: PropTypes.string.isRequired
+      title: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired
     })
   ).isRequired
 };
 
-export default PartyGrouping;
+const mapStateToProps = state => ({
+  byParty: state.amountReducer.amountByParties
+});
+
+export default connect(mapStateToProps)(PartyGrouping);

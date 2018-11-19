@@ -10,16 +10,17 @@ import throttle from 'lodash/throttle';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import appReducer from './reducers/appReducer';
 import userReducer from './reducers/userReducer';
+import amountReducer from './reducers/amountReducer';
 import App from './App';
 import messagesEn from './translations/en.json';
-import * as serviceWorker from './serviceWorker';
 import { loadState, saveState } from './localStorage';
 
 const persistedState = loadState();
 const store = createStore(
   combineReducers({
     appReducer,
-    userReducer
+    userReducer,
+    amountReducer
   }),
   persistedState,
   composeWithDevTools()
@@ -48,8 +49,3 @@ ReactDOM.render(
   </CssBaseline>,
   document.getElementById('root')
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();

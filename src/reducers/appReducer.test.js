@@ -1,3 +1,4 @@
+import deepFreeze from 'deep-freeze';
 import reducer, {
   initialState,
   setBank,
@@ -25,8 +26,9 @@ describe('userReducer', () => {
   });
 
   it('should set the bank', () => {
-    Object.freeze(initialState);
-    const state = reducer(initialState, setBank(op));
+    deepFreeze(initialState);
+    const action = deepFreeze(setBank(op));
+    const state = reducer(initialState, action);
     expect(state.bank).toEqual({
       amountIndex: 2,
       dateHeaderFormat: 'DD.MM.YYYY',
@@ -37,22 +39,25 @@ describe('userReducer', () => {
   });
 
   it('should set the transactions', () => {
-    Object.freeze(initialState);
-    const state = reducer(initialState, setTransactions(transactions));
+    deepFreeze(initialState);
+    const action = deepFreeze(setTransactions(transactions));
+    const state = reducer(initialState, action);
     expect(state.transactions.length).toEqual(4);
   });
 
   it('should set the page index', () => {
     Object.freeze(initialState);
-    const state = reducer(initialState, setPageIndex(2));
+    const action = deepFreeze(setPageIndex(2));
+    const state = reducer(initialState, action);
     expect(state.activePageIndex).toEqual(2);
   });
 
   it('should reset the state', () => {
-    Object.freeze(initialState);
-    const state = reducer(initialState, setTransactions(transactions));
+    deepFreeze(initialState);
+    const action = deepFreeze(setTransactions(transactions));
+    const state = reducer(initialState, action);
     expect(state.transactions.length).toEqual(4);
-    const resetted = reducer(state, resetAppState());
+    const resetted = reducer(deepFreeze(state), resetAppState());
     expect(resetted.transactions.length).toEqual(0);
   });
 });

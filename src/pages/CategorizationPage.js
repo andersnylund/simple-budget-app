@@ -11,14 +11,7 @@ import Categorizer from '../components/categorize/Categorizer';
 import CategoriesOverview from '../components/categorize/CategoriesOverview';
 import TransactionsOverview from '../components/categorize/TransactionsOverview';
 
-const Container = styled.div`
-  max-width: 30rem;
-  margin: 0 auto;
-  padding: 2rem 0;
-`;
-
 const Section = styled.div`
-  padding: 2rem 0;
   width: 100%;
 `;
 
@@ -28,7 +21,6 @@ const SectionNavigationContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 2rem 0;
 `;
 
 // @TODO replace the styles object with a styled component.
@@ -86,11 +78,8 @@ export class CategorizationPage extends React.Component {
     const uniqueParties = [...new Set(transactions.map(t => t.party))];
 
     return (
-      <Container>
+      <div>
         <Grid container>
-          <Typography variant="h3" gutterBottom>
-            Categorization
-          </Typography>
           {transactions.length !== 0 ? (
             <Section>
               <SectionNavigationContainer>
@@ -112,7 +101,7 @@ export class CategorizationPage extends React.Component {
             </Typography>
           )}
         </Grid>
-      </Container>
+      </div>
     );
   }
 }

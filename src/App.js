@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import LandingPage from './pages/LandingPage';
@@ -15,6 +16,12 @@ import NavigationAppBar, {
   VISUALIZE,
   EXPORT
 } from './components/NavigationAppBar';
+
+const Container = styled.div`
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 2rem;
+`;
 
 export class App extends Component {
   showPage = pageIndex => {
@@ -44,7 +51,7 @@ export class App extends Component {
     return (
       <div>
         <NavigationAppBar />
-        <div>{this.showPage(activePageIndex)}</div>
+        <Container>{this.showPage(activePageIndex)}</Container>
       </div>
     );
   }

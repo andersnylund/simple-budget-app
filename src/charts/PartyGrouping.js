@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Chart from 'react-apexcharts';
 import { connect } from 'react-redux';
+import Paper from '@material-ui/core/Paper';
 
-const PartyGrouping = ({ byParty }) => {
-  const array = byParty.map(party => ({
+const PartyGrouping = ({ significantParties }) => {
+  const array = significantParties.map(party => ({
     x: party.title,
     y: party.amount
   }));
@@ -12,16 +13,20 @@ const PartyGrouping = ({ byParty }) => {
   const options = {};
   const series = [
     {
-      name: 'Party',
+      name: 'Amount',
       data: array
     }
   ];
 
-  return <Chart options={options} series={series} height={800} type="bar" />;
+  return (
+    <Paper>
+      <Chart options={options} series={series} height={800} type="bar" />
+    </Paper>
+  );
 };
 
 PartyGrouping.propTypes = {
-  byParty: PropTypes.arrayOf(
+  significantParties: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       amount: PropTypes.number.isRequired
@@ -30,7 +35,7 @@ PartyGrouping.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  byParty: state.amountReducer.amountByParties
+  significantParties: state.amountReducer.significantParties
 });
 
 export default connect(mapStateToProps)(PartyGrouping);

@@ -1,31 +1,37 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import styled from 'styled-components';
-import TransactionFileReader from '../components/TransactionFileReader';
-import PreviousDataReader from '../components/PreviousDataReader';
-import Selector from '../components/BankSelector';
-import Reset from '../components/Reset';
+import TransactionFileReader from '../components/import/TransactionFileReader';
+import PreviousDataReader from '../components/import/PreviousDataReader';
+import Selector from '../components/import/BankSelector';
+import Reset from '../components/import/Reset';
+import Container from '../components/Container';
+import PageItem from '../components/import/PageItem';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-
-  .item {
-    padding: 3rem;
-  }
+const StyledPaper = styled(Paper)`
+  padding: 1rem;
 `;
 
 const ImportPage = () => (
   <Container>
-    <Typography variant="h2" className="item">
-      Import
-    </Typography>
-    <Selector className="item" />
-    <TransactionFileReader className="item" />
-    <PreviousDataReader className="item" />
-    <Reset className="item" />
+    <StyledPaper>
+      <Grid container spacing={40} direction="column">
+        <PageItem item={<Selector />} helpText="Select your bank." />
+        <PageItem
+          item={<TransactionFileReader />}
+          helpText="Select a CSV-file that contains you transactions."
+        />
+        <PageItem
+          item={<PreviousDataReader />}
+          helpText="Upload your previously exported data from Simple Budgeting."
+        />
+        <PageItem
+          item={<Reset />}
+          helpText="Reset the application state. Your unsaved categorizations will be lost."
+        />
+      </Grid>
+    </StyledPaper>
   </Container>
 );
 

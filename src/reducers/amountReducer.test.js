@@ -1,6 +1,6 @@
 import deepFreeze from 'deep-freeze';
 import reducer, {
-  setAmountByParties,
+  setSignificantParties,
   setAmountOfCategory,
   resetAmountState
 } from './amountReducer';
@@ -17,10 +17,13 @@ describe('amountReducer', () => {
         amount: -234.123
       }
     ];
-    const state = reducer(undefined, deepFreeze(setAmountByParties(amountByParty)));
+    const state = reducer(undefined, deepFreeze(setSignificantParties(amountByParty)));
     expect(state).toEqual({
       amountByCategories: [],
-      amountByParties: [{ amount: 123125, title: 'Party1' }, { amount: -234.123, title: 'Party2' }]
+      significantParties: [
+        { amount: 123125, title: 'Party1' },
+        { amount: -234.123, title: 'Party2' }
+      ]
     });
   });
 
@@ -46,7 +49,7 @@ describe('amountReducer', () => {
     const state2 = reducer(deepFreeze(state1), deepFreeze(resetAmountState()));
     expect(state2).toEqual({
       amountByCategories: [],
-      amountByParties: []
+      significantParties: []
     });
   });
 });

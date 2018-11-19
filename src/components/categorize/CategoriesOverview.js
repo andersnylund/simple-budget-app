@@ -12,7 +12,7 @@ import styled from 'styled-components';
 import {
   removeCategory as removeCategoryFromStore,
   addCategory as addCategoryFromStore
-} from '../reducers/userReducer';
+} from '../../reducers/userReducer';
 
 const Category = styled.li`
   display: flex;

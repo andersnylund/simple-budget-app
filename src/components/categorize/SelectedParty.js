@@ -13,7 +13,9 @@ const Container = styled.div`
 
 const SelectedParty = ({ party, removeParty }) => (
   <Container onClick={e => removeParty(party)}>
-    {party} <ClearIcon />
+    {party} 
+{' '}
+<ClearIcon />
   </Container>
 );
 

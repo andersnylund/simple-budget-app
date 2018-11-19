@@ -78,7 +78,6 @@ const InfoPage = () => {
 
   return (
     <Container>
-      <Typography variant="h2">Info</Typography>
       <InfoSteps steps={steps} />
     </Container>
   );

@@ -2,7 +2,14 @@ import papa from 'papaparse';
 import moment from 'moment';
 
 export const parse = (csvString, bank) => {
-  const transactions = papa.parse(csvString).data.filter((j, i) => i !== 0); // remove first item
+  const transactions = papa
+    .parse(csvString)
+    .data.filter(
+      (t, i) =>
+        t.length >= Math.max(bank.dateHeaderIndex, bank.amountIndex, bank.partyIndex) &&
+        !isNaN(parseFloat(t[bank.amountIndex].replace(',', '.')))
+    );
+
   const data = transactions.map(transaction => ({
     date: moment.utc(transaction[bank.dateHeaderIndex], bank.dateHeaderFormat).toISOString(),
     amount: parseFloat(transaction[bank.amountIndex].replace(',', '.')),

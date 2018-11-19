@@ -4,7 +4,12 @@ import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 import Image from 'material-ui-image';
 import InfoSteps from '../components/info/InfoSteps';
-import Privacy from '../images/privacy.png';
+import BankTransactionHelp from '../components/BankTransactionHelp';
+import InfoImport from '../images/infoImport.png';
+import InfoCreateCategories from '../images/infoCreateCategories.png';
+import InfoCategorization from '../images/infoCategorization.png';
+import InfoVisualization from '../images/infoVisualization.png';
+import InfoExport from '../images/infoExport.png';
 
 const Container = styled.div`
   text-align: center;
@@ -13,28 +18,61 @@ const Container = styled.div`
   }
 `;
 
+const ImageStyle = { width: '100%', height: 'auto' };
+const TypoStyle = { variant: 'h6', color: 'textSecondary' };
+
 const InfoPage = () => {
-  // TODO: To be added once all the features are finalized
   const steps = [
     {
       id: 1,
       label: <FormattedMessage id="navigation.import" />,
-      content: <Image src={Privacy} />
+      content: (
+        <Typography {...TypoStyle}>
+          <FormattedMessage id="info.import" />
+          <BankTransactionHelp />
+          <Image src={InfoImport} imageStyle={ImageStyle} />
+        </Typography>
+      )
     },
     {
       id: 2,
-      label: <FormattedMessage id="navigation.categorization" />,
-      content: <Image src={Privacy} />
+      label: <FormattedMessage id="info.createCategoriesHeader" />,
+      content: (
+        <Typography {...TypoStyle}>
+          <FormattedMessage id="info.createCategories" />
+          <Image src={InfoCreateCategories} imageStyle={ImageStyle} />
+        </Typography>
+      )
     },
     {
       id: 3,
-      label: <FormattedMessage id="navigation.visualization" />,
-      content: <Image src={Privacy} />
+      label: <FormattedMessage id="navigation.categorization" />,
+      content: (
+        <Typography {...TypoStyle}>
+          <FormattedMessage id="info.categorization" />
+          <Image src={InfoCategorization} imageStyle={ImageStyle} />
+        </Typography>
+      )
     },
     {
       id: 4,
+      label: <FormattedMessage id="navigation.visualization" />,
+      content: (
+        <Typography {...TypoStyle}>
+          <FormattedMessage id="info.visualization" />
+          <Image src={InfoVisualization} imageStyle={ImageStyle} />
+        </Typography>
+      )
+    },
+    {
+      id: 5,
       label: <FormattedMessage id="navigation.export" />,
-      content: <Image src={Privacy} />
+      content: (
+        <Typography {...TypoStyle}>
+          <FormattedMessage id="info.export" />
+          <Image src={InfoExport} imageStyle={ImageStyle} />
+        </Typography>
+      )
     }
   ];
 

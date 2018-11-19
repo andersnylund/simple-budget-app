@@ -5,6 +5,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Grow from '@material-ui/core/Grow';
+import Slide from '@material-ui/core/Slide';
+import Zoom from '@material-ui/core/Zoom';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -37,31 +40,44 @@ const styles = theme => ({
 const IntroFeatures = ({ classes, header, intro, features }) => (
   <React.Fragment>
     <main className={classes.layout}>
-      <div className={classes.heroContent}>
-        <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-          {header}
-        </Typography>
-        <Typography variant="h6" align="center" color="textSecondary" component="p">
-          {intro}
-        </Typography>
-      </div>
+      <Grow in timeout={{ enter: features.length * 1000 }}>
+        <div className={classes.heroContent}>
+          <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+            {header}
+          </Typography>
+          <Typography variant="h6" align="center" color="textSecondary" component="p">
+            {intro}
+          </Typography>
+        </div>
+      </Grow>
       <Grid container spacing={40} alignItems="flex-end">
-        {features.map(({ id, title, description }) => (
+        {features.map(({ id, title, description }, index) => (
           <Grid item key={id} xs={12} sm={6} md={4}>
-            <Card>
-              <CardHeader
-                key="{id}.title"
-                title={title}
-                titleTypographyProps={{ align: 'center' }}
-                subheaderTypographyProps={{ align: 'center' }}
-                className={classes.cardHeader}
-              />
-              <CardContent>
-                <Typography variant="subtitle1" align="center" key="{id}.description">
-                  {description}
-                </Typography>
-              </CardContent>
-            </Card>
+            <Slide
+              direction="up"
+              in
+              style={{ transformOrigin: '0 0 0' }}
+              {...{ timeout: (index + 1) * 1000 }}
+            >
+              <Card>
+                <Grow in {...{ timeout: (index + 1) * 1200 }}>
+                  <CardHeader
+                    key="{id}.title"
+                    title={title}
+                    titleTypographyProps={{ align: 'center' }}
+                    subheaderTypographyProps={{ align: 'center' }}
+                    className={classes.cardHeader}
+                  />
+                </Grow>
+                <Zoom in {...{ timeout: (index + 1) * 700 }}>
+                  <CardContent>
+                    <Typography variant="subtitle1" align="center" key="{id}.description">
+                      {description}
+                    </Typography>
+                  </CardContent>
+                </Zoom>
+              </Card>
+            </Slide>
           </Grid>
         ))}
       </Grid>

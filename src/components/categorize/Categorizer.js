@@ -6,16 +6,23 @@ import throttle from 'lodash/throttle';
 import PartyList from './PartyList';
 import CategoryList from './CategoryList';
 import { addPartyToCategory, removePartyFromCategory } from '../../reducers/userReducer';
-import { setAmountOfCategory as setAmount } from '../../reducers/amountReducer';
-import { combinedAmountOfParties } from '../../utils';
+import {
+  setAmountOfCategory as setAmount,
+  setSpendingOfCategory as setSpending
+} from '../../reducers/amountReducer';
+import { combinedAmountOfParties, combinedSpendingOfParties } from '../../utils';
 
 const partyListId = 'uncategorized-parties';
 
 export class Categorizer extends React.Component {
   updateAmounts = throttle(() => {
-    const { setAmountOfCategory, transactions, categories } = this.props;
+    const { setAmountOfCategory, setSpendingOfCategory, transactions, categories } = this.props;
     categories.forEach(category => {
       setAmountOfCategory(combinedAmountOfParties(transactions, category.parties), category.title);
+      setSpendingOfCategory(
+        combinedSpendingOfParties(transactions, category.parties),
+        category.title
+      );
     });
   }, 2000);
 
@@ -104,7 +111,8 @@ Categorizer.propTypes = {
   parties: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   addParty: PropTypes.func.isRequired,
   removeParty: PropTypes.func.isRequired,
-  setAmountOfCategory: PropTypes.func.isRequired
+  setAmountOfCategory: PropTypes.func.isRequired,
+  setSpendingOfCategory: PropTypes.func.isRequired
 };
 
 export default connect(
@@ -112,6 +120,7 @@ export default connect(
   {
     addParty: addPartyToCategory,
     removeParty: removePartyFromCategory,
-    setAmountOfCategory: setAmount
+    setAmountOfCategory: setAmount,
+    setSpendingOfCategory: setSpending
   }
 )(Categorizer);

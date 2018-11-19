@@ -1,10 +1,14 @@
+import cloneDeep from 'lodash/cloneDeep';
+
 export const initialState = {
   significantParties: [],
-  amountByCategories: []
+  amountByCategories: [],
+  spendingByCategories: []
 };
 
 const SET_AMOUNT_BY_PARTY = 'SET_AMOUNT_BY_PARTY';
 const SET_AMOUNT_OF_CATEGORY = 'SET_AMOUNT_OF_CATEGORY';
+const SET_SPENDING_OF_CATEGORY = 'SET_SPENDING_OF_CATEGORY';
 const RESET_AMOUNT_STATE = 'RESET_AMOUNT_STATE';
 
 const reducer = (state = initialState, action) => {
@@ -24,10 +28,18 @@ const reducer = (state = initialState, action) => {
     };
   }
 
+  if (action.type === SET_SPENDING_OF_CATEGORY) {
+    return {
+      ...state,
+      spendingByCategories: [...state.spendingByCategories]
+        .filter(c => c.title !== action.categoryTitle)
+        .concat({ spending: action.spending, title: action.categoryTitle })
+    };
+  }
+
   if (action.type === RESET_AMOUNT_STATE) {
     return {
-      significantParties: [],
-      amountByCategories: []
+      ...cloneDeep(initialState)
     };
   }
 
@@ -42,6 +54,12 @@ export const setSignificantParties = amountByParty => ({
 export const setAmountOfCategory = (amount, categoryTitle) => ({
   type: SET_AMOUNT_OF_CATEGORY,
   amount,
+  categoryTitle
+});
+
+export const setSpendingOfCategory = (spending, categoryTitle) => ({
+  type: SET_SPENDING_OF_CATEGORY,
+  spending,
   categoryTitle
 });
 

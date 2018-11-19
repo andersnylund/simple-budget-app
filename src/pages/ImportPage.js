@@ -23,7 +23,7 @@ const ImportPage = () => (
         />
         <PageItem
           item={<PreviousDataReader />}
-          helpText="Upload your previously exported data from Simple Budgeting."
+          helpText="Upload your previously exported categorizations from Simple Budgeting."
         />
         <PageItem
           item={<Reset />}

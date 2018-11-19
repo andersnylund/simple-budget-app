@@ -1,20 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-
-  .item {
-    padding: 3rem;
-  }
-`;
+import Grid from '@material-ui/core/Grid';
 
 const ExportPage = ({ userState }) => {
   const data = `data:application/json;charset=utf-8,${encodeURIComponent(
@@ -22,14 +11,21 @@ const ExportPage = ({ userState }) => {
   )}`;
 
   return (
-    <Container>
-      <Typography variant="h2" className="item">
-        Export
-      </Typography>
-      <Button variant="contained" download="simple-budgeting.json" href={data}>
-        Export
-      </Button>
-    </Container>
+    <div>
+      <Grid container spacing={40} direction="column" alignItems="center">
+        <Grid item>
+          <Typography variant="h6">
+            Here you can export your categorizations as a file. Then when you come back to Simple
+            Budgeting, you can reuse your previous categorizations!
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Button variant="contained" download="simple-budgeting.json" href={data}>
+            Export
+          </Button>
+        </Grid>
+      </Grid>
+    </div>
   );
 };
 

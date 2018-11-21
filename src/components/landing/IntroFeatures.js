@@ -50,7 +50,7 @@ const IntroFeatures = ({ classes, header, intro, features }) => (
           </Typography>
         </div>
       </Grow>
-      <Grid container spacing={40} alignItems="flex-end">
+      <Grid container spacing={40} alignItems="flex">
         {features.map(({ id, title, description }, index) => (
           <Grid item key={id} xs={12} sm={6} md={4}>
             <Slide
